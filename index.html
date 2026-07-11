@@ -9176,9 +9176,11 @@ if(srv&&typeof srv==='object'&&!Array.isArray(srv)){let ch=false;
 for(const k in srv)if(!(k in ratings)){ratings[k]=srv[k];ch=true;}
 if(ch){localStorage.setItem('gp_ratings',JSON.stringify(ratings));
 paintStars();if(rfilter!==null)apply();}}}).catch(()=>{});
+const tcnt={};
 for(const c of cards){
+c.dataset.seq=tcnt[c.dataset.tier]=(tcnt[c.dataset.tier]||0)+1;
 const n=document.createElement('span');n.className='num';
-n.textContent='#'+c.dataset.id;c.appendChild(n);
+n.textContent='#'+c.dataset.seq;c.appendChild(n);
 const s=document.createElement('div');s.className='stars';
 for(let i=1;i<=5;i++){const b=document.createElement('button');
 b.className='star';b.textContent='★';b.title=i+' / 5';
@@ -9191,10 +9193,8 @@ function paintStars(one){for(const c of(one?[one]:cards)){
 const r=ratings[c.dataset.id]||0;
 [...c.querySelectorAll('.star')].forEach((b,i)=>b.classList.toggle('on',i<r));}}
 function goTo(raw){const id=String(raw).trim().replace('#','');if(!id)return;
-const c=cards.find(x=>x.dataset.id===id);
-if(!c){count.textContent='no asset #'+id;return;}
-tier=c.dataset.tier;
-tabs.forEach(x=>x.classList.toggle('active',x.dataset.tier===tier));
+const c=cards.find(x=>x.dataset.seq===id&&x.dataset.tier===tier);
+if(!c){count.textContent='no #'+id+' in '+tier;return;}
 favOnly=false;favtab.classList.remove('active');
 rfilter=null;rbtns.forEach(x=>x.classList.toggle('active',x.dataset.r===''));
 q.value='';apply();
@@ -9222,7 +9222,7 @@ const hit=c.dataset.tier===tier&&
 (!favOnly||favs.has(c.dataset.id))&&
 (rfilter===null||r===rfilter)&&(!v||
 c.dataset.name.includes(v)||c.dataset.cat.includes(v)||
-c.dataset.id===vid);
+c.dataset.seq===vid);
 c.classList.toggle('show',hit);if(hit)n++;}
 count.textContent=n+' shown · '+tier+(favOnly?' ★':'')+
 (rfilter===null?'':rfilter===0?' · unrated':' · '+rfilter+'★');
