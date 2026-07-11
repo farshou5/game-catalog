@@ -45,14 +45,46 @@ p{margin:0;font-size:13px;color:#c5c6cd;line-height:1.45}
 .yt.search{color:#d3a94e}
 .yt:hover{text-decoration:underline}
 .empty{grid-column:1/-1;text-align:center;color:#8f909b;padding:40px 0}
+.num{position:absolute;top:18px;left:18px;z-index:2;background:#0e0f13cc;
+ color:#c8c9d0;font-size:12.5px;font-weight:700;padding:4px 9px;
+ border-radius:8px;pointer-events:none}
+.stars{display:flex;gap:2px}
+.star{background:none;border:none;font-size:22px;color:#4a4b57;
+ cursor:pointer;padding:0 3px;line-height:1}
+.star.on{color:#f2c14e}
+.searchrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#jump{width:100px;padding:9px 12px;border-radius:9px;
+ border:1px solid #33343d;background:#1c1d24;color:#fff;font-size:15px}
+#go{padding:9px 14px;border-radius:9px;border:1px solid #33343d;
+ background:#1c1d24;color:#c8c9d0;font-size:14px;font-weight:600;cursor:pointer}
+.rrow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:10px;
+ font-size:13px;color:#8f909b}
+.rbtn{padding:5px 12px;border-radius:16px;border:1.5px solid #33343d;
+ background:#1c1d24;color:#c8c9d0;font-size:13px;font-weight:600;cursor:pointer}
+.rbtn.active{border-color:#f2c14e;color:#f2c14e;
+ background:color-mix(in srgb,#f2c14e 12%,#1c1d24)}
+.card.flash{outline:3px solid #7ab8ff;outline-offset:2px}
 </style></head><body>
 <header>
  <div class="tabs"><button class="tab active" data-tier="Bronze" style="--tc:#cd7f32">Bronze <span>461</span></button><button class="tab" data-tier="Silver" style="--tc:#b9bfc9">Silver <span>509</span></button><button class="tab" data-tier="Ruby" style="--tc:#e0446a">Ruby <span>37</span></button><button class="tab" data-tier="Gold" style="--tc:#e8b923">Gold <span>0</span></button>
   <button class="tab favtab" id="favtab" style="--tc:#f2c14e">★ Favorites
    <span id="favn">0</span></button>
  </div>
- <input id="q" type="search" placeholder="Search name or category…">
- <span id="count"></span>
+ <div class="searchrow">
+  <input id="q" type="search" placeholder="Search name, category or #number…">
+  <input id="jump" type="number" inputmode="numeric" placeholder="#…" title="Go to asset number">
+  <button id="go">Go</button>
+  <span id="count"></span>
+ </div>
+ <div class="rrow">Rating:
+  <button class="rbtn active" data-r="">Any</button>
+  <button class="rbtn" data-r="5">★5</button>
+  <button class="rbtn" data-r="4">★4</button>
+  <button class="rbtn" data-r="3">★3</button>
+  <button class="rbtn" data-r="2">★2</button>
+  <button class="rbtn" data-r="1">★1</button>
+  <button class="rbtn" data-r="0">Unrated</button>
+ </div>
 </header>
 <main id="grid">
 <div class="card" data-id="377" data-tier="Silver"
@@ -9127,12 +9159,52 @@ const q=document.getElementById('q'),cards=[...document.querySelectorAll('.card'
 count=document.getElementById('count'),
 tabs=[...document.querySelectorAll('.tab[data-tier]')],
 favtab=document.getElementById('favtab'),favn=document.getElementById('favn'),
-empty=document.getElementById('empty');
-let tier='Bronze',favOnly=false;
+empty=document.getElementById('empty'),
+jump=document.getElementById('jump'),go=document.getElementById('go'),
+rbtns=[...document.querySelectorAll('.rbtn')];
+let tier='Bronze',favOnly=false,rfilter=null;
 let favs=new Set(JSON.parse(localStorage.getItem('gp_favs')||'[]'));
+let ratings=JSON.parse(localStorage.getItem('gp_ratings')||'{}');
 function saveFavs(){localStorage.setItem('gp_favs',JSON.stringify([...favs]));
 fetch('/favs',{method:'POST',headers:{'Content-Type':'application/json'},
 body:JSON.stringify([...favs])}).catch(()=>{});}
+function saveRatings(){localStorage.setItem('gp_ratings',JSON.stringify(ratings));
+fetch('/ratings',{method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify(ratings)}).catch(()=>{});}
+fetch('/ratings.json').then(r=>r.json()).then(srv=>{
+if(srv&&typeof srv==='object'&&!Array.isArray(srv)){let ch=false;
+for(const k in srv)if(!(k in ratings)){ratings[k]=srv[k];ch=true;}
+if(ch){localStorage.setItem('gp_ratings',JSON.stringify(ratings));
+paintStars();if(rfilter!==null)apply();}}}).catch(()=>{});
+for(const c of cards){
+const n=document.createElement('span');n.className='num';
+n.textContent='#'+c.dataset.id;c.appendChild(n);
+const s=document.createElement('div');s.className='stars';
+for(let i=1;i<=5;i++){const b=document.createElement('button');
+b.className='star';b.textContent='★';b.title=i+' / 5';
+b.addEventListener('click',()=>{const id=c.dataset.id;
+if(ratings[id]===i)delete ratings[id];else ratings[id]=i;
+saveRatings();paintStars(c);if(rfilter!==null)apply();});
+s.appendChild(b);}
+c.appendChild(s);}
+function paintStars(one){for(const c of(one?[one]:cards)){
+const r=ratings[c.dataset.id]||0;
+[...c.querySelectorAll('.star')].forEach((b,i)=>b.classList.toggle('on',i<r));}}
+function goTo(raw){const id=String(raw).trim().replace('#','');if(!id)return;
+const c=cards.find(x=>x.dataset.id===id);
+if(!c){count.textContent='no asset #'+id;return;}
+tier=c.dataset.tier;
+tabs.forEach(x=>x.classList.toggle('active',x.dataset.tier===tier));
+favOnly=false;favtab.classList.remove('active');
+rfilter=null;rbtns.forEach(x=>x.classList.toggle('active',x.dataset.r===''));
+q.value='';apply();
+c.scrollIntoView({behavior:'smooth',block:'center'});
+c.classList.add('flash');setTimeout(()=>c.classList.remove('flash'),2500);}
+jump.addEventListener('keydown',e=>{if(e.key==='Enter')goTo(jump.value);});
+go.addEventListener('click',()=>goTo(jump.value));
+for(const b of rbtns)b.addEventListener('click',()=>{
+rfilter=b.dataset.r===''?null:+b.dataset.r;
+rbtns.forEach(x=>x.classList.toggle('active',x===b));apply();});
 fetch('/favs.json').then(r=>r.json()).then(srv=>{
 if(Array.isArray(srv)){const before=favs.size;srv.forEach(id=>favs.add(id));
 if(favs.size!==before||srv.length!==favs.size){
@@ -9143,12 +9215,17 @@ function paintFavs(){for(const c of cards){const on=favs.has(c.dataset.id);
 c.classList.toggle('faved',on);const b=c.querySelector('.fav');
 b.textContent=on?'★':'☆';b.classList.toggle('on',on);}
 favn.textContent=favs.size;}
-function apply(){const v=q.value.trim().toLowerCase();let n=0;
-for(const c of cards){const hit=c.dataset.tier===tier&&
-(!favOnly||favs.has(c.dataset.id))&&(!v||
-c.dataset.name.includes(v)||c.dataset.cat.includes(v));
+function apply(){const v=q.value.trim().toLowerCase(),
+vid=v.replace('#','');let n=0;
+for(const c of cards){const r=ratings[c.dataset.id]||0;
+const hit=c.dataset.tier===tier&&
+(!favOnly||favs.has(c.dataset.id))&&
+(rfilter===null||r===rfilter)&&(!v||
+c.dataset.name.includes(v)||c.dataset.cat.includes(v)||
+c.dataset.id===vid);
 c.classList.toggle('show',hit);if(hit)n++;}
-count.textContent=n+' shown · '+tier+(favOnly?' ★':'');
+count.textContent=n+' shown · '+tier+(favOnly?' ★':'')+
+(rfilter===null?'':rfilter===0?' · unrated':' · '+rfilter+'★');
 empty.style.display=n?'none':'';}
 for(const t of tabs)t.addEventListener('click',()=>{tier=t.dataset.tier;
 tabs.forEach(x=>x.classList.toggle('active',x===t));apply();});
@@ -9158,6 +9235,6 @@ for(const c of cards)c.querySelector('.fav').addEventListener('click',()=>{
 const id=c.dataset.id;favs.has(id)?favs.delete(id):favs.add(id);
 saveFavs();paintFavs();if(favOnly)apply();});
 q.addEventListener('input',apply);
-paintFavs();apply();
+paintFavs();paintStars();apply();
 </script>
 </body></html>
