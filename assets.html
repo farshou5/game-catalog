@@ -88,6 +88,25 @@ p{margin:0;font-size:13px;color:#c5c6cd;line-height:1.45}
 .card.flash{outline:3px solid #7ab8ff;outline-offset:2px}
 .empty{grid-column:1/-1;text-align:center;color:#8f909b;padding:40px 0}
 #more{grid-column:1/-1;height:10px}
+@media (max-width:600px){
+header{padding:8px 12px}
+.nav{margin-bottom:6px;font-size:13px}
+.tabs,.rrow,.chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
+ -webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar,.rrow::-webkit-scrollbar,
+.chips::-webkit-scrollbar{display:none}
+.tabs{margin-bottom:8px}
+.chips{margin-bottom:6px}
+.tab{padding:6px 12px;font-size:13px;white-space:nowrap;flex:0 0 auto}
+.rbtn,.sbtn,.tbtn,.chip{padding:4px 10px;font-size:12px;
+ white-space:nowrap;flex:0 0 auto}
+.rrow{margin-top:6px}
+.searchrow{flex-wrap:nowrap}
+#q{flex:1;min-width:0;max-width:none;font-size:14px;padding:7px 10px}
+#jump{width:64px;font-size:14px;padding:7px 8px}
+#go{padding:7px 10px;font-size:13px}
+#count{font-size:11px;white-space:nowrap;margin-left:4px}
+}
 </style></head><body>
 <header>
  <div class="nav"><a href="index.html">Complete Projects</a><span>|</span>
@@ -292,9 +311,9 @@ go.addEventListener('click',()=>goTo(jump.value));
 q.addEventListener('input',refresh);
 const hdr=document.querySelector('header');let lastY=0;
 addEventListener('scroll',()=>{const y=scrollY;
-if(y>lastY+4&&y>120&&document.activeElement!==q&&
+if(y>lastY+30&&y>hdr.offsetHeight+300&&document.activeElement!==q&&
 document.activeElement!==jump)hdr.classList.add('hide');
-else if(y<lastY-4||y<120)hdr.classList.remove('hide');
+else if(y<lastY-8||y<hdr.offsetHeight)hdr.classList.remove('hide');
 lastY=y;},{passive:true});
 favn.textContent=favs.size;
 renderChips();refresh();
