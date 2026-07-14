@@ -109,8 +109,9 @@ header{padding:8px 12px}
 <header>
  <div class="nav"><a href="index.html">Complete Projects</a><span>|</span>
   <span class="here">Assets</span></div>
- <div class="tabs"><button class="tab active" data-sec="3d" style="--tc:#7ab8ff">3D <span>2201</span></button><button class="tab" data-sec="tools" style="--tc:#7ab8ff">Tools <span>1285</span></button><button class="tab" data-sec="vfx" style="--tc:#7ab8ff">VFX <span>450</span></button><button class="tab" data-sec="templates" style="--tc:#7ab8ff">Templates <span>440</span></button><button class="tab" data-sec="2d" style="--tc:#7ab8ff">2D <span>271</span></button><button class="tab" data-sec="audio" style="--tc:#7ab8ff">Audio <span>164</span></button><button class="tab" data-sec="other" style="--tc:#7ab8ff">Other <span>526</span></button>
-  <button class="tab favtab" id="favtab" style="--tc:#ff5b6e">♥ Favorites
+ <div class="tabs"><button class="tab active" data-sec="3d" style="--tc:#7ab8ff">3D <span>2201</span></button><button class="tab" data-sec="tools" style="--tc:#7ab8ff">Tools <span>1285</span></button><button class="tab" data-sec="vfx" style="--tc:#7ab8ff">VFX <span>450</span></button><button class="tab" data-sec="templates" style="--tc:#7ab8ff">Templates <span>440</span></button><button class="tab" data-sec="2d" style="--tc:#7ab8ff">2D <span>271</span></button><button class="tab" data-sec="audio" style="--tc:#7ab8ff">Audio <span>164</span></button><button class="tab" data-sec="other" style="--tc:#7ab8ff">Other <span>526</span></button></div>
+ <div class="rrow">Show:
+  <button class="tab favtab" id="favtab" style="--tc:#ff5b6e">♥ My favorites
    <span id="favn">0</span></button>
  </div>
  <div class="chips" id="chips"></div>
@@ -230,9 +231,8 @@ function paintStars(el,id){const r=ratings[id]||0;
 (b,i)=>b.classList.toggle('on',i<r));}
 function computeView(){const v=q.value.trim().toLowerCase(),
 vid=v.replace('#','');
-view=DATA.filter(it=>inSec(it,sec)&&
-(!cat||inCat(it,cat))&&(!sub||inCat(it,sub))&&
-(!favOnly||favs.has(it.id))&&
+view=DATA.filter(it=>(favOnly?favs.has(it.id):(inSec(it,sec)&&
+(!cat||inCat(it,cat))&&(!sub||inCat(it,sub))))&&
 (tfilter===null||it.t===tfilter)&&
 (rfilter===null||(ratings[it.id]||0)===rfilter));
 if(v)view=view.filter((it,i)=>it.n.toLowerCase().includes(v)||
@@ -248,7 +248,7 @@ grid.insertBefore(frag,more);rendered=end;}
 function refresh(){computeView();
 [...grid.querySelectorAll('.card')].forEach(c=>c.remove());
 rendered=0;renderMore();
-count.textContent=view.length+' in view';
+count.textContent=view.length+(favOnly?' favorites':' in view');
 empty.style.display=view.length?'none':'';}
 new IntersectionObserver(es=>{
 if(es[0].isIntersecting&&rendered<view.length)renderMore();},
@@ -267,7 +267,8 @@ kids.map(k=>'<button class="chip'+(cat===k.slug?' active':'')+
 ' <span>'+k.cnt+'</span></button>').join(''):'';
 [...chipsEl.querySelectorAll('.chip')].forEach(b=>
 b.addEventListener('click',()=>{
-cat=b.dataset.c||null;sub=null;renderChips();refresh();}));
+cat=b.dataset.c||null;sub=null;favOnly=false;
+favtab.classList.remove('active');renderChips();refresh();}));
 const node=kids.find(k=>k.slug===cat);
 const g=((node&&node.children)||[])
 .map(k=>({...k,cnt:catCount(k.slug)})).filter(k=>k.cnt>0);
@@ -279,9 +280,11 @@ g.map(k=>'<button class="chip'+(sub===k.slug?' active':'')+
 ' <span>'+k.cnt+'</span></button>').join(''):'';
 [...subchipsEl.querySelectorAll('.chip')].forEach(b=>
 b.addEventListener('click',()=>{
-sub=b.dataset.c||null;renderChips();refresh();}));}
+sub=b.dataset.c||null;favOnly=false;
+favtab.classList.remove('active');renderChips();refresh();}));}
 for(const t of tabs)t.addEventListener('click',()=>{
-sec=t.dataset.sec;cat=null;sub=null;
+sec=t.dataset.sec;cat=null;sub=null;favOnly=false;
+favtab.classList.remove('active');
 tabs.forEach(x=>x.classList.toggle('active',x===t));
 renderChips();refresh();window.scrollTo(0,0);});
 favtab.addEventListener('click',()=>{favOnly=!favOnly;

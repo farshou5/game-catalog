@@ -91,8 +91,9 @@ header{padding:8px 12px}
 <header>
  <div class="nav"><span class="here">Complete Projects</span><span>|</span>
   <a href="assets.html">Assets</a></div>
- <div class="tabs"><button class="tab active" data-tier="Bronze" style="--tc:#cd7f32">Bronze <span>474</span></button><button class="tab" data-tier="Silver" style="--tc:#b9bfc9">Silver <span>536</span></button><button class="tab" data-tier="Ruby" style="--tc:#e0446a">Ruby <span>40</span></button><button class="tab" data-tier="Gold" style="--tc:#e8b923">Gold <span>0</span></button>
-  <button class="tab favtab" id="favtab" style="--tc:#ff5b6e">♥ Favorites
+ <div class="tabs"><button class="tab active" data-tier="Bronze" style="--tc:#cd7f32">Bronze <span>474</span></button><button class="tab" data-tier="Silver" style="--tc:#b9bfc9">Silver <span>536</span></button><button class="tab" data-tier="Ruby" style="--tc:#e0446a">Ruby <span>40</span></button><button class="tab" data-tier="Gold" style="--tc:#e8b923">Gold <span>0</span></button></div>
+ <div class="rrow">Show:
+  <button class="tab favtab" id="favtab" style="--tc:#ff5b6e">♥ My favorites
    <span id="favn">0</span></button>
  </div>
  <div class="searchrow">
@@ -9649,16 +9650,16 @@ favn.textContent=favs.size;}
 function apply(){const v=q.value.trim().toLowerCase(),
 vid=v.replace('#','');let n=0;
 for(const c of cards){const r=ratings[c.dataset.id]||0;
-const hit=c.dataset.tier===tier&&
-(!favOnly||favs.has(c.dataset.id))&&
+const hit=(favOnly?favs.has(c.dataset.id):c.dataset.tier===tier)&&
 (rfilter===null||r===rfilter)&&(!v||
 c.dataset.name.includes(v)||c.dataset.cat.includes(v)||
 c.dataset.seq===vid);
 c.classList.toggle('show',hit);if(hit)n++;}
-count.textContent=n+' shown · '+tier+(favOnly?' ★':'')+
+count.textContent=n+' shown · '+(favOnly?'♥ favorites':tier)+
 (rfilter===null?'':rfilter===0?' · unrated':' · '+rfilter+'★');
 empty.style.display=n?'none':'';}
 for(const t of tabs)t.addEventListener('click',()=>{tier=t.dataset.tier;
+favOnly=false;favtab.classList.remove('active');
 tabs.forEach(x=>x.classList.toggle('active',x===t));apply();});
 favtab.addEventListener('click',()=>{favOnly=!favOnly;
 favtab.classList.toggle('active',favOnly);apply();});
