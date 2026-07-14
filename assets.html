@@ -50,17 +50,17 @@ header{background:#15161c;padding:12px 18px;
  background:color-mix(in srgb,#f2c14e 12%,#1c1d24)}
 .sbtn.active{border-color:#7ab8ff;color:#7ab8ff;
  background:color-mix(in srgb,#7ab8ff 12%,#1c1d24)}
-.favtab.active{border-color:#f2c14e;color:#f2c14e;
- background:color-mix(in srgb,#f2c14e 12%,#1c1d24)}
+.favtab.active{border-color:#ff5b6e;color:#ff5b6e;
+ background:color-mix(in srgb,#ff5b6e 12%,#1c1d24)}
 main{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
  gap:14px;padding:16px}
 .card{background:#171820;border:1px solid #262732;border-radius:14px;
  padding:12px;display:flex;flex-direction:column;gap:8px;position:relative}
-.card.faved{border-color:#f2c14e66}
+.card.faved{border-color:#ff5b6e66}
 .fav{position:absolute;top:18px;right:18px;z-index:2;width:38px;height:38px;
  border-radius:50%;border:none;background:#0e0f13cc;color:#8f909b;
  font-size:20px;line-height:1;cursor:pointer}
-.fav.on{color:#f2c14e}
+.fav.on{color:#ff5b6e}
 .num{position:absolute;top:18px;left:18px;z-index:2;background:#0e0f13cc;
  color:#c8c9d0;font-size:12.5px;font-weight:700;padding:4px 9px;
  border-radius:8px;pointer-events:none}
@@ -110,7 +110,7 @@ header{padding:8px 12px}
  <div class="nav"><a href="index.html">Complete Projects</a><span>|</span>
   <span class="here">Assets</span></div>
  <div class="tabs"><button class="tab active" data-sec="3d" style="--tc:#7ab8ff">3D <span>2201</span></button><button class="tab" data-sec="tools" style="--tc:#7ab8ff">Tools <span>1285</span></button><button class="tab" data-sec="vfx" style="--tc:#7ab8ff">VFX <span>450</span></button><button class="tab" data-sec="templates" style="--tc:#7ab8ff">Templates <span>440</span></button><button class="tab" data-sec="2d" style="--tc:#7ab8ff">2D <span>271</span></button><button class="tab" data-sec="audio" style="--tc:#7ab8ff">Audio <span>164</span></button><button class="tab" data-sec="other" style="--tc:#7ab8ff">Other <span>526</span></button>
-  <button class="tab favtab" id="favtab" style="--tc:#f2c14e">★ Favorites
+  <button class="tab favtab" id="favtab" style="--tc:#ff5b6e">♥ Favorites
    <span id="favn">0</span></button>
  </div>
  <div class="chips" id="chips"></div>
@@ -189,7 +189,7 @@ let srcHost='';
 try{srcHost=new URL(it.src).hostname.replace('www.','');}catch(e){}
 const ytq=encodeURIComponent(it.n+' unity asset');
 el.innerHTML=
-'<button class="fav">☆</button>'+
+'<button class="fav">♡</button>'+
 '<span class="num">#'+seq+'</span>'+
 (it.img.length?'<div class="imgs n'+it.img.length+'">'+imgs+'</div>':'')+
 '<h3><a href="https://gamepackage.net/assets/'+it.id+
@@ -211,7 +211,7 @@ esc(it.cn)+(it.ts?' · added '+it.ts.slice(0,10):'')+
 const on=favs.has(it.id);
 el.classList.toggle('faved',on);
 const fb=el.querySelector('.fav');
-fb.textContent=on?'★':'☆';fb.classList.toggle('on',on);
+fb.textContent=on?'♥':'♡';fb.classList.toggle('on',on);
 fb.addEventListener('click',()=>{
 favs.has(it.id)?favs.delete(it.id):favs.add(it.id);
 saveFavs();paintFav(el,it.id);favn.textContent=favs.size;
@@ -224,7 +224,7 @@ saveRatings();paintStars(el,it.id);if(rfilter!==null)refresh();}));
 return el;}
 function paintFav(el,id){const on=favs.has(id);
 el.classList.toggle('faved',on);const b=el.querySelector('.fav');
-b.textContent=on?'★':'☆';b.classList.toggle('on',on);}
+b.textContent=on?'♥':'♡';b.classList.toggle('on',on);}
 function paintStars(el,id){const r=ratings[id]||0;
 [...el.querySelectorAll('.star')].forEach(
 (b,i)=>b.classList.toggle('on',i<r));}
