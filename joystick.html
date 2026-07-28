@@ -52,6 +52,7 @@ p{margin:0;font-size:13px;color:#c5c6cd;line-height:1.45}
  color:#0e0f13;font-size:12.5px;font-weight:800;padding:4px 9px;
  border-radius:8px;pointer-events:none;background:#7ab8ff}
 .fit.f9{background:#7fe07f}
+.fit.fnew{background:#f2c14e}
 .kind{font-size:11px;font-weight:800;letter-spacing:.4px;
  padding:2px 8px;border-radius:6px;display:inline-block}
 .kind.proj{background:#8a63d222;color:#b79af2;border:1px solid #8a63d266}
@@ -146,7 +147,8 @@ tabs=[...document.querySelectorAll('.tab[data-k]')],
 sensbtns=[...document.querySelectorAll('.sensbtn')],
 sbtns=[...document.querySelectorAll('.sbtn')];
 const TIERC={Bronze:'#cd7f32',Silver:'#b9bfc9',Ruby:'#e0446a',Gold:'#e8b923'};
-const GROUPS={runner:'🏃 Runners',sports:'⚽ Sports',rhythm:'🕺 Dance & Rhythm',
+const GROUPS={new:'🆕 New arrivals',
+runner:'🏃 Runners',sports:'⚽ Sports',rhythm:'🕺 Dance & Rhythm',
 racing:'🏎 Racing',flying:'🪂 Flying',action:'🥊 Action',
 arcade:'👾 Arcade & Casual',other:'🎮 Other games',
 kit:'🧩 Game kits',anim:'🎞 Animations',char:'🧍 Characters',
@@ -181,7 +183,8 @@ const ytq=encodeURIComponent(it.n+(it.k==='proj'?' unity game':' unity asset'));
 const sensTxt=(it.s||[]).map(x=>SENSE[x]||'').join(' ');
 el.innerHTML=
 '<button class="fav">♡</button>'+
-'<span class="fit'+(it.f>=9?' f9':'')+'">FIT '+it.f+'</span>'+
+'<span class="fit'+(it.f>=9?' f9':it.f===0?' fnew':'')+'">'+
+(it.f===0?'🆕 NEW':'FIT '+it.f)+'</span>'+
 ((it.img||[]).length?'<div class="imgs n'+
 Math.min(it.img.length,2)+'">'+imgs+'</div>':'')+
 '<h3><a href="'+pageUrl(it)+'" target="_blank">'+esc(it.n)+'</a></h3>'+
@@ -317,5 +320,16 @@ favA=new Set(JSON.parse(localStorage.getItem('gpa_favs')||'[]'));
 ratP=JSON.parse(localStorage.getItem('gp_ratings')||'{}');
 ratA=JSON.parse(localStorage.getItem('gpa_ratings')||'{}');
 favn.textContent=favP.size+favA.size;refresh();});
+fetch('tools/new_items.json').then(r=>r.json()).then(arr=>{
+if(!Array.isArray(arr)||!arr.length)return;
+for(const x of arr)DATA.push({id:x.id,k:x.k,f:0,n:x.n,c:x.c,t:x.t||'',
+p:x.p||0,dl:0,ts:x.ts||'',img:x.img||[],src:'',yt:'',
+w:'New in catalog — not yet scored for Joystick fit',m:'',s:[],g:'new'});
+document.getElementById('nAll').textContent=DATA.length;
+document.getElementById('nProj').textContent=
+DATA.filter(i=>i.k==='proj').length;
+document.getElementById('nAsset').textContent=
+DATA.filter(i=>i.k==='asset').length;
+renderGroups();refresh();}).catch(()=>{});
 </script>
 </body></html>
