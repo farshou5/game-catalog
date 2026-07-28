@@ -38,6 +38,41 @@ export default {
 
     if (req.method === 'OPTIONS') return new Response(null, { headers: h });
 
+    if (req.method === 'GET' && url.pathname === '/refresh') {
+      const raw = await env.FAVS_KV.get('refresh');
+      return new Response(raw || '{"status":"idle"}', { headers: h });
+    }
+
+    if (req.method === 'POST' && url.pathname === '/refresh/request') {
+      const raw = await env.FAVS_KV.get('refresh');
+      const cur = raw ? JSON.parse(raw) : {};
+      if (cur.status === 'running') {
+        return new Response(JSON.stringify({ ok: true, status: 'running' }), { headers: h });
+      }
+      const next = { status: 'requested', requestedAt: Date.now(),
+                     lastDoneAt: cur.lastDoneAt || 0, note: cur.note || '' };
+      await env.FAVS_KV.put('refresh', JSON.stringify(next));
+      return new Response(JSON.stringify({ ok: true, status: 'requested' }), { headers: h });
+    }
+
+    if (req.method === 'POST' && url.pathname === '/refresh/status') {
+      let b;
+      try { b = await req.json(); }
+      catch { return new Response('{"ok":false,"err":"bad json"}', { status: 400, headers: h }); }
+      if (!['running', 'done', 'error', 'idle'].includes(b.status) ||
+          (b.note && (typeof b.note !== 'string' || b.note.length > 300))) {
+        return new Response('{"ok":false,"err":"bad shape"}', { status: 400, headers: h });
+      }
+      const raw = await env.FAVS_KV.get('refresh');
+      const cur = raw ? JSON.parse(raw) : {};
+      const next = { status: b.status, updatedAt: Date.now(),
+                     requestedAt: cur.requestedAt || 0,
+                     lastDoneAt: b.status === 'done' ? Date.now() : (cur.lastDoneAt || 0),
+                     note: b.note || '' };
+      await env.FAVS_KV.put('refresh', JSON.stringify(next));
+      return new Response('{"ok":true}', { headers: h });
+    }
+
     if (req.method === 'GET' && url.pathname === '/state') {
       const raw = await env.FAVS_KV.get(KEY);
       return new Response(raw ||

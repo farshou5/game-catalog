@@ -114,6 +114,15 @@ header{padding:8px 12px}
   <button class="rbtn sensbtn" data-x="mic">🎤 mic</button>
   <button class="rbtn sensbtn" data-x="gyro">📱 gyro</button>
  </div>
+ <div class="rrow">My rating:
+  <button class="rbtn rtgbtn active" data-r="">Any</button>
+  <button class="rbtn rtgbtn" data-r="5">★5</button>
+  <button class="rbtn rtgbtn" data-r="4">★4</button>
+  <button class="rbtn rtgbtn" data-r="3">★3</button>
+  <button class="rbtn rtgbtn" data-r="2">★2</button>
+  <button class="rbtn rtgbtn" data-r="1">★1</button>
+  <button class="rbtn rtgbtn" data-r="0">☆ Not reviewed</button>
+ </div>
  <div class="searchrow">
   <input id="q" type="search" placeholder="Search name, category, controls…">
   <span id="count"></span>
@@ -123,6 +132,10 @@ header{padding:8px 12px}
   <button class="sbtn" data-s="az">A–Z</button>
   <button class="sbtn" data-s="new">Newest</button>
   <button class="sbtn" data-s="dl">Downloads</button>
+ </div>
+ <div class="rrow">
+  <button class="rbtn" id="refreshbtn">🔄 Refresh catalog</button>
+  <span id="refstat"></span>
  </div>
  <div class="intro">Hand-picked for motion games: body tracking via camera
   (MediaPipe pose → stick + gesture buttons), plus mic / gyro / touch.
@@ -156,7 +169,7 @@ env:'🏟 Environments',input:'🎥 Input & tracking',tool:'🔧 Tools',
 audio:'🔊 Audio',vfx:'✨ VFX'};
 const SENSE={pose:'🎥',mic:'🎤',gyro:'📱',touch:'👆'};
 const CHUNK=100;
-let kind='*',group=null,sens=null,sort='fit',favOnly=false;
+let kind='*',group=null,sens=null,sort='fit',favOnly=false,rfilter=null;
 let view=[],rendered=0;
 // hearts/stars share storage with the General pages (gp_* / gpa_*)
 let favP=new Set(JSON.parse(localStorage.getItem('gp_favs')||'[]'));
@@ -228,6 +241,7 @@ view=DATA.filter(it=>
 (favOnly?favsOf(it).has(it.id):
 (kind==='*'||it.k===kind)&&(!group||it.g===group)&&
 (!sens||(it.s||[]).includes(sens)))&&
+(rfilter===null||(ratsOf(it)[it.id]||0)===rfilter)&&
 (!v||it.n.toLowerCase().includes(v)||(it.c||'').toLowerCase().includes(v)||
 (it.w||'').toLowerCase().includes(v)||(it.m||'').toLowerCase().includes(v)));
 if(sort==='fit')view=[...view].sort((a,b)=>b.f-a.f||(b.dl||0)-(a.dl||0));
@@ -268,6 +282,10 @@ favtab.classList.toggle('active',favOnly);refresh();});
 for(const b of sensbtns)b.addEventListener('click',()=>{
 sens=b.dataset.x||null;
 sensbtns.forEach(x=>x.classList.toggle('active',x===b));refresh();});
+const rtgbtns=[...document.querySelectorAll('.rtgbtn')];
+for(const b of rtgbtns)b.addEventListener('click',()=>{
+rfilter=b.dataset.r===''?null:+b.dataset.r;
+rtgbtns.forEach(x=>x.classList.toggle('active',x===b));refresh();});
 for(const b of sbtns)b.addEventListener('click',()=>{
 sort=b.dataset.s;
 sbtns.forEach(x=>x.classList.toggle('active',x===b));refresh();});
@@ -320,6 +338,29 @@ favA=new Set(JSON.parse(localStorage.getItem('gpa_favs')||'[]'));
 ratP=JSON.parse(localStorage.getItem('gp_ratings')||'{}');
 ratA=JSON.parse(localStorage.getItem('gpa_ratings')||'{}');
 favn.textContent=favP.size+favA.size;refresh();});
+const refreshBtn=document.getElementById('refreshbtn'),
+refstat=document.getElementById('refstat');
+let refTimer=null;
+function showRef(s){
+if(s.status==='requested')refstat.textContent=
+'⏳ requested — your PC picks it up within ~5 min';
+else if(s.status==='running')refstat.textContent='⚙️ refreshing…';
+else if(s.status==='error')refstat.textContent=
+'❌ last attempt failed'+(s.note?' — '+s.note:'');
+else refstat.textContent='last update: '+
+(s.lastDoneAt?new Date(s.lastDoneAt).toLocaleString():'never')+
+(s.note?' · '+s.note:'');
+const busy=s.status==='requested'||s.status==='running';
+if(busy&&!refTimer)refTimer=setInterval(pollRef,20000);
+if(!busy&&refTimer){clearInterval(refTimer);refTimer=null;}}
+function pollRef(){fetch(SYNC_URL+'/refresh').then(r=>r.json())
+.then(showRef).catch(()=>{});}
+refreshBtn.addEventListener('click',()=>{
+refstat.textContent='⏳ sending request…';
+fetch(SYNC_URL+'/refresh/request',{method:'POST'})
+.then(()=>pollRef())
+.catch(()=>{refstat.textContent='network error — try again';});});
+pollRef();
 fetch('tools/new_items.json').then(r=>r.json()).then(arr=>{
 if(!Array.isArray(arr)||!arr.length)return;
 for(const x of arr)DATA.push({id:x.id,k:x.k,f:0,n:x.n,c:x.c,t:x.t||'',
