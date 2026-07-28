@@ -10200,16 +10200,9 @@ let tier='Bronze',favOnly=false,rfilter=null;
 let favs=new Set(JSON.parse(localStorage.getItem('gp_favs')||'[]'));
 let ratings=JSON.parse(localStorage.getItem('gp_ratings')||'{}');
 function saveFavs(){localStorage.setItem('gp_favs',JSON.stringify([...favs]));
-fetch('/favs',{method:'POST',headers:{'Content-Type':'application/json'},
-body:JSON.stringify([...favs])}).catch(()=>{});}
+pushSync();}
 function saveRatings(){localStorage.setItem('gp_ratings',JSON.stringify(ratings));
-fetch('/ratings',{method:'POST',headers:{'Content-Type':'application/json'},
-body:JSON.stringify(ratings)}).catch(()=>{});}
-fetch('/ratings.json').then(r=>r.json()).then(srv=>{
-if(srv&&typeof srv==='object'&&!Array.isArray(srv)){let ch=false;
-for(const k in srv)if(!(k in ratings)){ratings[k]=srv[k];ch=true;}
-if(ch){localStorage.setItem('gp_ratings',JSON.stringify(ratings));
-paintStars();if(rfilter!==null)apply();}}}).catch(()=>{});
+pushSync();}
 const grid=document.getElementById('grid'),azOrder=[...cards],
 sbtns=[...document.querySelectorAll('.sbtn')];
 function renumber(order){const tc={};
@@ -10252,12 +10245,6 @@ go.addEventListener('click',()=>goTo(jump.value));
 for(const b of rbtns)b.addEventListener('click',()=>{
 rfilter=b.dataset.r===''?null:+b.dataset.r;
 rbtns.forEach(x=>x.classList.toggle('active',x===b));apply();});
-fetch('/favs.json').then(r=>r.json()).then(srv=>{
-if(Array.isArray(srv)){const before=favs.size;srv.forEach(id=>favs.add(id));
-if(favs.size!==before||srv.length!==favs.size){
-localStorage.setItem('gp_favs',JSON.stringify([...favs]));paintFavs();
-if(favOnly)apply();}
-if(srv.length!==favs.size)saveFavs();}}).catch(()=>{});
 function paintFavs(){for(const c of cards){const on=favs.has(c.dataset.id);
 c.classList.toggle('faved',on);const b=c.querySelector('.fav');
 b.textContent=on?'♥':'♡';b.classList.toggle('on',on);}
@@ -10290,6 +10277,36 @@ const txt='Joystick picks: '+(ids||'(none yet — tap the ♡ on cards first)');
 window.open('https://t.me/share/url?url='+
 encodeURIComponent('https://farshou5.github.io/game-catalog/joystick.html')+
 '&text='+encodeURIComponent(txt),'_blank');});
+const SYNC_URL='https://joystick-favs.farshoukh.workers.dev';let syncT=null;
+function pushSync(){if(!SYNC_URL.startsWith('http'))return;
+clearTimeout(syncT);syncT=setTimeout(()=>{
+fetch(SYNC_URL+'/sync',{method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+gp_favs:JSON.parse(localStorage.getItem('gp_favs')||'[]'),
+gpa_favs:JSON.parse(localStorage.getItem('gpa_favs')||'[]'),
+gp_ratings:JSON.parse(localStorage.getItem('gp_ratings')||'{}'),
+gpa_ratings:JSON.parse(localStorage.getItem('gpa_ratings')||'{}')
+})}).catch(()=>{});},800);}
+function pullSync(done){if(!SYNC_URL.startsWith('http'))return;
+fetch(SYNC_URL+'/state').then(r=>r.json()).then(srv=>{
+let changed=false,pushBack=false;
+for(const k of['gp_favs','gpa_favs']){
+const s=new Set(JSON.parse(localStorage.getItem(k)||'[]'));
+const before=s.size;(srv[k]||[]).forEach(i=>s.add(i));
+if(s.size!==before){localStorage.setItem(k,JSON.stringify([...s]));
+changed=true;}
+if(s.size!==(srv[k]||[]).length)pushBack=true;}
+for(const k of['gp_ratings','gpa_ratings']){
+const loc=JSON.parse(localStorage.getItem(k)||'{}');let ch=false;
+for(const id in(srv[k]||{}))if(!(id in loc)){loc[id]=srv[k][id];ch=true;}
+if(ch){localStorage.setItem(k,JSON.stringify(loc));changed=true;}
+if(Object.keys(loc).length!==Object.keys(srv[k]||{}).length)pushBack=true;}
+if(changed&&done)done();
+if(pushBack)pushSync();}).catch(()=>{});}
 renumber(azOrder);paintFavs();paintStars();apply();
+pullSync(()=>{favs=new Set(JSON.parse(localStorage.getItem('gp_favs')||'[]'));
+ratings=JSON.parse(localStorage.getItem('gp_ratings')||'{}');
+paintFavs();paintStars();apply();});
 </script>
 </body></html>

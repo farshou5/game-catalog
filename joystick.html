@@ -166,7 +166,7 @@ const ratsOf=it=>it.k==='proj'?ratP:ratA;
 function saveFR(){localStorage.setItem('gp_favs',JSON.stringify([...favP]));
 localStorage.setItem('gpa_favs',JSON.stringify([...favA]));
 localStorage.setItem('gp_ratings',JSON.stringify(ratP));
-localStorage.setItem('gpa_ratings',JSON.stringify(ratA));}
+localStorage.setItem('gpa_ratings',JSON.stringify(ratA));pushSync();}
 function esc(s){const d=document.createElement('div');
 d.textContent=s||'';return d.innerHTML;}
 function pageUrl(it){return it.k==='proj'?
@@ -282,7 +282,40 @@ document.getElementById('nProj').textContent=
 DATA.filter(i=>i.k==='proj').length;
 document.getElementById('nAsset').textContent=
 DATA.filter(i=>i.k==='asset').length;
+const SYNC_URL='https://joystick-favs.farshoukh.workers.dev';let syncT=null;
+function pushSync(){if(!SYNC_URL.startsWith('http'))return;
+clearTimeout(syncT);syncT=setTimeout(()=>{
+fetch(SYNC_URL+'/sync',{method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+gp_favs:JSON.parse(localStorage.getItem('gp_favs')||'[]'),
+gpa_favs:JSON.parse(localStorage.getItem('gpa_favs')||'[]'),
+gp_ratings:JSON.parse(localStorage.getItem('gp_ratings')||'{}'),
+gpa_ratings:JSON.parse(localStorage.getItem('gpa_ratings')||'{}')
+})}).catch(()=>{});},800);}
+function pullSync(done){if(!SYNC_URL.startsWith('http'))return;
+fetch(SYNC_URL+'/state').then(r=>r.json()).then(srv=>{
+let changed=false,pushBack=false;
+for(const k of['gp_favs','gpa_favs']){
+const s=new Set(JSON.parse(localStorage.getItem(k)||'[]'));
+const before=s.size;(srv[k]||[]).forEach(i=>s.add(i));
+if(s.size!==before){localStorage.setItem(k,JSON.stringify([...s]));
+changed=true;}
+if(s.size!==(srv[k]||[]).length)pushBack=true;}
+for(const k of['gp_ratings','gpa_ratings']){
+const loc=JSON.parse(localStorage.getItem(k)||'{}');let ch=false;
+for(const id in(srv[k]||{}))if(!(id in loc)){loc[id]=srv[k][id];ch=true;}
+if(ch){localStorage.setItem(k,JSON.stringify(loc));changed=true;}
+if(Object.keys(loc).length!==Object.keys(srv[k]||{}).length)pushBack=true;}
+if(changed&&done)done();
+if(pushBack)pushSync();}).catch(()=>{});}
 favn.textContent=favP.size+favA.size;
 renderGroups();refresh();
+pullSync(()=>{
+favP=new Set(JSON.parse(localStorage.getItem('gp_favs')||'[]'));
+favA=new Set(JSON.parse(localStorage.getItem('gpa_favs')||'[]'));
+ratP=JSON.parse(localStorage.getItem('gp_ratings')||'{}');
+ratA=JSON.parse(localStorage.getItem('gpa_ratings')||'{}');
+favn.textContent=favP.size+favA.size;refresh();});
 </script>
 </body></html>

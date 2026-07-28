@@ -172,9 +172,9 @@ let view=[],rendered=0;
 let favs=new Set(JSON.parse(localStorage.getItem('gpa_favs')||'[]'));
 let ratings=JSON.parse(localStorage.getItem('gpa_ratings')||'{}');
 function saveFavs(){localStorage.setItem('gpa_favs',
-JSON.stringify([...favs]));}
+JSON.stringify([...favs]));pushSync();}
 function saveRatings(){localStorage.setItem('gpa_ratings',
-JSON.stringify(ratings));}
+JSON.stringify(ratings));pushSync();}
 function inSec(it,s){
 if(s==='other')return!MAIN.some(m=>it.c.some(
 c=>c===m||c.startsWith(m+'-')));
@@ -321,7 +321,37 @@ const txt='Joystick picks: '+(ids||'(none yet — tap the ♡ on cards first)');
 window.open('https://t.me/share/url?url='+
 encodeURIComponent('https://farshou5.github.io/game-catalog/joystick.html')+
 '&text='+encodeURIComponent(txt),'_blank');});
+const SYNC_URL='https://joystick-favs.farshoukh.workers.dev';let syncT=null;
+function pushSync(){if(!SYNC_URL.startsWith('http'))return;
+clearTimeout(syncT);syncT=setTimeout(()=>{
+fetch(SYNC_URL+'/sync',{method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+gp_favs:JSON.parse(localStorage.getItem('gp_favs')||'[]'),
+gpa_favs:JSON.parse(localStorage.getItem('gpa_favs')||'[]'),
+gp_ratings:JSON.parse(localStorage.getItem('gp_ratings')||'{}'),
+gpa_ratings:JSON.parse(localStorage.getItem('gpa_ratings')||'{}')
+})}).catch(()=>{});},800);}
+function pullSync(done){if(!SYNC_URL.startsWith('http'))return;
+fetch(SYNC_URL+'/state').then(r=>r.json()).then(srv=>{
+let changed=false,pushBack=false;
+for(const k of['gp_favs','gpa_favs']){
+const s=new Set(JSON.parse(localStorage.getItem(k)||'[]'));
+const before=s.size;(srv[k]||[]).forEach(i=>s.add(i));
+if(s.size!==before){localStorage.setItem(k,JSON.stringify([...s]));
+changed=true;}
+if(s.size!==(srv[k]||[]).length)pushBack=true;}
+for(const k of['gp_ratings','gpa_ratings']){
+const loc=JSON.parse(localStorage.getItem(k)||'{}');let ch=false;
+for(const id in(srv[k]||{}))if(!(id in loc)){loc[id]=srv[k][id];ch=true;}
+if(ch){localStorage.setItem(k,JSON.stringify(loc));changed=true;}
+if(Object.keys(loc).length!==Object.keys(srv[k]||{}).length)pushBack=true;}
+if(changed&&done)done();
+if(pushBack)pushSync();}).catch(()=>{});}
 favn.textContent=favs.size;
 renderChips();refresh();
+pullSync(()=>{favs=new Set(JSON.parse(localStorage.getItem('gpa_favs')||'[]'));
+ratings=JSON.parse(localStorage.getItem('gpa_ratings')||'{}');
+favn.textContent=favs.size;refresh();});
 </script>
 </body></html>

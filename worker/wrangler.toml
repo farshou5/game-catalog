@@ -1,0 +1,8 @@
+name = "joystick-favs"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+
+# After "npx wrangler kv namespace create FAVS_KV" put the real id here.
+kv_namespaces = [
+  { binding = "FAVS_KV", id = "3a1b3a8766594b4fb0642e29a23e79da" }
+]
