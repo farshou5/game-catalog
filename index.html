@@ -97,6 +97,7 @@ header{padding:8px 12px}
  <div class="rrow">Show:
   <button class="tab favtab" id="favtab" style="--tc:#ff5b6e">♥ My favorites
    <span id="favn">0</span></button>
+  <button class="tab" id="sendpicks" style="--tc:#7ab8ff">📤 Send picks</button>
  </div>
  <div class="searchrow">
   <input id="q" type="search" placeholder="Search name, category or #number…">
@@ -10281,6 +10282,14 @@ for(const c of cards)c.querySelector('.fav').addEventListener('click',()=>{
 const id=c.dataset.id;favs.has(id)?favs.delete(id):favs.add(id);
 saveFavs();paintFavs();if(favOnly)apply();});
 q.addEventListener('input',apply);
+document.getElementById('sendpicks').addEventListener('click',()=>{
+const fp=JSON.parse(localStorage.getItem('gp_favs')||'[]'),
+fa=JSON.parse(localStorage.getItem('gpa_favs')||'[]');
+const ids=fp.map(i=>'P'+i).concat(fa.map(i=>'A'+i)).join(' ');
+const txt='Joystick picks: '+(ids||'(none yet — tap the ♡ on cards first)');
+window.open('https://t.me/share/url?url='+
+encodeURIComponent('https://farshou5.github.io/game-catalog/joystick.html')+
+'&text='+encodeURIComponent(txt),'_blank');});
 renumber(azOrder);paintFavs();paintStars();apply();
 </script>
 </body></html>

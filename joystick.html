@@ -104,6 +104,7 @@ header{padding:8px 12px}
   <button class="tab" data-k="proj" style="--tc:#b79af2">Complete Projects <span id="nProj"></span></button>
   <button class="tab" data-k="asset" style="--tc:#6fd9c8">Assets <span id="nAsset"></span></button>
   <button class="tab favtab" id="favtab" style="--tc:#ff5b6e">♥ <span id="favn">0</span></button>
+  <button class="tab" id="sendpicks" style="--tc:#7ab8ff">📤 Send picks</button>
  </div>
  <div class="rrow" id="groups"></div>
  <div class="rrow">Sensor:
@@ -268,6 +269,14 @@ for(const b of sbtns)b.addEventListener('click',()=>{
 sort=b.dataset.s;
 sbtns.forEach(x=>x.classList.toggle('active',x===b));refresh();});
 q.addEventListener('input',refresh);
+document.getElementById('sendpicks').addEventListener('click',()=>{
+const fp=JSON.parse(localStorage.getItem('gp_favs')||'[]'),
+fa=JSON.parse(localStorage.getItem('gpa_favs')||'[]');
+const ids=fp.map(i=>'P'+i).concat(fa.map(i=>'A'+i)).join(' ');
+const txt='Joystick picks: '+(ids||'(none yet — tap the ♡ on cards first)');
+window.open('https://t.me/share/url?url='+
+encodeURIComponent('https://farshou5.github.io/game-catalog/joystick.html')+
+'&text='+encodeURIComponent(txt),'_blank');});
 document.getElementById('nAll').textContent=DATA.length;
 document.getElementById('nProj').textContent=
 DATA.filter(i=>i.k==='proj').length;

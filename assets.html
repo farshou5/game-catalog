@@ -115,6 +115,7 @@ header{padding:8px 12px}
  <div class="rrow">Show:
   <button class="tab favtab" id="favtab" style="--tc:#ff5b6e">♥ My favorites
    <span id="favn">0</span></button>
+  <button class="tab" id="sendpicks" style="--tc:#7ab8ff">📤 Send picks</button>
  </div>
  <div class="chips" id="chips"></div>
  <div class="chips" id="subchips"></div>
@@ -312,6 +313,14 @@ setTimeout(()=>el.classList.remove('flash'),2500);}
 jump.addEventListener('keydown',e=>{if(e.key==='Enter')goTo(jump.value);});
 go.addEventListener('click',()=>goTo(jump.value));
 q.addEventListener('input',refresh);
+document.getElementById('sendpicks').addEventListener('click',()=>{
+const fp=JSON.parse(localStorage.getItem('gp_favs')||'[]'),
+fa=JSON.parse(localStorage.getItem('gpa_favs')||'[]');
+const ids=fp.map(i=>'P'+i).concat(fa.map(i=>'A'+i)).join(' ');
+const txt='Joystick picks: '+(ids||'(none yet — tap the ♡ on cards first)');
+window.open('https://t.me/share/url?url='+
+encodeURIComponent('https://farshou5.github.io/game-catalog/joystick.html')+
+'&text='+encodeURIComponent(txt),'_blank');});
 favn.textContent=favs.size;
 renderChips();refresh();
 </script>
