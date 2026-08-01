@@ -43,6 +43,9 @@ main{padding:18px;max-width:1400px;margin:0 auto}
  background:rgba(255,91,110,.09);border:1px solid rgba(255,91,110,.32);
  color:#e0aab0}
 .chal b{color:#ff8b96}
+.chal.c2{background:rgba(122,184,255,.09);border-color:rgba(122,184,255,.32);
+ color:#a8c6e8}
+.chal.c2 b{color:#7ab8ff}
 .verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
  border-radius:11px;padding:15px 17px;margin:0 0 26px}
 .verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
@@ -75,8 +78,10 @@ can be bought properly.</p>
 <main>
 <div class="verdict">
 <h2>Second opinion — and where it disagrees with me</h2>
-<p>Kimi K3 (max effort) reviewed this list against the same constraints. Cards it
-challenged carry a red note. Its three most useful objections:</p>
+<p>Two independent reviewers were given this list and the same constraints:
+Kimi K3 at max effort (red notes on the cards) and Codex gpt-5.6-sol at xhigh
+(blue notes). They agree far more than they disagree. The three most useful
+objections, which both of them raised in some form:</p>
 <ol>
 <li><b>The whole performance category may be answering the wrong problem.</b> Our
 frame budget is eaten by MediaPipe GPU inference, not by draw calls — and Synty
@@ -97,12 +102,14 @@ dwell buttons at roughly 600–900ms, audio ticks on hover / dwell / confirm, a
 visible countdown that auto-advances game-over into retry, and one universal
 "hand raise = back" escape gesture. Small to build, but it <i>is</i> the app —
 every menu and retry flow lives or dies here.</li>
-<li><b>Signal conditioning + a written gesture spec.</b> One Euro filter on
-StickX/StickY, dead zones, button hysteresis (press at 0.7, release at 0.4),
-cooldowns. Write it once as a platform-neutral spec with golden-video regression
-clips — recorded landmark streams mapped to expected pad output, replayed on all
-three platforms. That is where Kotlin/Flutter/Unity parity actually lives, and no
-asset provides it.</li>
+<li><b>Signal conditioning + a written gesture spec.</b> Body-relative
+normalisation, adaptive calibration, confidence gating, a One Euro (speed-
+sensitive) filter on StickX/StickY, dead zones, button hysteresis (press at 0.7,
+release at 0.4), debounce and cooldowns. Never derive ButtonA/ButtonB from a
+single noisy threshold. Write it once as a platform-neutral spec with golden
+regression clips — recorded landmark streams mapped to expected pad output,
+replayed on all three platforms. That is where Kotlin/Flutter/Unity parity
+actually lives, and no asset provides it.</li>
 </ol>
 <p>Runner-up missed category: crash / FPS / tracking-loss telemetry. IL2CPP arm64
 plus MediaPipe will fail in the wild in ways desk testing never reproduces.</p>
@@ -112,9 +119,23 @@ feedback — every dwell tick, confirm, crash and countdown needs a sound), and
 <b>Ragdoll Animator 2</b> for fail-state juice. Its swap rule: if one of the four
 flagships is a flying game, trade the third for the flight system. And spend
 nothing on the performance category until a profiler — not a hunch — says so.</p>
-<p class="src">Codex (gpt-5.6-sol, xhigh) was asked the same four questions and
-produced no usable answer on two attempts — it spent the run on web searches and
-returned nothing. Only the Kimi review is reflected here.</p>
+<p>Codex picks the same first two — <b>Infinite Runner Engine</b> and <b>2000 Game
+Sound FX</b> — but takes <b>3D Hypercasual Meters</b> as its third, on the grounds
+that big readable shapes become dwell timers, calibration gauges and retry
+countdowns, which is the shell we still have to build. It explicitly rejects
+Ragdoll Animator 2 for that slot. Where two reviewers converge on the same two
+purchases from different reasoning, that is about as strong a signal as this
+exercise can produce.</p>
+<p>Codex added two things Kimi did not. First, a <b>tracking-loss protocol</b>:
+when the player leaves frame, decay the axes to neutral, release both buttons,
+pause, show reacquisition guidance, then resume through a countdown — never just
+freeze. Second, a <b>vetting rule for any template purchase</b>: require full
+source, no native plugins or closed DLLs, no mandatory URP/HDRP, and input that
+can be cleanly replaced. Harvest subsystems into our architecture; never inherit
+a template's touch UI or application shell.</p>
+<p>It also flags a parity angle worth keeping in mind: Unity-only architectural
+assets (audio managers, UI frameworks) are parity debt, because whatever they do
+has to be rebuilt by hand in Kotlin and Flutter.</p>
 </div>
 <section id="c0" class="cat" style="--tc:#ff3d7f">
   <h2>Pose → avatar core</h2>
@@ -128,6 +149,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">animation &gt; Tools &middot; 150 pts</div>
   <p class="why">Final IK — the industry standard for retargeting. This is how you drive a rigged avatar from 33 pose landmarks without the limbs tearing apart. Nothing else on this list changes the feel of the app more.</p>
   <p class="map"><b>Control mapping:</b> Drive avatar limbs from MediaPipe landmarks</p>
+  
   
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/animation/final-ik-14290" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
@@ -144,6 +166,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">PuppetMaster — active ragdoll. Landmark jitter looks like a glitch on a kinematic rig, but reads as natural wobble on a physical puppet. It converts our worst technical weakness into a stylistic strength.</p>
   <p class="map"><b>Control mapping:</b> Pose drives ragdoll character physically</p>
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/physics/puppetmaster-48977" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/270" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -158,6 +181,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">integration &gt; Tools &middot; 77 pts</div>
   <p class="why">OpenCV for Unity. Not to replace MediaPipe, but for the pre/post-processing around it: smoothing filters, ROI cropping, frame conversion. Also our fallback if a device chokes on the GPU delegate.</p>
   <p class="map"><b>Control mapping:</b> build pose/blob/optical-flow input pipelines</p>
+  
   
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/integration/opencv-for-unity-21088" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
@@ -174,6 +198,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Character Controller Pro — a controller robust enough to be fed noisy, occasionally-absent input without exploding. Standard controllers assume clean input; ours is never clean.</p>
   <p class="map"><b>Control mapping:</b> Stick lean steers, buttons trigger jump/actions</p>
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/physics/character-controller-pro-159150" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1080" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -188,6 +213,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">physics &gt; Tools &middot; 35 pts</div>
   <p class="why">Active Ragdoll character controller — the cheaper alternative to PuppetMaster. Buy one of the two, not both.</p>
   <p class="map"><b>Control mapping:</b> Body lean drives ragdoll character</p>
+  
   
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/physics/active-ragdoll-physics-based-character-controller-simple-fullbod-235075" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
@@ -210,6 +236,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Rhythm Timeline 2 — a rhythm framework WITH an editor. This is the fastest credible route to the Daily Moves feature across all three apps.</p>
   <p class="map"><b>Control mapping:</b> gesture hits mapped to note lanes</p>
   <p class="chal"><b>Kimi disagrees:</b> Contested: tracking latency is roughly 50-150ms, so tight rhythm windows may be unfair. Only viable with generous timing and a calibration step.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/rhythm-timeline-2-rhythm-game-framework-editor-310749" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/4003" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -225,6 +252,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Beat Detection — real-time beat extraction, so moves can sync to any track the player has rather than only pre-authored charts.</p>
   <p class="map"><b>Control mapping:</b> Sync body-move prompts to music beats</p>
   <p class="chal"><b>Kimi disagrees:</b> Same latency caveat as the rhythm framework.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/beat-detection-19020" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/4937" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -240,6 +268,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Koreographer Pro — beat-synced event system. More mature than the above; use it if we want music-driven gameplay events everywhere, not just in one mode.</p>
   <p class="map"><b>Control mapping:</b> drive rhythm/dance game timing windows</p>
   <p class="chal"><b>Kimi disagrees:</b> Same latency caveat; also the most expensive of the three rhythm options.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/koreographer-professional-edition-44270" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/240" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -254,6 +283,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">3D &gt; animations &middot; 35 pts</div>
   <p class="why">Hip-hop animation set — the reference moves the player copies.</p>
   <p class="map"><b>Control mapping:</b> Pose-match dance moves to beat</p>
+  
   
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/aa-hip-hop-282010" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
@@ -270,6 +300,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Dance MoCap Collection — a larger move library to score the player against.</p>
   <p class="map"><b>Control mapping:</b> Avatar mirrors player dance moves</p>
   <p class="chal"><b>Kimi disagrees:</b> Thematically lovely for a win-screen dance, but Humanoid retargeting onto hypercasual rigs costs days. Later, not now.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/dance-mocap-collection-102966" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/644" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -291,6 +322,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">The tween library everything else assumes. Our hands-free menus need dwell-to-select rings, scale pops and eased slide-ins driven from code — DOTween does all of it in one line and is mobile-cheap.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Feel already ships DOTween-based feedbacks, and plain DOTween is free — Pro only adds visual editors we would not use.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/visual-scripting/dotween-pro-32416" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/170" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -306,6 +338,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Preset camera shake we can trigger from the 4 virtual-pad events. Cheaper to wire per-game than hand-rolling shake in every flagship.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Feel already has MMCameraShake. Straight redundancy.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/particles-effects/camera-shake-fx-146554" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/968" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -319,6 +352,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <h3>Super Confetti FX</h3>
   <div class="meta">particles &gt; VFX &middot; 35 pts</div>
   <p class="why">Score/win celebration burst. At 2m the player needs a big unmistakable &quot;you scored&quot; signal — confetti reads from across the room where a number flash does not.</p>
+  
   
   
   <div class="links">
@@ -336,6 +370,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Stylised break/shatter VFX matching our POLYGON look. Gives obstacles in Poopy Bird / dodge games a satisfying death instead of just despawning.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Pipeline risk: most modern VFX packs are URP/Shader-Graph and render pink on the built-in pipeline we use. Verify before buying.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/vfx/particles/break-items-toon-vfx-255067" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/3745" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -351,6 +386,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">General-purpose particle pack to pull one-off hits, pickups and trails from, rather than buying a pack per game.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Same built-in-pipeline shader risk as above. Verify it is legacy-particle based, not Shader Graph.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/vfx/particles/amazing-vfx-pack-particle-system-246753" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2116" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -372,6 +408,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Mesh combining + object pooling in one. Pooling matters most for endless games that spawn obstacles forever — GC spikes are what makes tracking stutter.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Our bottleneck is MediaPipe GPU inference, not draw calls — and Synty content is already cheap. Pooling is trivial to hand-roll. Profile before buying.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/utilities/4-optimization-tools-in-1-mesh-combiner-baker-mesh-optimizer-obj-236754" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1993" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -387,6 +424,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Occlusion/distance culling. Our Synty environments are draw-call heavy; culling is the cheapest way to buy frame time back for the tracking thread.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Occlusion culling does not pay for small arcade scenes; frustum culling is already built in.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/utilities/advanced-culling-system-2-complete-optimization-solution-272830" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2455" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -402,6 +440,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Animator LOD. Every animated character off-screen or far away is wasted CPU we need for pose inference.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> We have very few animated characters on screen. Little to reclaim.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/animation/animatorlod-pro-animator-optimizer-275807" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2488" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -417,6 +456,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Impostors for distant scenery — turns background Synty props into billboards. Big win for endless runners with long view distances.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Impostors are for big scenes with distant crowds. Our scenes are vignettes — wrong problem, and often URP-only.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/utilities/impostors-runtime-optimization-188562" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1411" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -432,6 +472,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Baked mobile lighting setup for the built-in pipeline (which this project uses). Avoids the realtime-light cost we currently pay for no visual gain.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Borderline: it is a preset pack we could replicate from the docs in an afternoon.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/utilities/built-in-mobile-lighting-box-181005" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1319" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -453,6 +494,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">The reference implementation for infinite runners. Its level-segment spawner and speed-ramp curve are directly portable to our endless flagships in all three apps.</p>
   <p class="map"><b>Control mapping:</b> Lean steers lanes, jump/squat gestures</p>
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/templates/systems/2d-3d-infinite-runner-engine-51328" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/348" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -468,6 +510,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Smaller, cleaner runner starter — easier to read end-to-end than the full engine above.</p>
   <p class="map"><b>Control mapping:</b> lean=steer lanes, jump/squat gestures=obstacles</p>
   <p class="chal"><b>Kimi disagrees:</b> Redundant with the full Infinite Runner Engine above; buy one runner reference, not three.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/templates/systems/hypercasual-runner-starter-kit-249286" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2691" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -483,6 +526,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Arcade-idle loop. Interesting for a hands-free mode where the player earns progress by holding poses rather than reacting fast.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Idle/tycoon economies are tap-driven meta loops — the opposite of our hands-free constraint, and a parity tax across three platforms.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/templates/systems/hypercasual-arcade-idle-engine-234142" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1962" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -498,6 +542,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Endless tunnel — the exact shape of a one-axis (StickX only) motion game. Good template for a lean-left/lean-right flagship.</p>
   <p class="map"><b>Control mapping:</b> Lean=steer around obstacles</p>
   <p class="chal"><b>Kimi disagrees:</b> Third runner reference. Redundant — pick one and read it properly.</p>
+  <p class="chal c2"><b>Codex disagrees:</b> Effectively legacy — version 1.0 from 2021, authored for Unity 2018.4.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/templates/packs/endless-tunnel-infinite-hyper-casual-game-complete-project-186775" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/5629" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -513,6 +558,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Flying system. We already have a Hang Glider concept; this is the closest off-the-shelf reference for pitch/roll from a single stick.</p>
   <p class="map"><b>Control mapping:</b> map torso lean to pitch/roll input</p>
   
+  <p class="chal c2"><b>Codex disagrees:</b> Redundant if we buy the Infinite Runner Engine, which already ships flight and tunnel examples. Only worth it for a dedicated free-flight flagship.</p>
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/assets/3754" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -534,6 +580,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Low-cost stylised characters that match the hypercasual look and cost almost nothing to render — ideal as game avatars.</p>
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/characters/humanoids/hypercasual-simple-characters-159307" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/5190" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -549,6 +596,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Stickman customisation. A stickman reads perfectly at 2m and is the cheapest possible rig to drive from pose landmarks.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> A customisation meta-feature we would then have to rebuild in Kotlin and Flutter. Skip until v2.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/characters/humanoids/humans/hypercasual-stickman-customization-184162" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1361" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -563,6 +611,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">3D &gt; animations &middot; 45 pts</div>
   <p class="why">Parkour animation set — run, jump and vault cycles, the core vocabulary of every endless-runner flagship.</p>
   <p class="map"><b>Control mapping:</b> Jump/squat gestures trigger parkour moves</p>
+  
   
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/parkour-animation-set-241266" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
@@ -579,6 +628,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Flying animation clips for the glider/bird flagships.</p>
   <p class="map"><b>Control mapping:</b> lean steers flying character</p>
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/flying-animation-pack-155965" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1049" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -593,6 +643,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">3D &gt; animations &middot; 53 pts</div>
   <p class="why">MOBILITY PRO mocap locomotion — clean run/walk/turn cycles to blend against when tracking confidence drops and we have to fall back to canned animation.</p>
   <p class="map"><b>Control mapping:</b> animate runner mirroring player movement</p>
+  
   
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/mobility-pro-mocap-animation-pack-46121" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
@@ -615,6 +666,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">World-space hypercasual meters/gauges. This is the single most on-point asset in the list — big readable progress and charge meters are exactly what a dwell-to-select, no-touch UI needs.</p>
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/props/3d-hypercasual-meters-199409" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1543" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -630,6 +682,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Renders 3D objects into uGUI. Lets the game-select grid show live rotating 3D previews instead of flat emoji tiles.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> A RenderTexture per 3D object in UI is genuinely expensive on mobile GPUs. Use sparingly or not at all.</p>
+  <p class="chal c2"><b>Codex disagrees:</b> Also flagged here: adds another render-to-texture path to solve inventory/portrait problems we do not have.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/2d/gui/3d-object-image-for-ugui-minimap-inventory-portrait-275542" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2483" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -645,6 +698,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Soft mask for uGUI — fixes the hard-edged clipping in our scrolling game list.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Probably unnecessary: a dwell/hold-to-confirm ring is just uGUI Image with fillMethod = Radial360, which is built in and free.</p>
+  <p class="chal c2"><b>Codex disagrees:</b> Also flagged here: decorative masking plus extra UI shader overdraw, for almost no benefit at two metres.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/gui/ams-ui-soft-mask-282501" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2561" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -660,6 +714,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Icon trails: gives the moving cursor/hand indicator a visible tail, which makes an untouched, camera-driven pointer far easier to follow.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Low value, and UI trails add overdraw.</p>
+  <p class="chal c2"><b>Codex disagrees:</b> Also flagged here: pointer decoration and overdraw, and Feel can already reproduce it.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/package/900001187" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/4303" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -673,6 +728,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <h3>1000+ Character Avatar Icons Pack</h3>
   <div class="meta">2D &gt; gui &middot; 10 pts</div>
   <p class="why">Large avatar icon set for the game grid and player slots.</p>
+  
   
   
   <div class="links">
@@ -696,6 +752,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">POLYGON Adventure — broad prop/environment coverage, same Synty pipeline we already have set up.</p>
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/environments/fantasy/polygon-adventure-pack-art-by-synty-80585" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/489" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -709,6 +766,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <h3>POLYGON - Alpine Mountain - Nature Biomes - 3D Environment Art by Synty</h3>
   <div class="meta">3D &gt; environments &middot; 65 pts</div>
   <p class="why">Alpine Mountain biome — snow/mountain endless-runner backdrop we currently lack.</p>
+  
   
   
   <div class="links">
@@ -726,6 +784,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">POLYGON City Characters — matching character set for the city environment we already imported.</p>
   
   
+  <p class="chal c2"><b>Codex disagrees:</b> Probably unnecessary — the POLYGON City and Town packs we already own contain character sets. Only needed if a flagship genuinely wants crowds.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/characters/humanoids/humans/polygon-city-characters-pack-art-by-synty-106757" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/4710" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -741,6 +800,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">AllSky, 220+ skyboxes. Cheapest possible way to make each of the 4 flagships feel like a different world.</p>
   <p class="map"><b>Control mapping:</b> Backdrop only; no control mapping.</p>
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-220-sky-skybox-set-10109" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/51" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -754,6 +814,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <h3>Nature – Spawner Pack for POLYGON Nature</h3>
   <div class="meta">Environments</div>
   <p class="why">Spawner for POLYGON Nature — procedural scatter, which is what an endless environment needs.</p>
+  
   
   
   <div class="links">
@@ -777,6 +838,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">2000 general game SFX — one purchase covers pickups, fails, UI blips across all 115 catalog games.</p>
   <p class="map"><b>Control mapping:</b> Feedback sounds for gesture hits</p>
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/audio/sound-fx/2000-game-sound-fx-207739" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/3567" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -792,6 +854,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Interactive ambient soundscapes, Unity 6 ready. Gives each flagship a distinct bed cheaply.</p>
   
   
+  <p class="chal c2"><b>Codex disagrees:</b> Built for elaborate spatial soundscapes — excessive for short arcade sessions, and another Unity-only system.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/ambient-sounds-interactive-soundscapes-for-unity-6-142132" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/928" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -807,6 +870,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Audio manager with pooling. We need one shared audio layer across games rather than per-game AudioSources.</p>
   
   
+  <p class="chal c2"><b>Codex disagrees:</b> Unity-only architecture, therefore parity debt against Kotlin and Flutter. A small AudioMixer facade is enough.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/bt-sound-system-pro-advanced-audio-manager-easy-optimize-312741" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2836" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -822,6 +886,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Impacts/whooshes — the exact hit vocabulary for dodge-and-collide gameplay.</p>
   <p class="map"><b>Control mapping:</b> play on punch/kick gesture hits</p>
   
+  <p class="chal c2"><b>Codex disagrees:</b> Overlaps 2000 Game Sound FX. Buy one of the two initially, not both.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/audio/sound-fx/impacts-hits-whooshes-157519" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1059" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -836,6 +901,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">Audio &gt; electronic &middot; 35 pts</div>
   <p class="why">Electronic/dance music pack for the movement-driven modes.</p>
   <p class="map"><b>Control mapping:</b> Music for rhythm and dance modes</p>
+  
   
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/audio/music/electronic/alt-electronic-dance-music-pack-158280" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
@@ -858,6 +924,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Yoga Fever — the player holds a pose and the game scores it. That is literally pose tracking as a game loop, with zero taps. If one complete project justifies its price here, it is this one.</p>
   <p class="map"><b>Control mapping:</b> match arm/leg poses to reference</p>
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/15" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -872,6 +939,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">Packs &middot; complete project</div>
   <p class="why">Red-light-green-light. A hands-free masterpiece by accident: move when told, freeze when told. Needs only &quot;is the player moving&quot;, the single most reliable signal a pose tracker produces.</p>
   <p class="map"><b>Control mapping:</b> body motion=move, freeze=stop</p>
+  
   
   <div class="links">
     
@@ -888,6 +956,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Body-race / dance-race. Whole-body input by design, and the scoring model is directly reusable for Daily Moves.</p>
   <p class="map"><b>Control mapping:</b> body moves=dance/race, hip gestures=boost</p>
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/607" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -903,6 +972,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Timberman — two-sided chop. Maps perfectly onto lean-left / lean-right, and proves how far a two-state input can carry a game.</p>
   <p class="map"><b>Control mapping:</b> lean left/right=side, chop gesture=chop</p>
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/615" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -917,6 +987,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">Arcades &middot; complete project</div>
   <p class="why">One-button flappy template. This is Poopy Bird's genre; worth buying purely to compare their difficulty curve and spawn pacing against ours.</p>
   <p class="map"><b>Control mapping:</b> jump gesture or blow=flap</p>
+  
   
   <div class="links">
     
@@ -939,6 +1010,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Lane runner built around lean steering — the closest existing match to our control model.</p>
   <p class="map"><b>Control mapping:</b> lean=move left/right</p>
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/314" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -953,6 +1025,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">Packs &middot; complete project</div>
   <p class="why">Parkour race runner. Good reference for a race framing, which gives a hands-free player a natural end condition without a menu.</p>
   <p class="map"><b>Control mapping:</b> lean=steer, jump/squat gestures=parkour moves</p>
+  
   
   <div class="links">
     
@@ -969,6 +1042,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Endless racer with tilt steering already built in. Tilt and lean are the same one-axis problem, so its steering feel transfers directly.</p>
   <p class="map"><b>Control mapping:</b> lean or tilt=steer</p>
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/419" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -984,6 +1058,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <p class="why">Ski/skate slide game — leaning IS the control in the original design.</p>
   <p class="map"><b>Control mapping:</b> lean=turn, jump gesture=jump</p>
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/411" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -998,6 +1073,7 @@ returned nothing. Only the Kimi review is reflected here.</p>
   <div class="meta">Php scripts &middot; complete project</div>
   <p class="why">Stumble/fall-guys style physical runner. Its ragdoll failure states are exactly the visually-obvious game-over a 2m player needs.</p>
   <p class="map"><b>Control mapping:</b> lean=steer, jump gesture=jump, squat=dodge</p>
+  
   
   <div class="links">
     

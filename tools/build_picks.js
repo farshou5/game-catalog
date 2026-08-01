@@ -179,6 +179,20 @@ const CHALLENGE = {
   '240': 'Same latency caveat; also the most expensive of the three rhythm options.',
 };
 
+// Second-opinion challenges from Codex (gpt-5.6-sol, xhigh). Keyed by pick id.
+const CHALLENGE2 = {
+  '5629': 'Effectively legacy — version 1.0 from 2021, authored for Unity 2018.4.',
+  '3754': 'Redundant if we buy the Infinite Runner Engine, which already ships flight and tunnel examples. Only worth it for a dedicated free-flight flagship.',
+  '2593': 'Disagrees with Kimi, which wanted this in the top three: active rigidbodies and joints are unjustified CPU cost unless ragdoll physics IS the core mechanic.',
+  '2836': 'Unity-only architecture, therefore parity debt against Kotlin and Flutter. A small AudioMixer facade is enough.',
+  '928': 'Built for elaborate spatial soundscapes — excessive for short arcade sessions, and another Unity-only system.',
+  '1059': 'Overlaps 2000 Game Sound FX. Buy one of the two initially, not both.',
+  '4710': 'Probably unnecessary — the POLYGON City and Town packs we already own contain character sets. Only needed if a flagship genuinely wants crowds.',
+  '2561': 'Also flagged here: decorative masking plus extra UI shader overdraw, for almost no benefit at two metres.',
+  '4303': 'Also flagged here: pointer decoration and overdraw, and Feel can already reproduce it.',
+  '2483': 'Also flagged here: adds another render-to-texture path to solve inventory/portrait problems we do not have.',
+};
+
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -205,6 +219,7 @@ const sections = CATS.map((cat, ci) => {
   <p class="why">${esc(why)}</p>
   ${it.m ? `<p class="map"><b>Control mapping:</b> ${esc(it.m)}</p>` : ''}
   ${CHALLENGE[rawId] ? `<p class="chal"><b>Kimi disagrees:</b> ${esc(CHALLENGE[rawId])}</p>` : ''}
+  ${CHALLENGE2[rawId] ? `<p class="chal c2"><b>Codex disagrees:</b> ${esc(CHALLENGE2[rawId])}</p>` : ''}
   <div class="links">
     ${store ? `<a class="buy" href="${esc(store)}" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>` : ''}
     <a class="alt" href="${esc(cat_url)}" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -267,6 +282,9 @@ main{padding:18px;max-width:1400px;margin:0 auto}
  background:rgba(255,91,110,.09);border:1px solid rgba(255,91,110,.32);
  color:#e0aab0}
 .chal b{color:#ff8b96}
+.chal.c2{background:rgba(122,184,255,.09);border-color:rgba(122,184,255,.32);
+ color:#a8c6e8}
+.chal.c2 b{color:#7ab8ff}
 .verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
  border-radius:11px;padding:15px 17px;margin:0 0 26px}
 .verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
@@ -300,8 +318,10 @@ can be bought properly.</p>
 <main>
 <div class="verdict">
 <h2>Second opinion — and where it disagrees with me</h2>
-<p>Kimi K3 (max effort) reviewed this list against the same constraints. Cards it
-challenged carry a red note. Its three most useful objections:</p>
+<p>Two independent reviewers were given this list and the same constraints:
+Kimi K3 at max effort (red notes on the cards) and Codex gpt-5.6-sol at xhigh
+(blue notes). They agree far more than they disagree. The three most useful
+objections, which both of them raised in some form:</p>
 <ol>
 <li><b>The whole performance category may be answering the wrong problem.</b> Our
 frame budget is eaten by MediaPipe GPU inference, not by draw calls — and Synty
@@ -322,12 +342,14 @@ dwell buttons at roughly 600–900ms, audio ticks on hover / dwell / confirm, a
 visible countdown that auto-advances game-over into retry, and one universal
 "hand raise = back" escape gesture. Small to build, but it <i>is</i> the app —
 every menu and retry flow lives or dies here.</li>
-<li><b>Signal conditioning + a written gesture spec.</b> One Euro filter on
-StickX/StickY, dead zones, button hysteresis (press at 0.7, release at 0.4),
-cooldowns. Write it once as a platform-neutral spec with golden-video regression
-clips — recorded landmark streams mapped to expected pad output, replayed on all
-three platforms. That is where Kotlin/Flutter/Unity parity actually lives, and no
-asset provides it.</li>
+<li><b>Signal conditioning + a written gesture spec.</b> Body-relative
+normalisation, adaptive calibration, confidence gating, a One Euro (speed-
+sensitive) filter on StickX/StickY, dead zones, button hysteresis (press at 0.7,
+release at 0.4), debounce and cooldowns. Never derive ButtonA/ButtonB from a
+single noisy threshold. Write it once as a platform-neutral spec with golden
+regression clips — recorded landmark streams mapped to expected pad output,
+replayed on all three platforms. That is where Kotlin/Flutter/Unity parity
+actually lives, and no asset provides it.</li>
 </ol>
 <p>Runner-up missed category: crash / FPS / tracking-loss telemetry. IL2CPP arm64
 plus MediaPipe will fail in the wild in ways desk testing never reproduces.</p>
@@ -337,9 +359,23 @@ feedback — every dwell tick, confirm, crash and countdown needs a sound), and
 <b>Ragdoll Animator 2</b> for fail-state juice. Its swap rule: if one of the four
 flagships is a flying game, trade the third for the flight system. And spend
 nothing on the performance category until a profiler — not a hunch — says so.</p>
-<p class="src">Codex (gpt-5.6-sol, xhigh) was asked the same four questions and
-produced no usable answer on two attempts — it spent the run on web searches and
-returned nothing. Only the Kimi review is reflected here.</p>
+<p>Codex picks the same first two — <b>Infinite Runner Engine</b> and <b>2000 Game
+Sound FX</b> — but takes <b>3D Hypercasual Meters</b> as its third, on the grounds
+that big readable shapes become dwell timers, calibration gauges and retry
+countdowns, which is the shell we still have to build. It explicitly rejects
+Ragdoll Animator 2 for that slot. Where two reviewers converge on the same two
+purchases from different reasoning, that is about as strong a signal as this
+exercise can produce.</p>
+<p>Codex added two things Kimi did not. First, a <b>tracking-loss protocol</b>:
+when the player leaves frame, decay the axes to neutral, release both buttons,
+pause, show reacquisition guidance, then resume through a countdown — never just
+freeze. Second, a <b>vetting rule for any template purchase</b>: require full
+source, no native plugins or closed DLLs, no mandatory URP/HDRP, and input that
+can be cleanly replaced. Harvest subsystems into our architecture; never inherit
+a template's touch UI or application shell.</p>
+<p>It also flags a parity angle worth keeping in mind: Unity-only architectural
+assets (audio managers, UI frameworks) are parity debt, because whatever they do
+has to be rebuilt by hand in Kotlin and Flutter.</p>
 </div>
 ${sections.replace(/<section class="cat"/g, (m => {
   let n = -1; return () => { n++; return `<section id="c${n}" class="cat"`; };
