@@ -304,8 +304,12 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 .verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
  border-radius:11px;padding:15px 17px;margin:0 0 26px}
 .verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
+.verdict.final{border-left-color:#7fe07f}
+.verdict.final h2{color:#7fe07f;font-size:19px}
+.verdict.final b{color:#e8e8ea}
 .verdict p{margin:0 0 9px;font-size:14px;color:#c8c9d0;max-width:85ch}
-.verdict ol{margin:0;padding-left:20px;font-size:14px;color:#c8c9d0}
+.verdict ol,.verdict ul{margin:0 0 9px;padding-left:20px;font-size:14px;
+ color:#c8c9d0}
 .verdict li{margin-bottom:5px}
 .verdict .src{color:#8f909b;font-size:12.5px;margin:10px 0 0}
 .links{display:flex;gap:7px;flex-wrap:wrap}
@@ -332,8 +336,67 @@ can be bought properly.</p>
   `<a href="#c${i}" style="border-color:${c.color};color:${c.color}">${esc(c.name)}</a>`).join('')}</div>
 </header>
 <main>
+<div class="verdict final">
+<h2>Final verdict, after a full inventory: buy almost nothing</h2>
+<p>On 1 Aug I inventoried what is actually installed on this PC — the Joystick
+project plus the shared AssetsToCheck library — and put that list to both
+reviewers. They converged, independently, on the same uncomfortable answer:
+<b>this project's asset needs are already met.</b> Codex put it plainly —
+"input, feedback, UI, environments, roads, characters, vehicles, tracking and
+profiling are already sufficiently covered."</p>
+<p><b>The only genuine gap both of them named is audio.</b> Nothing owned covers
+music or sound effects, and at two metres — with no touch and no useful haptics
+from a propped-up phone — audio is the most dependable feedback channel there
+is. Codex adds one non-asset purchase worth more than any package here:
+<b>representative low/mid-tier arm64 test phones</b>, because GPU contention and
+thermal throttling under MediaPipe cannot be reproduced in the editor.</p>
+<p><b>Owned but under-used, per both reviewers</b> — this is where the value
+actually is: <b>Feel/MMFeedbacks</b> for dwell progress, tracking-lost warnings,
+countdowns and game-over transitions (plus MMTools object pooling, which
+directly fights the GC spikes that stutter tracking); <b>Spline Architect</b>
+for runner paths, camera rails and reusable endless segments; <b>Ultimate
+Joystick</b> as a StickX/StickY debug visualiser rather than a touch control;
+<b>TextMesh Pro</b> for distance-readable prompts; <b>Synty</b> as one shared
+visual language across the flagships. The road/terrain/city tools are usable
+strictly as editor-time bake tools — never at runtime on arm64. And of the four
+vehicle physics packages owned, pick <i>one</i> if a driving flagship happens.</p>
+<p><b>They split three ways, and the splits are informative.</b></p>
+<ul>
+<li><b>OpenCV for Unity.</b> Codex would use it offline to analyse recorded
+sessions for latency, jitter and dropout; Kimi would keep it out of Joystick
+entirely as a Unity-only duplicate of MediaPipe. They agree on what matters:
+<b>never a runtime dependency.</b></li>
+<li><b>Haptics.</b> Kimi wanted NiceVibrations to be the primary selection
+"click" on every hover and commit. That is wrong here, and Codex caught why: the
+phone is propped up two metres away, so the player cannot feel it. Audio is the
+confirm channel; haptics are dead weight for this product.</li>
+<li><b>Hyper-casual template bundles.</b> Kimi would buy them to fill out the
+long tail of the catalog; Codex refuses them outright — inconsistent input
+assumptions and performance profiles cost more integration work than they save.
+Given that every game must be re-pointed at four targets anyway, Codex has the
+better of this one.</li>
+</ul>
+<p><b>The three highest-leverage moves cost nothing</b>, and both reviewers rank
+them above every purchase on this page:</p>
+<ol>
+<li><b>The hands-free shell.</b> One state machine for dwell selection, confirm
+and cancel gestures, inactivity timeouts, tracking-loss recovery, game-over and
+auto-retry. No purchased touch UI can satisfy the two-metre law.</li>
+<li><b>The virtual-pad adapter + replay harness.</b> Calibration, body-relative
+normalisation, One Euro smoothing, dead zones, hysteresis, confidence loss, and
+recorded-input playback as golden tests. Every game and all three platforms
+benefit from it once.</li>
+<li><b>A per-game certification gate.</b> Enforce four-target-only input, zero
+touch dependency, allocation limits and pooling, with replay-driven smoke tests
+on real phones — so 115 games don't become 115 separate performance problems.</li>
+</ol>
+<p class="src">Everything below this box was written before that inventory. It is
+kept because the reasoning per card is still sound, but read it as "what we would
+have bought", not a shopping list. Cards marked OWNED are already on this PC.</p>
+</div>
+
 <div class="verdict">
-<h2>Second opinion — and where it disagrees with me</h2>
+<h2>Earlier round — where the reviewers disagreed with me</h2>
 <p>Two independent reviewers were given this list and the same constraints:
 Kimi K3 at max effort (red notes on the cards) and Codex gpt-5.6-sol at xhigh
 (blue notes). They agree far more than they disagree. The three most useful
