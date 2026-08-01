@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Joystick — top 35 asset picks</title>
+<title>Joystick — top asset &amp; project picks</title>
 <style>
 :root{color-scheme:dark}
 *{box-sizing:border-box}
@@ -36,7 +36,20 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 .card h3{margin:0 0 3px;font-size:15.5px;padding-right:26px}
 .meta{color:#8f909b;font-size:12.5px;margin-bottom:8px;
  text-transform:uppercase;letter-spacing:.03em}
-.why{margin:0 0 12px;font-size:14px;color:#c8c9d0;flex:1}
+.why{margin:0 0 10px;font-size:14px;color:#c8c9d0;flex:1}
+.map{margin:0 0 10px;font-size:13px;color:#9a9aa5}
+.map b{color:#c8c9d0}
+.chal{margin:0 0 10px;padding:8px 10px;border-radius:8px;font-size:13px;
+ background:rgba(255,91,110,.09);border:1px solid rgba(255,91,110,.32);
+ color:#e0aab0}
+.chal b{color:#ff8b96}
+.verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
+ border-radius:11px;padding:15px 17px;margin:0 0 26px}
+.verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
+.verdict p{margin:0 0 9px;font-size:14px;color:#c8c9d0;max-width:85ch}
+.verdict ol{margin:0;padding-left:20px;font-size:14px;color:#c8c9d0}
+.verdict li{margin-bottom:5px}
+.verdict .src{color:#8f909b;font-size:12.5px;margin:10px 0 0}
 .links{display:flex;gap:7px;flex-wrap:wrap}
 .links a{font-size:12.5px;font-weight:600;text-decoration:none;
  padding:5px 11px;border-radius:14px;border:1.5px solid #33343d;
@@ -50,26 +63,219 @@ footer{padding:22px 18px 40px;color:#6d6e78;font-size:13px;
  href="joystick.html">Joystick</a><span>&middot;</span><a
  href="assets.html">All assets</a><span>&middot;</span><span
  class="here">Top picks</span></div>
-<h1>Top 35 asset picks for Joystick</h1>
-<p>Seven categories, five each — chosen against this project's real constraints:
+<h1>Top picks for Joystick</h1>
+<p>Eleven categories, five each — assets and ready-made projects, chosen
+against this project's real constraints:
 Android arm64 with MediaPipe tracking already eating the frame budget, four
 flagship games, and a player standing two metres from a propped phone who
 cannot touch the screen. Every card links to the Unity Asset Store page so it
 can be bought properly.</p>
-<div class="toc"><a href="#c0" style="border-color:#f2c14e;color:#f2c14e">Game feel &amp; juice</a><a href="#c1" style="border-color:#7fe07f;color:#7fe07f">Mobile performance (arm64)</a><a href="#c2" style="border-color:#7ab8ff;color:#7ab8ff">Endless / arcade templates (study, do not ship)</a><a href="#c3" style="border-color:#c58cff;color:#c58cff">Characters &amp; animation</a><a href="#c4" style="border-color:#4ec9a8;color:#4ec9a8">HUD &amp; UI for a 2m-away player</a><a href="#c5" style="border-color:#ff9f5b;color:#ff9f5b">Environments (extends the Synty packs we own)</a><a href="#c6" style="border-color:#ff5b6e;color:#ff5b6e">Audio</a></div>
+<div class="toc"><a href="#c0" style="border-color:#ff3d7f;color:#ff3d7f">Pose → avatar core</a><a href="#c1" style="border-color:#00c8c8;color:#00c8c8">Rhythm &amp; beat (Daily Moves)</a><a href="#c2" style="border-color:#f2c14e;color:#f2c14e">Game feel &amp; juice</a><a href="#c3" style="border-color:#7fe07f;color:#7fe07f">Mobile performance (arm64)</a><a href="#c4" style="border-color:#7ab8ff;color:#7ab8ff">Endless / arcade templates (study, do not ship)</a><a href="#c5" style="border-color:#c58cff;color:#c58cff">Characters &amp; animation</a><a href="#c6" style="border-color:#4ec9a8;color:#4ec9a8">HUD &amp; UI for a 2m-away player</a><a href="#c7" style="border-color:#ff9f5b;color:#ff9f5b">Environments (extends the Synty packs we own)</a><a href="#c8" style="border-color:#ff5b6e;color:#ff5b6e">Audio</a><a href="#c9" style="border-color:#ffd23d;color:#ffd23d">Complete projects — pose-native genres</a><a href="#c10" style="border-color:#a0e060;color:#a0e060">Complete projects — runner architecture</a></div>
 </header>
 <main>
-<section id="c0" class="cat" style="--tc:#f2c14e">
+<div class="verdict">
+<h2>Second opinion — and where it disagrees with me</h2>
+<p>Kimi K3 (max effort) reviewed this list against the same constraints. Cards it
+challenged carry a red note. Its three most useful objections:</p>
+<ol>
+<li><b>The whole performance category may be answering the wrong problem.</b> Our
+frame budget is eaten by MediaPipe GPU inference, not by draw calls — and Synty
+content is already cheap in scenes that are small arcade vignettes. Profile on
+device before buying culling or impostor tools.</li>
+<li><b>Built-in render pipeline is a buying filter.</b> Most current VFX packs are
+URP / Shader Graph and render pink on the built-in pipeline this project uses.
+Check the pipeline badge on every VFX purchase.</li>
+<li><b>Some of it is already free.</b> Feel covers camera shake and brings DOTween;
+a dwell-to-confirm ring is just a uGUI Image with <code>fillMethod =
+Radial360</code>. Do not pay for those.</li>
+</ol>
+<p>It also named a category neither of us can buy, which it rated above everything
+on this page: <b>input signal conditioning</b> — One Euro / Kalman filtering,
+hysteresis and cooldowns on gesture state changes. Jitter is what makes a
+two-metre UI feel broken, the fix is open-source rather than a purchase, and the
+same filter ports to the Kotlin and Flutter apps, so it is parity-positive.</p>
+<p>Its three-purchase budget answer: <b>Infinite Runner Engine</b>, <b>one large SFX
+library</b> (at two metres, audio is the only feedback channel that reaches the
+player), and <b>Ragdoll Animator 2</b> for fail-state juice.</p>
+<p class="src">Codex (gpt-5.6-sol, xhigh) was asked the same four questions and
+produced no usable answer on two attempts — it spent the run on web searches and
+returned nothing. Only the Kimi review is reflected here.</p>
+</div>
+<section id="c0" class="cat" style="--tc:#ff3d7f">
+  <h2>Pose → avatar core</h2>
+  <p class="note">The highest-leverage category in the whole list, and the one I originally missed. Everything here turns noisy MediaPipe landmarks into a body that moves believably — which is the actual product, not a nice-to-have. Buy from here first.</p>
+  <div class="grid">
+<article class="card">
+  <span class="num">1</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/93/56/9356a3bb268931353c18c3716232d85bfac80b06823f5a5c01677e27027d355e" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Final IK</h3>
+  <div class="meta">animation &gt; Tools &middot; 150 pts</div>
+  <p class="why">Final IK — the industry standard for retargeting. This is how you drive a rigged avatar from 33 pose landmarks without the limbs tearing apart. Nothing else on this list changes the feel of the app more.</p>
+  <p class="map"><b>Control mapping:</b> Drive avatar limbs from MediaPipe landmarks</p>
+  
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/tools/animation/final-ik-14290" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/74" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=Final%20IK%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">2</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/a9/9d/a99d93e1027070bf970646180809c47823edef2ea1c3f5fdf65bd6cfaae91a99" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>PuppetMaster</h3>
+  <div class="meta">physics &gt; Tools &middot; 74 pts</div>
+  <p class="why">PuppetMaster — active ragdoll. Landmark jitter looks like a glitch on a kinematic rig, but reads as natural wobble on a physical puppet. It converts our worst technical weakness into a stylistic strength.</p>
+  <p class="map"><b>Control mapping:</b> Pose drives ragdoll character physically</p>
+  
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/tools/physics/puppetmaster-48977" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/270" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=PuppetMaster%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">3</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/42/63/42639d7955522953aa78b8c44dd7d832f9f0e2fce5bd28f03073012210422218" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>OpenCV for Unity</h3>
+  <div class="meta">integration &gt; Tools &middot; 77 pts</div>
+  <p class="why">OpenCV for Unity. Not to replace MediaPipe, but for the pre/post-processing around it: smoothing filters, ROI cropping, frame conversion. Also our fallback if a device chokes on the GPU delegate.</p>
+  <p class="map"><b>Control mapping:</b> build pose/blob/optical-flow input pipelines</p>
+  
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/tools/integration/opencv-for-unity-21088" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/4011" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=OpenCV%20for%20Unity%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">4</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/f7/ad/f7add58775d9c498c697a57f1626e5623dd1b8279b963a983c546a64a941d68c" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Character Controller Pro</h3>
+  <div class="meta">physics &gt; Tools &middot; 35 pts</div>
+  <p class="why">Character Controller Pro — a controller robust enough to be fed noisy, occasionally-absent input without exploding. Standard controllers assume clean input; ours is never clean.</p>
+  <p class="map"><b>Control mapping:</b> Stick lean steers, buttons trigger jump/actions</p>
+  
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/tools/physics/character-controller-pro-159150" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/1080" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=Character%20Controller%20Pro%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">5</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/85/2d/852d08958a5169bb7259b814adbf469c5213331fdacd2c00a44dd27511b9bcbb" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Active Ragdoll Physics-Based Character Controller (Simple &amp; Fullbody)</h3>
+  <div class="meta">physics &gt; Tools &middot; 35 pts</div>
+  <p class="why">Active Ragdoll character controller — the cheaper alternative to PuppetMaster. Buy one of the two, not both.</p>
+  <p class="map"><b>Control mapping:</b> Body lean drives ragdoll character</p>
+  
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/tools/physics/active-ragdoll-physics-based-character-controller-simple-fullbod-235075" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/1975" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=Active%20Ragdoll%20Physics-Based%20Character%20Controller%20(Simple%20%26%20Fullbody)%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+  </div>
+</section>
+<section id="c1" class="cat" style="--tc:#00c8c8">
+  <h2>Rhythm &amp; beat (Daily Moves)</h2>
+  <p class="note">A whole category I had missed. Rhythm is the one genre where a hands-free, 2m-away player is not a compromise but the ideal setup — and it needs almost no precision from the tracker, only timing.</p>
+  <div class="grid">
+<article class="card">
+  <span class="num">6</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/20/e3/20e3284d82e028e4aa548a6718e2a2bbcbffcfa8f55ebe38628c75a9899ca49a" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Rhythm Timeline 2 - Rhythm Game Framework &amp; Editor</h3>
+  <div class="meta">audio &gt; Tools &middot; 56 pts</div>
+  <p class="why">Rhythm Timeline 2 — a rhythm framework WITH an editor. This is the fastest credible route to the Daily Moves feature across all three apps.</p>
+  <p class="map"><b>Control mapping:</b> gesture hits mapped to note lanes</p>
+  <p class="chal"><b>Kimi disagrees:</b> Contested: tracking latency is roughly 50-150ms, so tight rhythm windows may be unfair. Only viable with generous timing and a calibration step.</p>
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/rhythm-timeline-2-rhythm-game-framework-editor-310749" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/4003" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=Rhythm%20Timeline%202%20-%20Rhythm%20Game%20Framework%20%26%20Editor%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">7</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/0b/3f/0b3fef13030caf9f5b59e354e7a368c2e3b8b1a4c217ca70e264ef60258220b4" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Beat Detection</h3>
+  <div class="meta">audio &gt; Tools &middot; 35 pts</div>
+  <p class="why">Beat Detection — real-time beat extraction, so moves can sync to any track the player has rather than only pre-authored charts.</p>
+  <p class="map"><b>Control mapping:</b> Sync body-move prompts to music beats</p>
+  <p class="chal"><b>Kimi disagrees:</b> Same latency caveat as the rhythm framework.</p>
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/beat-detection-19020" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/4937" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=Beat%20Detection%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">8</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/24/53/2453f2292e985ff889146d557143855208f0acec7275ec054f35778cbc8fbcb7" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Koreographer Professional Edition</h3>
+  <div class="meta">audio &gt; Tools &middot; 300 pts</div>
+  <p class="why">Koreographer Pro — beat-synced event system. More mature than the above; use it if we want music-driven gameplay events everywhere, not just in one mode.</p>
+  <p class="map"><b>Control mapping:</b> drive rhythm/dance game timing windows</p>
+  <p class="chal"><b>Kimi disagrees:</b> Same latency caveat; also the most expensive of the three rhythm options.</p>
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/koreographer-professional-edition-44270" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/240" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=Koreographer%20Professional%20Edition%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">9</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/cc/84/cc84567823ad30169c39b2506dfa923fca7ee87ecc59400d29d2d9efeb4b213a" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>AA_Hip_Hop</h3>
+  <div class="meta">3D &gt; animations &middot; 35 pts</div>
+  <p class="why">Hip-hop animation set — the reference moves the player copies.</p>
+  <p class="map"><b>Control mapping:</b> Pose-match dance moves to beat</p>
+  
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/aa-hip-hop-282010" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/2005" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=AA_Hip_Hop%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">10</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/85/48/85480d9f34a90d13fd3ed3ce1d61b5b491bfb27faa01b4fb8045465ba4f88c77" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Dance MoCap Collection</h3>
+  <div class="meta">3D &gt; animations &middot; 56 pts</div>
+  <p class="why">Dance MoCap Collection — a larger move library to score the player against.</p>
+  <p class="map"><b>Control mapping:</b> Avatar mirrors player dance moves</p>
+  
+  <div class="links">
+    <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/dance-mocap-collection-102966" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/644" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=Dance%20MoCap%20Collection%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+  </div>
+</section>
+<section id="c2" class="cat" style="--tc:#f2c14e">
   <h2>Game feel &amp; juice</h2>
   <p class="note">Feel (More Mountains) is already in the Unity project — these are the layers Feel does not cover: tweened menus, shake presets, and cheap stylised burst VFX for hit/score moments.</p>
   <div class="grid">
 <article class="card">
-  <span class="num">1</span>
+  <span class="num">11</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/fd/9e/fd9e96825a766c334cdb3f5b2c3222ee2f810fa007681b3535953b02afb726cf" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>DOTween Pro</h3>
   <div class="meta">Tools &gt; visual scripting &middot; 35 pts</div>
   <p class="why">The tween library everything else assumes. Our hands-free menus need dwell-to-select rings, scale pops and eased slide-ins driven from code — DOTween does all of it in one line and is mobile-cheap.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Feel already ships DOTween-based feedbacks, and plain DOTween is free — Pro only adds visual editors we would not use.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/visual-scripting/dotween-pro-32416" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/170" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -77,12 +283,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">2</span>
+  <span class="num">12</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/a8/a9/a8a96feb8cb3eef003dd1215c689a8283ba0f975e2c4c79e2659b0f9f18bf961" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Camera Shake FX</h3>
   <div class="meta">particles effects &gt; Tools &middot; 10 pts</div>
   <p class="why">Preset camera shake we can trigger from the 4 virtual-pad events. Cheaper to wire per-game than hand-rolling shake in every flagship.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Feel already has MMCameraShake. Straight redundancy.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/particles-effects/camera-shake-fx-146554" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/968" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -90,12 +298,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">3</span>
+  <span class="num">13</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/0c/7d/0c7db4e9a7f0d8451f4b608cfdc5f47a818ca1d00c9bf17ac21ff2bea190b25f" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Super Confetti FX</h3>
   <div class="meta">particles &gt; VFX &middot; 35 pts</div>
   <p class="why">Score/win celebration burst. At 2m the player needs a big unmistakable &quot;you scored&quot; signal — confetti reads from across the room where a number flash does not.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/vfx/particles/super-confetti-fx-152141" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1013" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -103,12 +313,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">4</span>
+  <span class="num">14</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/94/29/9429342f9ccce9cb1bb79076648ca218f1c901429b2cd524f5f73184b8e2dd83" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Break Items - Toon VFX</h3>
   <div class="meta">particles &gt; VFX &middot; 35 pts</div>
   <p class="why">Stylised break/shatter VFX matching our POLYGON look. Gives obstacles in Poopy Bird / dodge games a satisfying death instead of just despawning.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Pipeline risk: most modern VFX packs are URP/Shader-Graph and render pink on the built-in pipeline we use. Verify before buying.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/vfx/particles/break-items-toon-vfx-255067" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/3745" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -116,12 +328,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">5</span>
+  <span class="num">15</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/17/08/170808922104f25150e5483e530db03afcd691f670ec7f4db31361828e63eeb0" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Amazing VFX Pack - Particle System</h3>
   <div class="meta">particles &gt; VFX &middot; 35 pts</div>
   <p class="why">General-purpose particle pack to pull one-off hits, pickups and trails from, rather than buying a pack per game.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Same built-in-pipeline shader risk as above. Verify it is legacy-particle based, not Shader Graph.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/vfx/particles/amazing-vfx-pack-particle-system-246753" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2116" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -130,17 +344,19 @@ can be bought properly.</p>
 </article>
   </div>
 </section>
-<section id="c1" class="cat" style="--tc:#7fe07f">
+<section id="c3" class="cat" style="--tc:#7fe07f">
   <h2>Mobile performance (arm64)</h2>
   <p class="note">The single biggest risk in this project: MediaPipe tracking already eats a large slice of the frame budget, so game rendering has to be unusually cheap. These pay for themselves the first time a flagship drops below 60fps.</p>
   <div class="grid">
 <article class="card">
-  <span class="num">6</span>
+  <span class="num">16</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/b4/ab/b4abb62be554b11763a92484fc8a7e298711bdd7b38ca48c8b9d7fe94ccf48b4" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>4 Optimization Tools in 1: Mesh Combiner Baker + Mesh Optimizer + Object Pooling</h3>
   <div class="meta">Tools &gt; utilities &middot; 35 pts</div>
   <p class="why">Mesh combining + object pooling in one. Pooling matters most for endless games that spawn obstacles forever — GC spikes are what makes tracking stutter.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Our bottleneck is MediaPipe GPU inference, not draw calls — and Synty content is already cheap. Pooling is trivial to hand-roll. Profile before buying.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/utilities/4-optimization-tools-in-1-mesh-combiner-baker-mesh-optimizer-obj-236754" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1993" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -148,12 +364,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">7</span>
+  <span class="num">17</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/ed/46/ed46bba56249a52f6e2d26227c2c03186d5c5d0a6742d7be29c289168b0f746b" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Advanced Culling System 2 - Complete Optimization Solution</h3>
   <div class="meta">Tools &gt; utilities &middot; 85 pts</div>
   <p class="why">Occlusion/distance culling. Our Synty environments are draw-call heavy; culling is the cheapest way to buy frame time back for the tracking thread.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Occlusion culling does not pay for small arcade scenes; frustum culling is already built in.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/utilities/advanced-culling-system-2-complete-optimization-solution-272830" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2455" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -161,12 +379,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">8</span>
+  <span class="num">18</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/9a/8a/9a8ae37ac6024ce9ef77d310b4da36e14f045763957622fb159ccf6067af0f16" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>AnimatorLOD Pro - Animator Optimizer</h3>
   <div class="meta">animation &gt; Tools &middot; 45 pts</div>
   <p class="why">Animator LOD. Every animated character off-screen or far away is wasted CPU we need for pose inference.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> We have very few animated characters on screen. Little to reclaim.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/animation/animatorlod-pro-animator-optimizer-275807" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2488" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -174,12 +394,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">9</span>
+  <span class="num">19</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/55/a5/55a567cf0d5bd01011231255b632e3d359fd542e143b91df16cfb119910d5c92" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Impostors - Runtime Optimization</h3>
   <div class="meta">Tools &gt; utilities &middot; 125 pts</div>
   <p class="why">Impostors for distant scenery — turns background Synty props into billboards. Big win for endless runners with long view distances.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Impostors are for big scenes with distant crowds. Our scenes are vignettes — wrong problem, and often URP-only.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/utilities/impostors-runtime-optimization-188562" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1411" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -187,12 +409,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">10</span>
+  <span class="num">20</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/92/65/92652ad0c566e6627ba586192c6f7c874ea147315f18a3e9e71908e3abf1dc7a" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Built-In Mobile Lighting Box</h3>
   <div class="meta">Tools &gt; utilities &middot; 20 pts</div>
   <p class="why">Baked mobile lighting setup for the built-in pipeline (which this project uses). Avoids the realtime-light cost we currently pay for no visual gain.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/utilities/built-in-mobile-lighting-box-181005" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1319" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -201,17 +425,19 @@ can be bought properly.</p>
 </article>
   </div>
 </section>
-<section id="c2" class="cat" style="--tc:#7ab8ff">
+<section id="c4" class="cat" style="--tc:#7ab8ff">
   <h2>Endless / arcade templates (study, do not ship)</h2>
   <p class="note">Buy these to read, not to ship. Our games must only ever read StickX/StickY/ButtonA/ButtonB, so template input layers get thrown away — what we want is their spawn/difficulty/scoring architecture.</p>
   <div class="grid">
 <article class="card">
-  <span class="num">11</span>
+  <span class="num">21</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/24/e6/24e6f15653bcb3edc7435ce93e5bd7d82b7fade04e0c361bd16603f66a9d9511" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>2D+3D Infinite Runner Engine</h3>
   <div class="meta">systems &gt; Templates &middot; 56 pts</div>
   <p class="why">The reference implementation for infinite runners. Its level-segment spawner and speed-ramp curve are directly portable to our endless flagships in all three apps.</p>
+  <p class="map"><b>Control mapping:</b> Lean steers lanes, jump/squat gestures</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/templates/systems/2d-3d-infinite-runner-engine-51328" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/348" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -219,12 +445,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">12</span>
+  <span class="num">22</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/c9/d1/c9d1445ec9e687a0d9d330ab51254ce404da18672db7dda2b45b8729971e51b1" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Hypercasual - Runner Starter Kit</h3>
   <div class="meta">systems &gt; Templates &middot; 60 pts</div>
   <p class="why">Smaller, cleaner runner starter — easier to read end-to-end than the full engine above.</p>
+  <p class="map"><b>Control mapping:</b> lean=steer lanes, jump/squat gestures=obstacles</p>
+  <p class="chal"><b>Kimi disagrees:</b> Redundant with the full Infinite Runner Engine above; buy one runner reference, not two.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/templates/systems/hypercasual-runner-starter-kit-249286" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2691" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -232,12 +460,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">13</span>
+  <span class="num">23</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/91/b6/91b6e911b6d7dee6933a1c2e79605788e3cadc2fea8a1ad7f360fc51aad6c6ad" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>HyperCasual - Arcade Idle Engine</h3>
   <div class="meta">systems &gt; Templates &middot; 110 pts</div>
   <p class="why">Arcade-idle loop. Interesting for a hands-free mode where the player earns progress by holding poses rather than reacting fast.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Idle/tycoon economies are tap-driven meta loops — the opposite of our hands-free constraint.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/templates/systems/hypercasual-arcade-idle-engine-234142" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1962" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -245,12 +475,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">14</span>
+  <span class="num">24</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/3a/26/3a26f52ff80e74656d1dbcccca4e4c175f0aeccd31b0bbaca26c61f66232998c" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Endless Tunnel - Infinite Hyper Casual Game - Complete Project | Packs</h3>
   <div class="meta">packs &gt; Templates &middot; 35 pts</div>
   <p class="why">Endless tunnel — the exact shape of a one-axis (StickX only) motion game. Good template for a lean-left/lean-right flagship.</p>
+  <p class="map"><b>Control mapping:</b> Lean=steer around obstacles</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/templates/packs/endless-tunnel-infinite-hyper-casual-game-complete-project-186775" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/5629" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -258,12 +490,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">15</span>
+  <span class="num">25</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/e2/97/e297b6b10340cb46d9115c68d5241d73f072d581fb96fa650bc89d0492cb2185" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Easy Flying System</h3>
   <div class="meta">Packs &middot; 20 pts</div>
   <p class="why">Flying system. We already have a Hang Glider concept; this is the closest off-the-shelf reference for pitch/roll from a single stick.</p>
+  <p class="map"><b>Control mapping:</b> map torso lean to pitch/roll input</p>
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/assets/3754" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -272,17 +506,19 @@ can be bought properly.</p>
 </article>
   </div>
 </section>
-<section id="c3" class="cat" style="--tc:#c58cff">
+<section id="c5" class="cat" style="--tc:#c58cff">
   <h2>Characters &amp; animation</h2>
   <p class="note">Our avatar/puppet is driven by MediaPipe landmarks, so we need cheap stylised rigs plus animation clips for the moments tracking is NOT driving the character (menus, idle, celebrate, game over).</p>
   <div class="grid">
 <article class="card">
-  <span class="num">16</span>
+  <span class="num">26</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/13/4a/134ab90c6b8d26143faceb45531c1303948fc81644ec7355d9fd5bea034ec81d" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>HYPERCASUAL - Simple Characters</h3>
   <div class="meta">3D &gt; characters &middot; 15 pts</div>
   <p class="why">Low-cost stylised characters that match the hypercasual look and cost almost nothing to render — ideal as game avatars.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/characters/humanoids/hypercasual-simple-characters-159307" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/5190" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -290,12 +526,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">17</span>
+  <span class="num">27</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/c6/dd/c6ddf845135de64e9967cc67be8414a72308e98594a4cb854e69f847dbe1c856" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>HYPERCASUAL - Stickman Customization</h3>
   <div class="meta">3D &gt; characters &middot; 40 pts</div>
   <p class="why">Stickman customisation. A stickman reads perfectly at 2m and is the cheapest possible rig to drive from pose landmarks.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/characters/humanoids/humans/hypercasual-stickman-customization-184162" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1361" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -303,25 +541,29 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">18</span>
-  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/85/48/85480d9f34a90d13fd3ed3ce1d61b5b491bfb27faa01b4fb8045465ba4f88c77" alt=""
+  <span class="num">28</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/61/88/6188b6b8391f1f504e110962aeccade5aa60d2788886758509d3ad70000ea18b" alt=""
     onerror="this.parentElement.style.display='none'"></div>
-  <h3>Dance MoCap Collection</h3>
-  <div class="meta">3D &gt; animations &middot; 56 pts</div>
-  <p class="why">Dance mocap. Directly enables a Daily Moves / dance-match mode: compare the player pose against a reference clip.</p>
+  <h3>Parkour Animation Set</h3>
+  <div class="meta">3D &gt; animations &middot; 45 pts</div>
+  <p class="why">Parkour animation set — run, jump and vault cycles, the core vocabulary of every endless-runner flagship.</p>
+  <p class="map"><b>Control mapping:</b> Jump/squat gestures trigger parkour moves</p>
+  
   <div class="links">
-    <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/dance-mocap-collection-102966" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
-    <a class="alt" href="https://gamepackage.net/assets/644" target="_blank" rel="noopener">Catalog entry &#8599;</a>
-    <a class="yt" href="https://www.youtube.com/results?search_query=Dance%20MoCap%20Collection%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+    <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/parkour-animation-set-241266" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/2044" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=Parkour%20Animation%20Set%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
 <article class="card">
-  <span class="num">19</span>
+  <span class="num">29</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/08/75/08755e4c5ce3b71e40be306f5840556e7cf9ef7dc795a28a656bcd6af36e05d8" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Flying Animation Pack</h3>
   <div class="meta">3D &gt; animations &middot; 35 pts</div>
   <p class="why">Flying animation clips for the glider/bird flagships.</p>
+  <p class="map"><b>Control mapping:</b> lean steers flying character</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/flying-animation-pack-155965" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1049" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -329,31 +571,35 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">20</span>
-  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/28/d0/28d0cd6c85d8053e73af0424f082e84c2999fcec1b7fdd1e0e2df5bb84d956a0" alt=""
+  <span class="num">30</span>
+  <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/d2/a1/d2a13dad81d955bcee59c4a89bfdcb064813c23e9589c6aa829a463da50fc310" alt=""
     onerror="this.parentElement.style.display='none'"></div>
-  <h3>Ragdoll Animator 2</h3>
-  <div class="meta">physics &gt; Tools &middot; 37 pts</div>
-  <p class="why">Ragdoll Animator — blends animation into ragdoll on failure. A hands-free &quot;you died&quot; needs to be visually obvious without any UI.</p>
+  <h3>MOBILITY PRO: Mocap Animation Pack</h3>
+  <div class="meta">3D &gt; animations &middot; 53 pts</div>
+  <p class="why">MOBILITY PRO mocap locomotion — clean run/walk/turn cycles to blend against when tracking confidence drops and we have to fall back to canned animation.</p>
+  <p class="map"><b>Control mapping:</b> animate runner mirroring player movement</p>
+  
   <div class="links">
-    <a class="buy" href="https://assetstore.unity.com/packages/tools/physics/ragdoll-animator-2-285638" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
-    <a class="alt" href="https://gamepackage.net/assets/2593" target="_blank" rel="noopener">Catalog entry &#8599;</a>
-    <a class="yt" href="https://www.youtube.com/results?search_query=Ragdoll%20Animator%202%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+    <a class="buy" href="https://assetstore.unity.com/packages/3d/animations/mobility-pro-mocap-animation-pack-46121" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
+    <a class="alt" href="https://gamepackage.net/assets/253" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/results?search_query=MOBILITY%20PRO%3A%20Mocap%20Animation%20Pack%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
   </div>
 </section>
-<section id="c4" class="cat" style="--tc:#4ec9a8">
+<section id="c6" class="cat" style="--tc:#4ec9a8">
   <h2>HUD &amp; UI for a 2m-away player</h2>
   <p class="note">Our hardest UX constraint: the player cannot touch the phone and is standing two metres away. Everything must be large, world-space where possible, and selectable by dwell/gesture.</p>
   <div class="grid">
 <article class="card">
-  <span class="num">21</span>
+  <span class="num">31</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/07/18/0718d4f0a39e55998dbcf9e4591767bb7befb19838327785af3451e8220e9b55" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>3D Hypercasual Meters</h3>
   <div class="meta">3D &gt; props &middot; 35 pts</div>
   <p class="why">World-space hypercasual meters/gauges. This is the single most on-point asset in the list — big readable progress and charge meters are exactly what a dwell-to-select, no-touch UI needs.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/props/3d-hypercasual-meters-199409" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1543" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -361,12 +607,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">22</span>
+  <span class="num">32</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/b9/4c/b94ca9fc6f8164381f04b73e7db6bd7ec09657c7020cb973461796999a35d935" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>3D Object Image for UGUI - MiniMap Inventory Portrait</h3>
   <div class="meta">2D &gt; gui &middot; 35 pts</div>
   <p class="why">Renders 3D objects into uGUI. Lets the game-select grid show live rotating 3D previews instead of flat emoji tiles.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> A RenderTexture per 3D object in UI is genuinely expensive on mobile GPUs. Use sparingly or not at all.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/2d/gui/3d-object-image-for-ugui-minimap-inventory-portrait-275542" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2483" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -374,12 +622,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">23</span>
+  <span class="num">33</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/72/fd/72fdea1ed1c798480ec9a7b0c914b06f41077575508130248e23c6080b8fd9fb" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>AMS UI Soft Mask</h3>
   <div class="meta">gui &gt; Tools &middot; 35 pts</div>
   <p class="why">Soft mask for uGUI — fixes the hard-edged clipping in our scrolling game list.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Probably unnecessary: a dwell/hold-to-confirm ring is just uGUI Image with fillMethod = Radial360, which is built in and free.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/gui/ams-ui-soft-mask-282501" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2561" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -387,12 +637,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">24</span>
+  <span class="num">34</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/04/c8/04c8a8752838b06afcb14e3159c6bdb61380d567c0fb18ddb0bd2447a813f3ee" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>GOOD UI Icon Trail</h3>
   <div class="meta">GUI &middot; 10 pts</div>
   <p class="why">Icon trails: gives the moving cursor/hand indicator a visible tail, which makes an untouched, camera-driven pointer far easier to follow.</p>
+  
+  <p class="chal"><b>Kimi disagrees:</b> Low value, and UI trails add overdraw.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/package/900001187" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/4303" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -400,12 +652,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">25</span>
+  <span class="num">35</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/db/1e/db1e2605342467cdd8ea44b97b75ab9ccf4b697f47b66498d3a62d3d32a1279c" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>1000+ Character Avatar Icons Pack</h3>
   <div class="meta">2D &gt; gui &middot; 10 pts</div>
   <p class="why">Large avatar icon set for the game grid and player slots.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/2d/gui/icons/1000-character-avatar-icons-pack-246224" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/3036" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -414,17 +668,19 @@ can be bought properly.</p>
 </article>
   </div>
 </section>
-<section id="c5" class="cat" style="--tc:#ff9f5b">
+<section id="c7" class="cat" style="--tc:#ff9f5b">
   <h2>Environments (extends the Synty packs we own)</h2>
   <p class="note">We already own POLYGON City / Town / Nature. These extend that exact art style so re-skins stay consistent across all games and no new shader/material work is needed.</p>
   <div class="grid">
 <article class="card">
-  <span class="num">26</span>
+  <span class="num">36</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/55/ed/55ed0502976531eb5af678eac3e7facf021877c44a37f4893326a0561585744e" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>POLYGON - Adventure Pack - Art by Synty</h3>
   <div class="meta">3D &gt; environments &middot; 35 pts</div>
   <p class="why">POLYGON Adventure — broad prop/environment coverage, same Synty pipeline we already have set up.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/environments/fantasy/polygon-adventure-pack-art-by-synty-80585" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/489" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -432,12 +688,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">27</span>
+  <span class="num">37</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/d8/55/d855a0588b12aacb4b145e5a20f7257b235d1b2a8fdabe2b19cb9076f35158df" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>POLYGON - Alpine Mountain - Nature Biomes - 3D Environment Art by Synty</h3>
   <div class="meta">3D &gt; environments &middot; 65 pts</div>
   <p class="why">Alpine Mountain biome — snow/mountain endless-runner backdrop we currently lack.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/environments/landscapes/polygon-alpine-mountain-nature-biomes-3d-environment-art-by-synt-271620" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2443" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -445,12 +703,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">28</span>
+  <span class="num">38</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/4d/0f/4d0f5bb8af0f0c13742d21f8b7b624ee2feb3f2af63f21c68360b85ab5260afb" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>POLYGON - City Characters Pack - Art by Synty</h3>
   <div class="meta">3D &gt; characters &middot; 35 pts</div>
   <p class="why">POLYGON City Characters — matching character set for the city environment we already imported.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/characters/humanoids/humans/polygon-city-characters-pack-art-by-synty-106757" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/4710" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -458,12 +718,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">29</span>
+  <span class="num">39</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/72/64/726413b7fc0b85543998ca026bfd15281c154dc9d5cb303642978766b9bb12e2" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>AllSky - 220+ Sky / Skybox Set</h3>
   <div class="meta">2D &gt; sky &middot; 35 pts</div>
   <p class="why">AllSky, 220+ skyboxes. Cheapest possible way to make each of the 4 flagships feel like a different world.</p>
+  <p class="map"><b>Control mapping:</b> Backdrop only; no control mapping.</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-220-sky-skybox-set-10109" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/51" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -471,12 +733,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">30</span>
+  <span class="num">40</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/5d/0e/5d0eae0c9ee89190cba4859db342caa7f13759ff84c073e6035dff35492da2ab" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Nature – Spawner Pack for POLYGON Nature</h3>
   <div class="meta">Environments</div>
   <p class="why">Spawner for POLYGON Nature — procedural scatter, which is what an endless environment needs.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/package/900000554" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/3677" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -485,17 +749,19 @@ can be bought properly.</p>
 </article>
   </div>
 </section>
-<section id="c6" class="cat" style="--tc:#ff5b6e">
+<section id="c8" class="cat" style="--tc:#ff5b6e">
   <h2>Audio</h2>
   <p class="note">Audio is doing double duty for us: it is the only feedback channel that works when the player is looking away from a phone 2m away. Sound is arguably higher value than art here.</p>
   <div class="grid">
 <article class="card">
-  <span class="num">31</span>
+  <span class="num">41</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/b5/e3/b5e366976cbc8375e4d3648e1fd2142f4cf525bab8897844470a7e34ff3eb269" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>2000 Game Sound FX</h3>
   <div class="meta">Audio &gt; sound fx &middot; 39 pts</div>
   <p class="why">2000 general game SFX — one purchase covers pickups, fails, UI blips across all 115 catalog games.</p>
+  <p class="map"><b>Control mapping:</b> Feedback sounds for gesture hits</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/audio/sound-fx/2000-game-sound-fx-207739" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/3567" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -503,12 +769,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">32</span>
+  <span class="num">42</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/10/93/1093d03be32830576548cbf83614a0d4fc7de595a69912d3f0ccad76f2458d0f" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Ambient Sounds - Interactive Soundscapes for Unity 6</h3>
   <div class="meta">audio &gt; Tools &middot; 49 pts</div>
   <p class="why">Interactive ambient soundscapes, Unity 6 ready. Gives each flagship a distinct bed cheaply.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/ambient-sounds-interactive-soundscapes-for-unity-6-142132" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/928" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -516,12 +784,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">33</span>
+  <span class="num">43</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/17/fc/17fc22c8506c9f6503c529ad162852e82575e04dc0e474d419cfc7bf70766f83" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>BT - Sound System Pro: Advanced Audio Manager (Easy &amp; Optimize)</h3>
   <div class="meta">audio &gt; Tools &middot; 35 pts</div>
   <p class="why">Audio manager with pooling. We need one shared audio layer across games rather than per-game AudioSources.</p>
+  
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/bt-sound-system-pro-advanced-audio-manager-easy-optimize-312741" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2836" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -529,12 +799,14 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">34</span>
+  <span class="num">44</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/16/ff/16ffd982371e5be4bcfec32a53da50841f09f109c5efafecb8f729407297741a" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Impacts, Hits &amp; Whooshes</h3>
   <div class="meta">Audio &gt; sound fx &middot; 55 pts</div>
   <p class="why">Impacts/whooshes — the exact hit vocabulary for dodge-and-collide gameplay.</p>
+  <p class="map"><b>Control mapping:</b> play on punch/kick gesture hits</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/audio/sound-fx/impacts-hits-whooshes-157519" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1059" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -542,16 +814,180 @@ can be bought properly.</p>
   </div>
 </article>
 <article class="card">
-  <span class="num">35</span>
+  <span class="num">45</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/46/a2/46a261acbf3e04a5e6fd7f8c475b1f448c4179ed261c988deb14efdea95e0fc0" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>ALT. Electronic Dance Music Pack</h3>
   <div class="meta">Audio &gt; electronic &middot; 35 pts</div>
   <p class="why">Electronic/dance music pack for the movement-driven modes.</p>
+  <p class="map"><b>Control mapping:</b> Music for rhythm and dance modes</p>
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/audio/music/electronic/alt-electronic-dance-music-pack-158280" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1070" target="_blank" rel="noopener">Catalog entry &#8599;</a>
     <a class="yt" href="https://www.youtube.com/results?search_query=ALT.%20Electronic%20Dance%20Music%20Pack%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+  </div>
+</section>
+<section id="c9" class="cat" style="--tc:#ffd23d">
+  <h2>Complete projects — pose-native genres</h2>
+  <p class="note">Ready-made projects whose ORIGINAL design already assumes a whole moving body. These are not re-skins, they are the genres our control scheme was born for — the closest thing to a shortcut this project has.</p>
+  <div class="grid">
+<article class="card">
+  <span class="num">46</span>
+  <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2024/12/yoga-fever-e1735377283119.webp" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Yoga Fever</h3>
+  <div class="meta">Packs &middot; complete project</div>
+  <p class="why">Yoga Fever — the player holds a pose and the game scores it. That is literally pose tracking as a game loop, with zero taps. If one complete project justifies its price here, it is this one.</p>
+  <p class="map"><b>Control mapping:</b> match arm/leg poses to reference</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/15" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=R0FbEPZv5Cg" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">47</span>
+  <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2025/07/squid-game-e1752854604268.webp" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>squid game</h3>
+  <div class="meta">Packs &middot; complete project</div>
+  <p class="why">Red-light-green-light. A hands-free masterpiece by accident: move when told, freeze when told. Needs only &quot;is the player moving&quot;, the single most reliable signal a pose tracker produces.</p>
+  <p class="map"><b>Control mapping:</b> body motion=move, freeze=stop</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/1039" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=L7fNBqPLmtA" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">48</span>
+  <div class="thumb"><img loading="lazy" src="https://www.sellanycode.com/system/assets/uploads/products/TwerkItBodyRacetoptrendinggame_sellanycode_featured_image_1671805684.png" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Twerk It : Body Race – top trending game</h3>
+  <div class="meta">.unityproj &middot; complete project</div>
+  <p class="why">Body-race / dance-race. Whole-body input by design, and the scoring model is directly reusable for Daily Moves.</p>
+  <p class="map"><b>Control mapping:</b> body moves=dance/race, hip gestures=boost</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/607" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=nGD-A-TvQlE" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">49</span>
+  <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2025/08/timberman-e1756290133633.webp" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Timberman</h3>
+  <div class="meta">Packs &middot; complete project</div>
+  <p class="why">Timberman — two-sided chop. Maps perfectly onto lean-left / lean-right, and proves how far a two-state input can carry a game.</p>
+  <p class="map"><b>Control mapping:</b> lean left/right=side, chop gesture=chop</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/615" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=CS13yB-rssI" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">50</span>
+  <div class="thumb"><img loading="lazy" src="https://www.sellmyapp.com/wp-content/uploads/featured_image58999ac3f0ca7.png" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Flap Up – Premium Unity Template</h3>
+  <div class="meta">Arcades &middot; complete project</div>
+  <p class="why">One-button flappy template. This is Poopy Bird's genre; worth buying purely to compare their difficulty curve and spawn pacing against ours.</p>
+  <p class="map"><b>Control mapping:</b> jump gesture or blow=flap</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/160" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=HjA55T-3Vow" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+  </div>
+</section>
+<section id="c10" class="cat" style="--tc:#a0e060">
+  <h2>Complete projects — runner architecture</h2>
+  <p class="note">Buy these for their spawn/difficulty/scoring code, not their content. Endless runners are the flagship shape for lean-to-steer, and their input layer is the only part we throw away.</p>
+  <div class="grid">
+<article class="card">
+  <span class="num">51</span>
+  <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2024/08/3dflexrunner-e1725091667427.webp" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>3DFlexRunner</h3>
+  <div class="meta">Packs &middot; complete project</div>
+  <p class="why">Lane runner built around lean steering — the closest existing match to our control model.</p>
+  <p class="map"><b>Control mapping:</b> lean=move left/right</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/314" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=d9asKCRMWtA" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">52</span>
+  <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2020/09/run-racer-3d-e1599972384270.png" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Run Race 3D</h3>
+  <div class="meta">Packs &middot; complete project</div>
+  <p class="why">Parkour race runner. Good reference for a race framing, which gives a hands-free player a natural end condition without a menu.</p>
+  <p class="map"><b>Control mapping:</b> lean=steer, jump/squat gestures=parkour moves</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/385" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=UrmtDKQoAfg" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">53</span>
+  <div class="thumb"><img loading="lazy" src="https://www.sellmyapp.com/wp-content/uploads/featured_image5beafcc226f9e.png" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Unity Game Template – Blocky Highway</h3>
+  <div class="meta">Arcades &middot; complete project</div>
+  <p class="why">Endless racer with tilt steering already built in. Tilt and lean are the same one-axis problem, so its steering feel transfers directly.</p>
+  <p class="map"><b>Control mapping:</b> lean or tilt=steer</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/419" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=lvr49icrN1A" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">54</span>
+  <div class="thumb"><img loading="lazy" src="https://www.sellmyapp.com/wp-content/uploads/featured_image6140ef034c087.png" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Unity Game Template – Snowy Skate</h3>
+  <div class="meta">Arcades &middot; complete project</div>
+  <p class="why">Ski/skate slide game — leaning IS the control in the original design.</p>
+  <p class="map"><b>Control mapping:</b> lean=turn, jump gesture=jump</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/411" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=ykFPDwfNTK0" target="_blank" rel="noopener">&#128269; YouTube</a>
+  </div>
+</article>
+<article class="card">
+  <span class="num">55</span>
+  <div class="thumb"><img loading="lazy" src="https://www.sellanycode.com/system/assets/uploads/products/KnockoutStumbleRun_sellanycode_featured_image_1656944032.png" alt=""
+    onerror="this.parentElement.style.display='none'"></div>
+  <h3>Knockout Stumble Run</h3>
+  <div class="meta">Php scripts &middot; complete project</div>
+  <p class="why">Stumble/fall-guys style physical runner. Its ragdoll failure states are exactly the visually-obvious game-over a 2m player needs.</p>
+  <p class="map"><b>Control mapping:</b> lean=steer, jump gesture=jump, squat=dodge</p>
+  
+  <div class="links">
+    
+    <a class="alt" href="https://gamepackage.net/ready-made-solutions/1029" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="yt" href="https://www.youtube.com/watch?v=8uExW8qV7QU" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
   </div>

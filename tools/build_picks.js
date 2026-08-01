@@ -1,14 +1,50 @@
-// Builds picks.html — curated Joystick asset shortlist (7 categories x 5).
-// Data source: the inline #d0 catalog already embedded in assets.html.
+// Builds picks.html — curated Joystick shortlist (11 categories x 5).
+// Sources: assets.html #d0 (full catalog) + tools/joystick_data.json (curated).
 const fs = require('fs');
 const path = require('path');
 const ROOT = path.join(__dirname, '..');
 
+// Two sources: the full 5.6k asset catalog embedded in assets.html, and the
+// hand-curated 750-item joystick_data.json (assets + ready-made projects).
 const html = fs.readFileSync(path.join(ROOT, 'assets.html'), 'utf8');
 const DATA = JSON.parse(html.match(/id=["']d0["'][^>]*>([\s\S]*?)<\/script>/)[1]);
-const byId = new Map(DATA.map(x => [String(x.id), x]));
+const CURATED = require('./joystick_data.json');
+
+const byId = new Map(DATA.map(x => [String(x.id), x]));            // A<id>
+const projById = new Map(CURATED.filter(x => x.k === 'proj')
+  .map(x => [String(x.id), x]));                                   // P<id>
+// Curated assets carry richer fields (w/m); prefer them when present.
+for (const x of CURATED) {
+  if (x.k !== 'asset') continue;
+  const prev = byId.get(String(x.id));
+  byId.set(String(x.id), prev ? { ...prev, ...x } : x);
+}
 
 const CATS = [
+  {
+    name: 'Pose → avatar core',
+    color: '#ff3d7f',
+    note: 'The highest-leverage category in the whole list, and the one I originally missed. Everything here turns noisy MediaPipe landmarks into a body that moves believably — which is the actual product, not a nice-to-have. Buy from here first.',
+    picks: [
+      ['74', 'Final IK — the industry standard for retargeting. This is how you drive a rigged avatar from 33 pose landmarks without the limbs tearing apart. Nothing else on this list changes the feel of the app more.'],
+      ['270', 'PuppetMaster — active ragdoll. Landmark jitter looks like a glitch on a kinematic rig, but reads as natural wobble on a physical puppet. It converts our worst technical weakness into a stylistic strength.'],
+      ['4011', 'OpenCV for Unity. Not to replace MediaPipe, but for the pre/post-processing around it: smoothing filters, ROI cropping, frame conversion. Also our fallback if a device chokes on the GPU delegate.'],
+      ['1080', 'Character Controller Pro — a controller robust enough to be fed noisy, occasionally-absent input without exploding. Standard controllers assume clean input; ours is never clean.'],
+      ['1975', 'Active Ragdoll character controller — the cheaper alternative to PuppetMaster. Buy one of the two, not both.'],
+    ],
+  },
+  {
+    name: 'Rhythm & beat (Daily Moves)',
+    color: '#00c8c8',
+    note: 'A whole category I had missed. Rhythm is the one genre where a hands-free, 2m-away player is not a compromise but the ideal setup — and it needs almost no precision from the tracker, only timing.',
+    picks: [
+      ['4003', 'Rhythm Timeline 2 — a rhythm framework WITH an editor. This is the fastest credible route to the Daily Moves feature across all three apps.'],
+      ['4937', 'Beat Detection — real-time beat extraction, so moves can sync to any track the player has rather than only pre-authored charts.'],
+      ['240', 'Koreographer Pro — beat-synced event system. More mature than the above; use it if we want music-driven gameplay events everywhere, not just in one mode.'],
+      ['2005', 'Hip-hop animation set — the reference moves the player copies.'],
+      ['644', 'Dance MoCap Collection — a larger move library to score the player against.'],
+    ],
+  },
   {
     name: 'Game feel & juice',
     color: '#f2c14e',
@@ -52,9 +88,9 @@ const CATS = [
     picks: [
       ['5190', 'Low-cost stylised characters that match the hypercasual look and cost almost nothing to render — ideal as game avatars.'],
       ['1361', 'Stickman customisation. A stickman reads perfectly at 2m and is the cheapest possible rig to drive from pose landmarks.'],
-      ['644', 'Dance mocap. Directly enables a Daily Moves / dance-match mode: compare the player pose against a reference clip.'],
+      ['2044', 'Parkour animation set — run, jump and vault cycles, the core vocabulary of every endless-runner flagship.'],
       ['1049', 'Flying animation clips for the glider/bird flagships.'],
-      ['2593', 'Ragdoll Animator — blends animation into ragdoll on failure. A hands-free "you died" needs to be visually obvious without any UI.'],
+      ['253', 'MOBILITY PRO mocap locomotion — clean run/walk/turn cycles to blend against when tracking confidence drops and we have to fall back to canned animation.'],
     ],
   },
   {
@@ -93,30 +129,81 @@ const CATS = [
       ['1070', 'Electronic/dance music pack for the movement-driven modes.'],
     ],
   },
+  {
+    name: 'Complete projects — pose-native genres',
+    color: '#ffd23d',
+    note: 'Ready-made projects whose ORIGINAL design already assumes a whole moving body. These are not re-skins, they are the genres our control scheme was born for — the closest thing to a shortcut this project has.',
+    picks: [
+      ['P15', 'Yoga Fever — the player holds a pose and the game scores it. That is literally pose tracking as a game loop, with zero taps. If one complete project justifies its price here, it is this one.'],
+      ['P1039', 'Red-light-green-light. A hands-free masterpiece by accident: move when told, freeze when told. Needs only "is the player moving", the single most reliable signal a pose tracker produces.'],
+      ['P607', 'Body-race / dance-race. Whole-body input by design, and the scoring model is directly reusable for Daily Moves.'],
+      ['P615', 'Timberman — two-sided chop. Maps perfectly onto lean-left / lean-right, and proves how far a two-state input can carry a game.'],
+      ['P160', 'One-button flappy template. This is Poopy Bird\'s genre; worth buying purely to compare their difficulty curve and spawn pacing against ours.'],
+    ],
+  },
+  {
+    name: 'Complete projects — runner architecture',
+    color: '#a0e060',
+    note: 'Buy these for their spawn/difficulty/scoring code, not their content. Endless runners are the flagship shape for lean-to-steer, and their input layer is the only part we throw away.',
+    picks: [
+      ['P314', 'Lane runner built around lean steering — the closest existing match to our control model.'],
+      ['P385', 'Parkour race runner. Good reference for a race framing, which gives a hands-free player a natural end condition without a menu.'],
+      ['P419', 'Endless racer with tilt steering already built in. Tilt and lean are the same one-axis problem, so its steering feel transfers directly.'],
+      ['P411', 'Ski/skate slide game — leaning IS the control in the original design.'],
+      ['P1029', 'Stumble/fall-guys style physical runner. Its ragdoll failure states are exactly the visually-obvious game-over a 2m player needs.'],
+    ],
+  },
 ];
+
+// Second-opinion challenges from Kimi K3 (max effort). Keyed by pick id.
+const CHALLENGE = {
+  '170': 'Feel already ships DOTween-based feedbacks, and plain DOTween is free — Pro only adds visual editors we would not use.',
+  '968': 'Feel already has MMCameraShake. Straight redundancy.',
+  '3745': 'Pipeline risk: most modern VFX packs are URP/Shader-Graph and render pink on the built-in pipeline we use. Verify before buying.',
+  '2116': 'Same built-in-pipeline shader risk as above. Verify it is legacy-particle based, not Shader Graph.',
+  '1993': 'Our bottleneck is MediaPipe GPU inference, not draw calls — and Synty content is already cheap. Pooling is trivial to hand-roll. Profile before buying.',
+  '2455': 'Occlusion culling does not pay for small arcade scenes; frustum culling is already built in.',
+  '2488': 'We have very few animated characters on screen. Little to reclaim.',
+  '1411': 'Impostors are for big scenes with distant crowds. Our scenes are vignettes — wrong problem, and often URP-only.',
+  '2483': 'A RenderTexture per 3D object in UI is genuinely expensive on mobile GPUs. Use sparingly or not at all.',
+  '2561': 'Probably unnecessary: a dwell/hold-to-confirm ring is just uGUI Image with fillMethod = Radial360, which is built in and free.',
+  '4303': 'Low value, and UI trails add overdraw.',
+  '1962': 'Idle/tycoon economies are tap-driven meta loops — the opposite of our hands-free constraint.',
+  '2691': 'Redundant with the full Infinite Runner Engine above; buy one runner reference, not two.',
+  '4003': 'Contested: tracking latency is roughly 50-150ms, so tight rhythm windows may be unfair. Only viable with generous timing and a calibration step.',
+  '4937': 'Same latency caveat as the rhythm framework.',
+  '240': 'Same latency caveat; also the most expensive of the three rhythm options.',
+};
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 let missing = [];
 const sections = CATS.map((cat, ci) => {
-  const cards = cat.picks.map(([id, why], i) => {
-    const it = byId.get(id);
-    if (!it) { missing.push(id); return ''; }
+  const cards = cat.picks.map(([rawId, why], i) => {
+    const isProj = /^P/.test(rawId);
+    const id = rawId.replace(/^P/, '');
+    const it = isProj ? projById.get(id) : byId.get(id);
+    if (!it) { missing.push(rawId); return ''; }
     const img = (it.img && it.img[0]) || '';
     const store = it.src && /assetstore\.unity/.test(it.src) ? it.src : '';
-    const yt = 'https://www.youtube.com/results?search_query=' +
-      encodeURIComponent(it.n + ' unity asset');
+    const cat_url = isProj
+      ? 'https://gamepackage.net/ready-made-solutions/' + id
+      : 'https://gamepackage.net/assets/' + id;
+    const yt = it.yt || ('https://www.youtube.com/results?search_query=' +
+      encodeURIComponent(it.n + (isProj ? ' unity game' : ' unity asset')));
     return `<article class="card">
   <span class="num">${ci * 5 + i + 1}</span>
   ${img ? `<div class="thumb"><img loading="lazy" src="${esc(img)}" alt=""
     onerror="this.parentElement.style.display='none'"></div>` : ''}
   <h3>${esc(it.n)}</h3>
-  <div class="meta">${esc(it.cn || '')}${it.p ? ' &middot; ' + esc(it.p) + ' pts' : ''}</div>
+  <div class="meta">${esc(it.cn || it.c || '')}${isProj ? ' &middot; complete project' : ''}${it.p ? ' &middot; ' + esc(it.p) + ' pts' : ''}</div>
   <p class="why">${esc(why)}</p>
+  ${it.m ? `<p class="map"><b>Control mapping:</b> ${esc(it.m)}</p>` : ''}
+  ${CHALLENGE[rawId] ? `<p class="chal"><b>Kimi disagrees:</b> ${esc(CHALLENGE[rawId])}</p>` : ''}
   <div class="links">
     ${store ? `<a class="buy" href="${esc(store)}" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>` : ''}
-    <a class="alt" href="https://gamepackage.net/assets/${esc(id)}" target="_blank" rel="noopener">Catalog entry &#8599;</a>
+    <a class="alt" href="${esc(cat_url)}" target="_blank" rel="noopener">Catalog entry &#8599;</a>
     <a class="yt" href="${esc(yt)}" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>`;
@@ -135,7 +222,7 @@ const out = `<!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Joystick — top 35 asset picks</title>
+<title>Joystick — top asset &amp; project picks</title>
 <style>
 :root{color-scheme:dark}
 *{box-sizing:border-box}
@@ -169,7 +256,20 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 .card h3{margin:0 0 3px;font-size:15.5px;padding-right:26px}
 .meta{color:#8f909b;font-size:12.5px;margin-bottom:8px;
  text-transform:uppercase;letter-spacing:.03em}
-.why{margin:0 0 12px;font-size:14px;color:#c8c9d0;flex:1}
+.why{margin:0 0 10px;font-size:14px;color:#c8c9d0;flex:1}
+.map{margin:0 0 10px;font-size:13px;color:#9a9aa5}
+.map b{color:#c8c9d0}
+.chal{margin:0 0 10px;padding:8px 10px;border-radius:8px;font-size:13px;
+ background:rgba(255,91,110,.09);border:1px solid rgba(255,91,110,.32);
+ color:#e0aab0}
+.chal b{color:#ff8b96}
+.verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
+ border-radius:11px;padding:15px 17px;margin:0 0 26px}
+.verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
+.verdict p{margin:0 0 9px;font-size:14px;color:#c8c9d0;max-width:85ch}
+.verdict ol{margin:0;padding-left:20px;font-size:14px;color:#c8c9d0}
+.verdict li{margin-bottom:5px}
+.verdict .src{color:#8f909b;font-size:12.5px;margin:10px 0 0}
 .links{display:flex;gap:7px;flex-wrap:wrap}
 .links a{font-size:12.5px;font-weight:600;text-decoration:none;
  padding:5px 11px;border-radius:14px;border:1.5px solid #33343d;
@@ -183,8 +283,9 @@ footer{padding:22px 18px 40px;color:#6d6e78;font-size:13px;
  href="joystick.html">Joystick</a><span>&middot;</span><a
  href="assets.html">All assets</a><span>&middot;</span><span
  class="here">Top picks</span></div>
-<h1>Top 35 asset picks for Joystick</h1>
-<p>Seven categories, five each — chosen against this project's real constraints:
+<h1>Top picks for Joystick</h1>
+<p>Eleven categories, five each — assets and ready-made projects, chosen
+against this project's real constraints:
 Android arm64 with MediaPipe tracking already eating the frame budget, four
 flagship games, and a player standing two metres from a propped phone who
 cannot touch the screen. Every card links to the Unity Asset Store page so it
@@ -193,6 +294,34 @@ can be bought properly.</p>
   `<a href="#c${i}" style="border-color:${c.color};color:${c.color}">${esc(c.name)}</a>`).join('')}</div>
 </header>
 <main>
+<div class="verdict">
+<h2>Second opinion — and where it disagrees with me</h2>
+<p>Kimi K3 (max effort) reviewed this list against the same constraints. Cards it
+challenged carry a red note. Its three most useful objections:</p>
+<ol>
+<li><b>The whole performance category may be answering the wrong problem.</b> Our
+frame budget is eaten by MediaPipe GPU inference, not by draw calls — and Synty
+content is already cheap in scenes that are small arcade vignettes. Profile on
+device before buying culling or impostor tools.</li>
+<li><b>Built-in render pipeline is a buying filter.</b> Most current VFX packs are
+URP / Shader Graph and render pink on the built-in pipeline this project uses.
+Check the pipeline badge on every VFX purchase.</li>
+<li><b>Some of it is already free.</b> Feel covers camera shake and brings DOTween;
+a dwell-to-confirm ring is just a uGUI Image with <code>fillMethod =
+Radial360</code>. Do not pay for those.</li>
+</ol>
+<p>It also named a category neither of us can buy, which it rated above everything
+on this page: <b>input signal conditioning</b> — One Euro / Kalman filtering,
+hysteresis and cooldowns on gesture state changes. Jitter is what makes a
+two-metre UI feel broken, the fix is open-source rather than a purchase, and the
+same filter ports to the Kotlin and Flutter apps, so it is parity-positive.</p>
+<p>Its three-purchase budget answer: <b>Infinite Runner Engine</b>, <b>one large SFX
+library</b> (at two metres, audio is the only feedback channel that reaches the
+player), and <b>Ragdoll Animator 2</b> for fail-state juice.</p>
+<p class="src">Codex (gpt-5.6-sol, xhigh) was asked the same four questions and
+produced no usable answer on two attempts — it spent the run on web searches and
+returned nothing. Only the Kimi review is reflected here.</p>
+</div>
 ${sections.replace(/<section class="cat"/g, (m => {
   let n = -1; return () => { n++; return `<section id="c${n}" class="cat"`; };
 })())}
