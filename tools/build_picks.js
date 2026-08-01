@@ -193,6 +193,13 @@ const CHALLENGE2 = {
   '2483': 'Also flagged here: adds another render-to-texture path to solve inventory/portrait problems we do not have.',
 };
 
+// Already owned — verified on disk 2026-08-01, either in the Joystick project or
+// in the shared AssetsToCheck evaluation project on the same PC.
+const OWNED = {
+  '4011': 'Already owned — sitting in the shared AssetsToCheck project (2.9 GB). Nothing to buy.',
+  '1080': 'Already owned — in the shared AssetsToCheck project. Nothing to buy.',
+};
+
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -212,12 +219,14 @@ const sections = CATS.map((cat, ci) => {
       encodeURIComponent(it.n + (isProj ? ' unity game' : ' unity asset')));
     return `<article class="card">
   <span class="num">${ci * 5 + i + 1}</span>
+  ${OWNED[rawId] ? '<span class="owned">OWNED</span>' : ''}
   ${img ? `<div class="thumb"><img loading="lazy" src="${esc(img)}" alt=""
     onerror="this.parentElement.style.display='none'"></div>` : ''}
   <h3>${esc(it.n)}</h3>
   <div class="meta">${esc(it.cn || it.c || '')}${isProj ? ' &middot; complete project' : ''}${it.p ? ' &middot; ' + esc(it.p) + ' pts' : ''}</div>
   <p class="why">${esc(why)}</p>
   ${it.m ? `<p class="map"><b>Control mapping:</b> ${esc(it.m)}</p>` : ''}
+  ${OWNED[rawId] ? `<p class="chal own"><b>You already own this:</b> ${esc(OWNED[rawId])}</p>` : ''}
   ${CHALLENGE[rawId] ? `<p class="chal"><b>Kimi disagrees:</b> ${esc(CHALLENGE[rawId])}</p>` : ''}
   ${CHALLENGE2[rawId] ? `<p class="chal c2"><b>Codex disagrees:</b> ${esc(CHALLENGE2[rawId])}</p>` : ''}
   <div class="links">
@@ -285,6 +294,13 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 .chal.c2{background:rgba(122,184,255,.09);border-color:rgba(122,184,255,.32);
  color:#a8c6e8}
 .chal.c2 b{color:#7ab8ff}
+.chal.own{background:rgba(127,224,127,.10);border-color:rgba(127,224,127,.38);
+ color:#a9dfa9}
+.chal.own b{color:#7fe07f}
+.owned{position:absolute;top:8px;right:34px;background:#7fe07f;color:#0e0f13;
+ font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:2px 7px;
+ border-radius:9px}
+.card:has(.owned){border-left-color:#7fe07f}
 .verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
  border-radius:11px;padding:15px 17px;margin:0 0 26px}
 .verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
