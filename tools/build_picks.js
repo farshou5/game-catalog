@@ -168,8 +168,12 @@ const CHALLENGE = {
   '2483': 'A RenderTexture per 3D object in UI is genuinely expensive on mobile GPUs. Use sparingly or not at all.',
   '2561': 'Probably unnecessary: a dwell/hold-to-confirm ring is just uGUI Image with fillMethod = Radial360, which is built in and free.',
   '4303': 'Low value, and UI trails add overdraw.',
-  '1962': 'Idle/tycoon economies are tap-driven meta loops — the opposite of our hands-free constraint.',
-  '2691': 'Redundant with the full Infinite Runner Engine above; buy one runner reference, not two.',
+  '1962': 'Idle/tycoon economies are tap-driven meta loops — the opposite of our hands-free constraint, and a parity tax across three platforms.',
+  '2691': 'Redundant with the full Infinite Runner Engine above; buy one runner reference, not three.',
+  '5629': 'Third runner reference. Redundant — pick one and read it properly.',
+  '1361': 'A customisation meta-feature we would then have to rebuild in Kotlin and Flutter. Skip until v2.',
+  '644': 'Thematically lovely for a win-screen dance, but Humanoid retargeting onto hypercasual rigs costs days. Later, not now.',
+  '1319': 'Borderline: it is a preset pack we could replicate from the docs in an afternoon.',
   '4003': 'Contested: tracking latency is roughly 50-150ms, so tight rhythm windows may be unfair. Only viable with generous timing and a calibration step.',
   '4937': 'Same latency caveat as the rhythm framework.',
   '240': 'Same latency caveat; also the most expensive of the three rhythm options.',
@@ -310,14 +314,29 @@ Check the pipeline badge on every VFX purchase.</li>
 a dwell-to-confirm ring is just a uGUI Image with <code>fillMethod =
 Radial360</code>. Do not pay for those.</li>
 </ol>
-<p>It also named a category neither of us can buy, which it rated above everything
-on this page: <b>input signal conditioning</b> — One Euro / Kalman filtering,
-hysteresis and cooldowns on gesture state changes. Jitter is what makes a
-two-metre UI feel broken, the fix is open-source rather than a purchase, and the
-same filter ports to the Kotlin and Flutter apps, so it is parity-positive.</p>
+<p>It also named the category neither of us can buy, and rated it above everything
+on this page: <b>the hands-free interaction layer itself</b>, in two parts.</p>
+<ol>
+<li><b>Dwell-confirm UI.</b> One focus manager, oversized targets, radial-fill
+dwell buttons at roughly 600–900ms, audio ticks on hover / dwell / confirm, a
+visible countdown that auto-advances game-over into retry, and one universal
+"hand raise = back" escape gesture. Small to build, but it <i>is</i> the app —
+every menu and retry flow lives or dies here.</li>
+<li><b>Signal conditioning + a written gesture spec.</b> One Euro filter on
+StickX/StickY, dead zones, button hysteresis (press at 0.7, release at 0.4),
+cooldowns. Write it once as a platform-neutral spec with golden-video regression
+clips — recorded landmark streams mapped to expected pad output, replayed on all
+three platforms. That is where Kotlin/Flutter/Unity parity actually lives, and no
+asset provides it.</li>
+</ol>
+<p>Runner-up missed category: crash / FPS / tracking-loss telemetry. IL2CPP arm64
+plus MediaPipe will fail in the wild in ways desk testing never reproduces.</p>
 <p>Its three-purchase budget answer: <b>Infinite Runner Engine</b>, <b>one large SFX
-library</b> (at two metres, audio is the only feedback channel that reaches the
-player), and <b>Ragdoll Animator 2</b> for fail-state juice.</p>
+library</b> (at two metres, with no haptics and no touch, audio IS the tactile
+feedback — every dwell tick, confirm, crash and countdown needs a sound), and
+<b>Ragdoll Animator 2</b> for fail-state juice. Its swap rule: if one of the four
+flagships is a flying game, trade the third for the flight system. And spend
+nothing on the performance category until a profiler — not a hunch — says so.</p>
 <p class="src">Codex (gpt-5.6-sol, xhigh) was asked the same four questions and
 produced no usable answer on two attempts — it spent the run on web searches and
 returned nothing. Only the Kimi review is reflected here.</p>
