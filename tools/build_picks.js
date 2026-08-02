@@ -196,8 +196,16 @@ const CHALLENGE2 = {
 // Already owned — verified on disk 2026-08-01, either in the Joystick project or
 // in the shared AssetsToCheck evaluation project on the same PC.
 const OWNED = {
+  '74': 'Already owned and downloaded (48 MB in the Asset Store cache), and installed. This was the single highest pick on the page — nothing to buy.',
   '4011': 'Already owned — sitting in the shared AssetsToCheck project (2.9 GB). Nothing to buy.',
   '1080': 'Already owned — in the shared AssetsToCheck project. Nothing to buy.',
+  '3754': 'Already owned and imported into AssetsToCheck on 2 Aug (RageRun Games / Easy Flying System). Nothing to buy.',
+  // Audio: 29 GB / 41,466 files already on disk in the Music2 library.
+  '3567': 'Covered by the Music2 library — 29 GB and 41,466 audio files already on disk. Nothing to buy.',
+  '928':  'Covered by the Music2 library. Nothing to buy.',
+  '2836': 'Covered by the Music2 library. Nothing to buy — and both reviewers called a Unity-only audio manager parity debt anyway.',
+  '1059': 'Covered by the Music2 library, which already includes impact and whoosh packs. Nothing to buy.',
+  '1070': 'Covered by the Music2 library, which already includes electronic and hybrid-action music packs. Nothing to buy.',
 };
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c =>
@@ -344,10 +352,12 @@ reviewers. They converged, independently, on the same uncomfortable answer:
 <b>this project's asset needs are already met.</b> Codex put it plainly —
 "input, feedback, UI, environments, roads, characters, vehicles, tracking and
 profiling are already sufficiently covered."</p>
-<p><b>The only genuine gap both of them named is audio.</b> Nothing owned covers
-music or sound effects, and at two metres — with no touch and no useful haptics
-from a propped-up phone — audio is the most dependable feedback channel there
-is. Codex adds one non-asset purchase worth more than any package here:
+<p><b>The single gap they named was audio — and that turned out to be already
+owned too.</b> The Music2 library holds <b>29 GB across 41,466 audio files</b>
+(SFX packs, engine sounds, combat magic, card-game UI, hybrid-action and
+classical music). Audio was the last thing on the buy list, and it was never
+needed. <b>The shopping list is now zero.</b></p>
+<p>The one purchase neither of them could cross off is not an asset at all:
 <b>representative low/mid-tier arm64 test phones</b>, because GPU contention and
 thermal throttling under MediaPipe cannot be reproduced in the editor.</p>
 <p><b>Owned but under-used, per both reviewers</b> — this is where the value
