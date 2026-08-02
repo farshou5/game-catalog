@@ -337,6 +337,9 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 .verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
  border-radius:11px;padding:15px 17px;margin:0 0 26px}
 .verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
+.verdict.endless{border-left-color:#7ab8ff}
+.verdict.endless h2{color:#7ab8ff;font-size:19px}
+.verdict.endless b{color:#e8e8ea}
 .verdict.final{border-left-color:#7fe07f}
 .verdict.final h2{color:#7fe07f;font-size:19px}
 .verdict.final b{color:#e8e8ea}
@@ -375,6 +378,64 @@ can be bought properly.</p>
   `<a href="#c${i}" style="border-color:${c.color};color:${c.color}">${esc(c.name)}</a>`).join('')}</div>
 </header>
 <main>
+<div class="verdict endless">
+<h2>Endless: the right call, but not the way endless games normally work</h2>
+<p>Both reviewers were asked whether endless is even correct for a hands-free,
+two-metre, pose-controlled game. Both said yes — and both immediately named the
+same failure mode, in near-identical terms. Codex called it
+<b>"fatigue-contaminated failure"</b>: as the player tires, their pose quality and
+the tracker's confidence decline <i>together</i>, so a long run eventually ends
+because their body or the camera failed, not because their decisions did. Kimi
+put the same point as "scores become a stamina contest instead of a skill
+contest."</p>
+<p><b>So: endless content, short runs.</b> What we want is an auto-restarting
+score-attack arcade, not Temple Run. Non-negotiables both agreed on:</p>
+<ul>
+<li><b>Tracking dropout must never kill a run.</b> Dropout is a system fault:
+freeze danger, forgive, resume on a neutral pose plus a visible countdown. An
+endless game that kills you on dropout is an unfairness machine.</li>
+<li><b>No one-touch death.</b> Always a shield or health reserve, so a single
+tracking glitch can't end a run.</li>
+<li><b>Death must be legible at two metres</b> and obviously the player's fault,
+or the auto-restart feels like the game discarding their run.</li>
+<li><b>Cap physical demand early; ramp complexity instead.</b> Plateau the speed
+(Kimi suggests ~60% of what a touch runner would reach), then add difficulty
+through patterns, simultaneity and feints — thinking harder, not moving faster.</li>
+<li><b>Mandatory rest beats</b> — a 2–4s low-demand valley every 20–30s, with
+score rewards placed <i>in</i> the valleys so resting doesn't feel like losing.</li>
+<li><b>Design a climax.</b> Around the 2.5–3 minute mark, a telegraphed intensity
+spike that ends most runs by the game's hand at a legible peak — far better than
+runs ending because the player wandered off.</li>
+<li><b>Use tracking confidence as a difficulty signal</b>: when it drops, freeze
+the ramp and spawn forgiving patterns. That is the concrete implementation of
+"dropout never kills".</li>
+</ul>
+<p><b>The four formats, where they agreed:</b> (1) <b>lane/dodge auto-runner</b> —
+StickX for lanes, A jump, B slide; the lowest jitter sensitivity and lowest
+physical demand of any format, and both ranked it first. (2) <b>endless driver</b>
+— steering is the most forgiving input there is, and we already own four vehicle
+stacks plus the road tools. (3) <b>wide-gate flyer</b> — forgiving because a gate
+is huge relative to input noise. (4) <b>arena survivor with auto-aim</b> — strong
+score-chase but the fatigue ceiling; ship it last.</p>
+<p><b>The traps — and one of them is uncomfortably close to home.</b> Both flagged
+<b>flappy-style one-tap timing games</b>: the whole game is a tight timing window,
+so every gesture false positive or negative becomes an unfair death. Both also
+flagged <b>rhythm and dance</b> (50–150ms variable pose latency means grading
+timing we cannot fairly measure — Kimi's note on Beat Detection was literally
+"resist"), <b>twin-stick and precision aiming</b> (one stick cannot move and aim,
+and a raised aiming arm is textbook gorilla-arm), <b>precision platformers</b>,
+and <b>anything with meta-progression menus</b>, which need selection UI we cannot
+offer without tripling gesture-menu work across three platforms.</p>
+<p><b>Where they split:</b> the retry seam. Kimi wants a fully automatic restart —
+score card, countdown, next run — on the grounds that a "RETRY?" prompt waits for
+input the player physically cannot give. Codex wants A = retry / B = menu with an
+idle timeout to game-select, warning that auto-restart traps the player in a loop.
+The synthesis is to auto-restart on a visible countdown, while showing a
+persistent exit gesture and falling back to the catalog on idle. They also split
+on run length: Kimi says 90–150s median, Codex 3–5 minutes; Kimi's is the safer
+figure for a standing player.</p>
+</div>
+
 <div class="verdict final">
 <h2>Final verdict, after a full inventory: buy almost nothing</h2>
 <p>On 1 Aug I inventoried what is actually installed on this PC — the Joystick
