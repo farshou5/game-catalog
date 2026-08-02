@@ -39,7 +39,7 @@ main{display:grid;gap:14px;padding:16px;
 .imgs{display:flex;gap:4px;margin:-12px -12px 10px;border-radius:11px 11px 0 0;
  overflow:hidden;background:#0b0c10}
 .imgs img{width:100%;height:120px;object-fit:cover;display:block;flex:1}
-.card h3{margin:0 0 4px;font-size:15px;padding-right:58px}
+.card h3{margin:0;font-size:15px;flex:1;min-width:0}
 .card h3 a{color:#e8e8ea;text-decoration:none}
 .card h3 a:hover{color:#7ab8ff}
 .meta{color:#8f909b;font-size:12px;margin-bottom:7px;text-transform:uppercase;
@@ -48,9 +48,10 @@ main{display:grid;gap:14px;padding:16px;
 .links{display:flex;gap:6px;flex-wrap:wrap}
 .links a{font-size:12.5px;font-weight:600;text-decoration:none;padding:5px 10px;
  border-radius:14px;border:1.5px solid #33343d;background:#1c1d24;color:#c8c9d0}
-.fav{position:absolute;top:8px;left:10px;z-index:2;background:rgba(14,15,19,.72);
- border:none;border-radius:50%;width:29px;height:29px;font-size:15px;
- color:#c8c9d0;cursor:pointer;line-height:1}
+.hdr{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px;
+ padding-right:58px}
+.fav{flex:0 0 auto;background:none;border:none;font-size:17px;color:#6d6e78;
+ cursor:pointer;line-height:1.15;padding:0}
 .fav.on{color:#ff5b6e}
 .card.faved{border-color:#ff5b6e}
 .stars{display:flex;gap:2px;margin-top:9px}
@@ -146,10 +147,10 @@ function makeCard(it){
  const yt='https://www.youtube.com/results?search_query='
   +encodeURIComponent(it.n+(it.k==='p'?' unity game':' unity asset'));
  el.innerHTML=
-  '<button class="fav" title="Favorite">♡</button>'
-  +'<span class="kind '+it.k+'">'+(it.k==='p'?'PROJECT':'ASSET')+'</span>'
+  '<span class="kind '+it.k+'">'+(it.k==='p'?'PROJECT':'ASSET')+'</span>'
   +(imgs?'<div class="imgs">'+imgs+'</div>':'')
-  +'<h3><a href="'+esc(it.src)+'" target="_blank" rel="noopener">'+esc(it.n)+'</a></h3>'
+  +'<div class="hdr"><button class="fav" title="Favorite">♡</button>'
+  +'<h3><a href="'+esc(it.src)+'" target="_blank" rel="noopener">'+esc(it.n)+'</a></h3></div>'
   +'<div class="meta">'+esc(it.cat||'')+(it.tier?' · '+esc(it.tier):'')
    +(it.ts?' · '+it.ts.slice(0,10):'')+'</div>'
   +'<p>'+esc(it.d||'')+'</p>'
