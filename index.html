@@ -100,7 +100,7 @@ document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='
 </head><body>
 <header>
  <div class="nav"><span class="here">Complete Projects</span><span>|</span><a href="assets.html">Assets</a><span>|</span><a href="joystick.html">🕹 Joystick</a><span>|</span><a href="picks.html">⭐ Top picks</a></div>
-<div class="tabs"><button class="tab active" data-tier="Bronze" style="--tc:#cd7f32">Bronze <span>501</span></button><button class="tab" data-tier="Silver" style="--tc:#b9bfc9">Silver <span>568</span></button><button class="tab" data-tier="Ruby" style="--tc:#e0446a">Ruby <span>49</span></button><button class="tab" data-tier="Gold" style="--tc:#e8b923">Gold <span>0</span></button></div>
+<div class="tabs"><button class="tab active" data-tier="*" style="--tc:#7fe07f">All <span>1118</span></button><button class="tab" data-tier="Bronze" style="--tc:#cd7f32">Bronze <span>501</span></button><button class="tab" data-tier="Silver" style="--tc:#b9bfc9">Silver <span>568</span></button><button class="tab" data-tier="Ruby" style="--tc:#e0446a">Ruby <span>49</span></button><button class="tab" data-tier="Gold" style="--tc:#e8b923">Gold <span>0</span></button></div>
  <div class="rrow" id="genrow"></div>
  <div class="rrow">Show:
   <button class="tab favtab" id="favtab" style="--tc:#ff5b6e">♥ My favorites
@@ -10204,11 +10204,12 @@ favtab=document.getElementById('favtab'),favn=document.getElementById('favn'),
 empty=document.getElementById('empty'),
 jump=document.getElementById('jump'),go=document.getElementById('go'),
 rbtns=[...document.querySelectorAll('.rbtn')];
-let tier='Bronze',favOnly=false,rfilter=null,genre=null;
+let tier='*',favOnly=false,rfilter=null,genre=null;
 const GENRES={"dance": "🕺 Dance & Music", "racing": "🏎 Racing & Driving", "flying": "🪂 Flying", "runner": "🏃 Runners & Parkour", "sports": "⚽ Sports", "shooter": "🔫 Shooters & Battle", "puzzle": "🧩 Puzzle & Cards", "sim": "🏗 Simulation & Idle", "action": "🗡 Action & Adventure", "arcade": "👾 Arcade & Casual", "other": "🎮 Other"};
 const genrow=document.getElementById('genrow');
+function tierHit(c){return tier==='*'||c.dataset.tier===tier;}
 function renderGenres(){const cnt={};
-for(const c of cards)if(c.dataset.tier===tier)
+for(const c of cards)if(tierHit(c))
 cnt[c.dataset.g]=(cnt[c.dataset.g]||0)+1;
 genrow.innerHTML='<button class="gbtn'+(genre===null?' active':'')+
 '" data-g="">All types</button>'+Object.keys(GENRES).filter(g=>cnt[g])
@@ -10253,8 +10254,8 @@ function paintStars(one){for(const c of(one?[one]:cards)){
 const r=ratings[c.dataset.id]||0;
 [...c.querySelectorAll('.star')].forEach((b,i)=>b.classList.toggle('on',i<r));}}
 function goTo(raw){const id=String(raw).trim().replace('#','');if(!id)return;
-const c=cards.find(x=>x.dataset.seq===id&&x.dataset.tier===tier);
-if(!c){count.textContent='no #'+id+' in '+tier;return;}
+const c=cards.find(x=>x.dataset.seq===id&&tierHit(x));
+if(!c){count.textContent='no #'+id+' in '+(tier==='*'?'any tier':tier);return;}
 favOnly=false;favtab.classList.remove('active');
 rfilter=null;rbtns.forEach(x=>x.classList.toggle('active',x.dataset.r===''));
 q.value='';apply();
@@ -10272,15 +10273,15 @@ favn.textContent=favs.size;}
 function apply(){const v=q.value.trim().toLowerCase(),
 vid=v.replace('#','');let n=0;
 for(const c of cards){const r=ratings[c.dataset.id]||0;
-const hit=(favOnly?favs.has(c.dataset.id):c.dataset.tier===tier&&
+const hit=(favOnly?favs.has(c.dataset.id):tierHit(c)&&
 (!genre||c.dataset.g===genre))&&
 (rfilter===null||r===rfilter)&&(!v||
 c.dataset.name.includes(v)||c.dataset.cat.includes(v)||
 c.dataset.seq===vid);
 c.classList.toggle('show',hit);if(hit)n++;}
-count.textContent=n+' shown · '+(favOnly?'♥ favorites':tier)+
+count.textContent=n+' shown · '+(favOnly?'♥ favorites':tier==='*'?'all tiers':tier)+
 (rfilter===null?'':rfilter===0?' · unrated':' · '+rfilter+'★');
-empty.style.display=n?'none':'';if(!n)empty.textContent=favOnly?'No favorites yet - tap the heart on any project to add one.':'Nothing matches this filter. '+tier+' has no projects'+(genre?' of this type':'')+'.';}
+empty.style.display=n?'none':'';if(!n)empty.textContent=favOnly?'No favorites yet - tap the heart on any project to add one.':'Nothing matches this filter'+(tier==='*'?'':' in '+tier)+(genre?' of this type':'')+'.';}
 for(const t of tabs)t.addEventListener('click',()=>{tier=t.dataset.tier;
 favOnly=false;favtab.classList.remove('active');
 tabs.forEach(x=>x.classList.toggle('active',x===t));
