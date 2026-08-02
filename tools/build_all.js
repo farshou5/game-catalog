@@ -120,6 +120,15 @@ main{display:grid;gap:14px;padding:16px;
 .links{display:flex;gap:6px;flex-wrap:wrap}
 .links a{font-size:12.5px;font-weight:600;text-decoration:none;padding:5px 10px;
  border-radius:14px;border:1.5px solid #33343d;background:#1c1d24;color:#c8c9d0}
+.fav{position:absolute;top:8px;left:10px;z-index:2;background:rgba(14,15,19,.72);
+ border:none;border-radius:50%;width:29px;height:29px;font-size:15px;
+ color:#c8c9d0;cursor:pointer;line-height:1}
+.fav.on{color:#ff5b6e}
+.card.faved{border-color:#ff5b6e}
+.stars{display:flex;gap:2px;margin-top:9px}
+.star{background:none;border:none;color:#3a3b45;font-size:16px;cursor:pointer;
+ padding:0 1px;line-height:1}
+.star.on{color:#f2c14e}
 #more{grid-column:1/-1;height:1px}
 #empty{grid-column:1/-1;color:#8f909b;padding:26px 4px}
 </style></head><body>
@@ -137,6 +146,16 @@ main{display:grid;gap:14px;padding:16px;
   <button class="chip" id="sTitle" data-s="title">Title only</button>
   <button class="chip active" id="sFull" data-s="full">Title + description</button>
   <span id="count"></span></div>
+ <div class="row"><span style="color:#8f909b;font-size:13px">Show:</span>
+  <button class="chip" id="favtab">♥ My favorites <span id="favn">0</span></button>
+  <span style="color:#8f909b;font-size:13px;margin-left:6px">Rating:</span>
+  <button class="chip active rbtn" data-r="">Any</button>
+  <button class="chip rbtn" data-r="5">★5</button>
+  <button class="chip rbtn" data-r="4">★4</button>
+  <button class="chip rbtn" data-r="3">★3</button>
+  <button class="chip rbtn" data-r="2">★2</button>
+  <button class="chip rbtn" data-r="1">★1</button>
+  <button class="chip rbtn" data-r="0">Unrated</button></div>
 </header>
 <main id="grid"><div id="empty" style="display:none">Nothing matches.</div><div id="more"></div></main>
 <script id="d" type="application/json">${JSON.stringify(DATA).replace(/</g, '\\u003c')}</script>
@@ -146,7 +165,34 @@ const GENRES=${JSON.stringify(GENRES)};
 const grid=document.getElementById('grid'),more=document.getElementById('more'),
  q=document.getElementById('q'),count=document.getElementById('count'),
  empty=document.getElementById('empty'),genrow=document.getElementById('genrow');
-let kind='*',genre=null,scope='full',view=[],rendered=0;const CHUNK=60;
+let kind='*',genre=null,scope='full',view=[],rendered=0,favOnly=false,rfilter=null;
+const CHUNK=60;
+
+// Same localStorage keys the other pages use, so hearts and stars set here show
+// up on Complete Projects / Assets / Joystick and vice versa.
+// projects -> gp_favs / gp_ratings   assets -> gpa_favs / gpa_ratings
+const KEY={p:{f:'gp_favs',r:'gp_ratings'},a:{f:'gpa_favs',r:'gpa_ratings'}};
+const FAVS={p:new Set(JSON.parse(localStorage.getItem('gp_favs')||'[]').map(String)),
+            a:new Set(JSON.parse(localStorage.getItem('gpa_favs')||'[]').map(String))};
+const RATS={p:JSON.parse(localStorage.getItem('gp_ratings')||'{}'),
+            a:JSON.parse(localStorage.getItem('gpa_ratings')||'{}')};
+const favSet=k=>FAVS[k], ratMap=k=>RATS[k];
+function saveFavs(k){localStorage.setItem(KEY[k].f,JSON.stringify([...FAVS[k]]));}
+function saveRatings(k){localStorage.setItem(KEY[k].r,JSON.stringify(RATS[k]));}
+function favCount(){return FAVS.p.size+FAVS.a.size;}
+
+function paintFav(el,it){const on=FAVS[it.k].has(it.id);
+ el.classList.toggle('faved',on);const b=el.querySelector('.fav');
+ b.textContent=on?'♥':'♡';b.classList.toggle('on',on);}
+function paintStars(el,it){const r=RATS[it.k][it.id]||0;
+ [...el.querySelectorAll('.star')].forEach((b,i)=>b.classList.toggle('on',i<r));}
+
+const SYNC='https://joystick-favs.farshoukh.workers.dev';let syncT=null;
+function pushSync(){clearTimeout(syncT);syncT=setTimeout(()=>{
+ fetch(SYNC+'/sync',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({gp_favs:[...FAVS.p],gpa_favs:[...FAVS.a],
+   gp_ratings:RATS.p,gpa_ratings:RATS.a})}).catch(()=>{});
+ const fc=document.getElementById('favn');if(fc)fc.textContent=favCount();},800);}
 
 function esc(s){const d=document.createElement('div');d.textContent=s==null?'':s;
  return d.innerHTML;}
@@ -172,22 +218,42 @@ function makeCard(it){
  const yt='https://www.youtube.com/results?search_query='
   +encodeURIComponent(it.n+(it.k==='p'?' unity game':' unity asset'));
  el.innerHTML=
-  '<span class="kind '+it.k+'">'+(it.k==='p'?'PROJECT':'ASSET')+'</span>'
+  '<button class="fav" title="Favorite">♡</button>'
+  +'<span class="kind '+it.k+'">'+(it.k==='p'?'PROJECT':'ASSET')+'</span>'
   +(imgs?'<div class="imgs">'+imgs+'</div>':'')
   +'<h3><a href="'+esc(it.src)+'" target="_blank" rel="noopener">'+esc(it.n)+'</a></h3>'
   +'<div class="meta">'+esc(it.cat||'')+(it.tier?' · '+esc(it.tier):'')
    +(it.ts?' · '+it.ts.slice(0,10):'')+'</div>'
   +'<p>'+esc(it.d||'')+'</p>'
   +'<div class="links"><a href="'+esc(it.src)+'" target="_blank" rel="noopener">Open ↗</a>'
-  +'<a href="'+yt+'" target="_blank" rel="noopener">🔍 YouTube</a></div>';
+  +'<a href="'+yt+'" target="_blank" rel="noopener">🔍 YouTube</a></div>'
+  +'<div class="stars">'+[1,2,3,4,5].map(i=>
+    '<button class="star" data-i="'+i+'">★</button>').join('')+'</div>';
+
+ const fb=el.querySelector('.fav');
+ paintFav(el,it);
+ fb.addEventListener('click',()=>{
+  const s=favSet(it.k);
+  s.has(it.id)?s.delete(it.id):s.add(it.id);
+  saveFavs(it.k);paintFav(el,it);pushSync();
+  if(favOnly)refresh();});
+
+ paintStars(el,it);
+ el.querySelectorAll('.star').forEach(b=>b.addEventListener('click',()=>{
+  const r=ratMap(it.k),i=+b.dataset.i;
+  if(r[it.id]===i)delete r[it.id];else r[it.id]=i;
+  saveRatings(it.k);paintStars(el,it);pushSync();
+  if(rfilter!==null)refresh();}));
  return el;
 }
 
 function compute(){
  const v=q.value.trim().toLowerCase();
  view=DATA.filter(it=>{
+  if(favOnly&&!FAVS[it.k].has(it.id))return false;
   if(kind!=='*'&&it.k!==kind)return false;
   if(genre&&it.g!==genre)return false;
+  if(rfilter!==null&&(RATS[it.k][it.id]||0)!==rfilter)return false;
   if(!v)return true;
   if(it.n.toLowerCase().includes(v))return true;
   if(scope==='title')return false;
@@ -225,7 +291,26 @@ q.addEventListener('input',refresh);
 document.addEventListener('error',function(e){const t=e.target;
  if(t&&t.tagName==='IMG'&&t.closest&&t.closest('.card'))t.style.display='none';},true);
 
+document.getElementById('favtab').addEventListener('click',function(){
+ favOnly=!favOnly;this.classList.toggle('active',favOnly);refresh();});
+[...document.querySelectorAll('.rbtn')].forEach(b=>b.addEventListener('click',()=>{
+ rfilter=b.dataset.r===''?null:+b.dataset.r;
+ document.querySelectorAll('.rbtn').forEach(x=>x.classList.toggle('active',x===b));
+ refresh();}));
+
+document.getElementById('favn').textContent=favCount();
 renderGenres();refresh();
+
+// pull anything favourited/rated on the other pages or another device
+fetch(SYNC+'/state').then(r=>r.json()).then(srv=>{
+ let changed=false;
+ for(const [k,sk] of [['p','gp_favs'],['a','gpa_favs']])
+  for(const id of (srv[sk]||[])) if(!FAVS[k].has(String(id))){FAVS[k].add(String(id));changed=true;}
+ for(const [k,sk] of [['p','gp_ratings'],['a','gpa_ratings']])
+  for(const id in (srv[sk]||{})) if(!(id in RATS[k])){RATS[k][id]=srv[sk][id];changed=true;}
+ if(changed){saveFavs('p');saveFavs('a');saveRatings('p');saveRatings('a');
+  document.getElementById('favn').textContent=favCount();refresh();}
+}).catch(()=>{});
 </script>
 </body></html>`;
 
