@@ -202,6 +202,12 @@ const OWNED = {
   '1080': 'Already owned — in the shared AssetsToCheck project. Nothing to buy.',
   '1975': 'Redundant: PuppetMaster is already owned and imported, and the same RootMotion folder also ships RagdollManager. This was the "buy one of the two" alternative — both are already covered.',
   '3754': 'Already owned and imported into AssetsToCheck on 2 Aug (RageRun Games / Easy Flying System). Nothing to buy.',
+  '170':  'Already owned and imported — Assets/Plugins/Demigiant/DOTweenPro. Nothing to buy.',
+  '4003': 'Already owned and imported — Assets/Dypsloom/RhythmTimeline (49 MB). Nothing to buy.',
+  '4937': 'Already owned and imported — Assets/Beat Detection. Its 4 demo scripts needed a GUIText fix to compile on Unity 6; done 2 Aug.',
+  '2005': 'Already owned and imported — Assets/Animo/AA.Hip.Hop (37 MB).',
+  '644':  'Already owned and imported — Assets/Dance_MoCap_Collection_Update (346 MB).',
+  '1411': 'Superseded: Amplify Impostors is already owned and is the better tool here — it BAKES impostors in-editor (vendor wiki: "currently only provides the in-editor baked variant"), so there is zero runtime generation cost. A runtime impostor generator spends GPU at play time, which is exactly what MediaPipe has already taken. Use Amplify if impostors are ever needed at all — and for Joystick they are not.',
   // Audio: 29 GB / 41,466 files already on disk in the Music2 library.
   '3567': 'Covered by the Music2 library — 29 GB and 41,466 audio files already on disk. Nothing to buy.',
   '928':  'Covered by the Music2 library. Nothing to buy.',

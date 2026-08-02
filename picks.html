@@ -400,16 +400,16 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Rhythm &amp; beat (Daily Moves)</h2>
   <p class="note">Rhythm is the one genre where a hands-free, 2m-away player is ideal rather than a compromise — it needs almost no precision from the tracker, only timing. But the two MOVE LIBRARIES below are the wrong way to get reference moves: record them through our own MediaPipe pipeline instead. We already have the machinery (the virtual-human replay harness records and replays landmark streams). Only the beat/timing tools are worth considering, and both reviewers flagged even those as risky against 50-150ms tracking latency.</p>
   <div class="grid">
-<article class="card" data-own="need">
+<article class="card" data-own="owned">
   <span class="num">6</span>
-  
+  <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/20/e3/20e3284d82e028e4aa548a6718e2a2bbcbffcfa8f55ebe38628c75a9899ca49a" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Rhythm Timeline 2 - Rhythm Game Framework &amp; Editor</h3>
   <div class="meta">audio &gt; Tools &middot; 56 pts</div>
   <p class="why">Rhythm Timeline 2 — a rhythm framework WITH an editor. This is the fastest credible route to the Daily Moves feature across all three apps.</p>
   <p class="map"><b>Control mapping:</b> gesture hits mapped to note lanes</p>
-  
+  <p class="chal own"><b>You already own this:</b> Already owned and imported — Assets/Dypsloom/RhythmTimeline (49 MB). Nothing to buy.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Contested: tracking latency is roughly 50-150ms, so tight rhythm windows may be unfair. Only viable with generous timing and a calibration step.</p>
   
@@ -419,16 +419,16 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Rhythm%20Timeline%202%20-%20Rhythm%20Game%20Framework%20%26%20Editor%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card" data-own="need">
+<article class="card" data-own="owned">
   <span class="num">7</span>
-  
+  <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/0b/3f/0b3fef13030caf9f5b59e354e7a368c2e3b8b1a4c217ca70e264ef60258220b4" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Beat Detection</h3>
   <div class="meta">audio &gt; Tools &middot; 35 pts</div>
   <p class="why">Beat Detection — real-time beat extraction, so moves can sync to any track the player has rather than only pre-authored charts.</p>
   <p class="map"><b>Control mapping:</b> Sync body-move prompts to music beats</p>
-  
+  <p class="chal own"><b>You already own this:</b> Already owned and imported — Assets/Beat Detection. Its 4 demo scripts needed a GUIText fix to compile on Unity 6; done 2 Aug.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Same latency caveat as the rhythm framework.</p>
   
@@ -457,16 +457,16 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Koreographer%20Professional%20Edition%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card" data-own="need">
+<article class="card" data-own="owned">
   <span class="num">9</span>
-  
+  <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/cc/84/cc84567823ad30169c39b2506dfa923fca7ee87ecc59400d29d2d9efeb4b213a" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>AA_Hip_Hop</h3>
   <div class="meta">3D &gt; animations &middot; 35 pts</div>
   <p class="why">Hip-hop animation set — the reference moves the player copies.</p>
   <p class="map"><b>Control mapping:</b> Pose-match dance moves to beat</p>
-  
+  <p class="chal own"><b>You already own this:</b> Already owned and imported — Assets/Animo/AA.Hip.Hop (37 MB).</p>
   <p class="chal sup"><b>Don't buy — record it instead:</b> Same reason as the mocap collection: record the reference moves through our own pipeline instead. Free, no retargeting, and parity-portable across all three apps.</p>
   
   
@@ -476,16 +476,16 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=AA_Hip_Hop%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card" data-own="need">
+<article class="card" data-own="owned">
   <span class="num">10</span>
-  
+  <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/85/48/85480d9f34a90d13fd3ed3ce1d61b5b491bfb27faa01b4fb8045465ba4f88c77" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Dance MoCap Collection</h3>
   <div class="meta">3D &gt; animations &middot; 56 pts</div>
   <p class="why">Dance MoCap Collection — a larger move library to score the player against.</p>
   <p class="map"><b>Control mapping:</b> Avatar mirrors player dance moves</p>
-  
+  <p class="chal own"><b>You already own this:</b> Already owned and imported — Assets/Dance_MoCap_Collection_Update (346 MB).</p>
   <p class="chal sup"><b>Don't buy — record it instead:</b> Our animation source is the PLAYER, live, through MediaPipe. A dance mode needs a reference to score against, and that reference is better recorded through our own tracking pipeline than bought as mocap: no Humanoid retargeting, the data is already in landmark form so scoring is a direct comparison, and the same recording replays in Kotlin and Flutter. A Unity .anim clip does none of that.</p>
   <p class="chal"><b>Kimi disagrees:</b> Thematically lovely for a win-screen dance, but Humanoid retargeting onto hypercasual rigs costs days. Later, not now.</p>
   
@@ -501,16 +501,16 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Game feel &amp; juice</h2>
   <p class="note">Feel (More Mountains) is already in the Unity project — these are the layers Feel does not cover: tweened menus, shake presets, and cheap stylised burst VFX for hit/score moments.</p>
   <div class="grid">
-<article class="card" data-own="need">
+<article class="card" data-own="owned">
   <span class="num">11</span>
-  
+  <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/fd/9e/fd9e96825a766c334cdb3f5b2c3222ee2f810fa007681b3535953b02afb726cf" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>DOTween Pro</h3>
   <div class="meta">Tools &gt; visual scripting &middot; 35 pts</div>
   <p class="why">The tween library everything else assumes. Our hands-free menus need dwell-to-select rings, scale pops and eased slide-ins driven from code — DOTween does all of it in one line and is mobile-cheap.</p>
   
-  
+  <p class="chal own"><b>You already own this:</b> Already owned and imported — Assets/Plugins/Demigiant/DOTweenPro. Nothing to buy.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Feel already ships DOTween-based feedbacks, and plain DOTween is free — Pro only adds visual editors we would not use.</p>
   
@@ -659,16 +659,16 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=AnimatorLOD%20Pro%20-%20Animator%20Optimizer%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card" data-own="need">
+<article class="card" data-own="owned">
   <span class="num">19</span>
-  
+  <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/55/a5/55a567cf0d5bd01011231255b632e3d359fd542e143b91df16cfb119910d5c92" alt=""
     onerror="this.parentElement.style.display='none'"></div>
   <h3>Impostors - Runtime Optimization</h3>
   <div class="meta">Tools &gt; utilities &middot; 125 pts</div>
   <p class="why">Impostors for distant scenery — turns background Synty props into billboards. Big win for endless runners with long view distances.</p>
   
-  
+  <p class="chal own"><b>You already own this:</b> Superseded: Amplify Impostors is already owned and is the better tool here — it BAKES impostors in-editor (vendor wiki: &quot;currently only provides the in-editor baked variant&quot;), so there is zero runtime generation cost. A runtime impostor generator spends GPU at play time, which is exactly what MediaPipe has already taken. Use Amplify if impostors are ever needed at all — and for Joystick they are not.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Impostors are for big scenes with distant crowds. Our scenes are vignettes — wrong problem, and often URP-only.</p>
   
