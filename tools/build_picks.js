@@ -236,7 +236,8 @@ const sections = CATS.map((cat, ci) => {
       : 'https://gamepackage.net/assets/' + id;
     const yt = it.yt || ('https://www.youtube.com/results?search_query=' +
       encodeURIComponent(it.n + (isProj ? ' unity game' : ' unity asset')));
-    return `<article class="card">
+    const ownState = OWNED[rawId] ? 'owned' : 'need';
+    return `<article class="card" data-own="${ownState}">
   <span class="num">${ci * 5 + i + 1}</span>
   ${OWNED[rawId] ? '<span class="owned">OWNED</span>' : ''}
   ${img ? `<div class="thumb"><img loading="lazy" src="${esc(img)}" alt=""
@@ -283,6 +284,15 @@ header{background:#15161c;padding:16px 18px;border-bottom:1px solid #2a2b33}
 .nav span{color:#5a5b66;margin:0 8px}
 h1{margin:0 0 6px;font-size:22px}
 header p{margin:0;color:#9a9aa5;font-size:14px;max-width:70ch}
+.ownfilter{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.ownfilter .lbl{color:#8f909b;font-size:13px}
+.ofb{padding:7px 15px;border-radius:17px;border:1.5px solid #33343d;
+ background:#1c1d24;color:#c8c9d0;font-size:13.5px;font-weight:600;cursor:pointer}
+.ofb span{opacity:.55;font-weight:400;margin-left:3px}
+.ofb.active{border-color:#7fe07f;color:#7fe07f;
+ background:color-mix(in srgb,#7fe07f 12%,#1c1d24)}
+.cat.hidden{display:none}
+.card.hidden{display:none}
 .toc{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .toc a{padding:6px 13px;border-radius:16px;border:1.5px solid #33343d;
  background:#1c1d24;color:#c8c9d0;font-size:13px;font-weight:600;
@@ -355,6 +365,12 @@ Android arm64 with MediaPipe tracking already eating the frame budget, four
 flagship games, and a player standing two metres from a propped phone who
 cannot touch the screen. Every card links to the Unity Asset Store page so it
 can be bought properly.</p>
+<div class="ownfilter">
+  <span class="lbl">Show:</span>
+  <button class="ofb active" data-own="all">All <span id="nAll"></span></button>
+  <button class="ofb" data-own="owned">✓ Already owned <span id="nOwned"></span></button>
+  <button class="ofb" data-own="need">Not owned yet <span id="nNeed"></span></button>
+</div>
 <div class="toc">${CATS.map((c, i) =>
   `<a href="#c${i}" style="border-color:${c.color};color:${c.color}">${esc(c.name)}</a>`).join('')}</div>
 </header>
@@ -500,6 +516,36 @@ under the account that builds it.</p>
 <p>Already in the project: More Mountains <b>Feel</b>, Synty
 <b>POLYGON City / Town / Nature</b>. Those are deliberately excluded above.</p>
 </footer>
+<script>
+(function () {
+  var cards = [].slice.call(document.querySelectorAll('.card'));
+  var cats = [].slice.call(document.querySelectorAll('.cat'));
+  var btns = [].slice.call(document.querySelectorAll('.ofb'));
+  var owned = cards.filter(function (c) { return c.dataset.own === 'owned'; }).length;
+
+  document.getElementById('nAll').textContent = cards.length;
+  document.getElementById('nOwned').textContent = owned;
+  document.getElementById('nNeed').textContent = cards.length - owned;
+
+  function apply(mode) {
+    cards.forEach(function (c) {
+      c.classList.toggle('hidden', mode !== 'all' && c.dataset.own !== mode);
+    });
+    // hide a category heading entirely when nothing in it survives the filter
+    cats.forEach(function (s) {
+      var visible = s.querySelectorAll('.card:not(.hidden)').length;
+      s.classList.toggle('hidden', visible === 0);
+    });
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      apply(b.dataset.own);
+    });
+  });
+})();
+</script>
 </body></html>`;
 
 fs.writeFileSync(path.join(ROOT, 'picks.html'), out);

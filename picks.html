@@ -15,6 +15,15 @@ header{background:#15161c;padding:16px 18px;border-bottom:1px solid #2a2b33}
 .nav span{color:#5a5b66;margin:0 8px}
 h1{margin:0 0 6px;font-size:22px}
 header p{margin:0;color:#9a9aa5;font-size:14px;max-width:70ch}
+.ownfilter{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.ownfilter .lbl{color:#8f909b;font-size:13px}
+.ofb{padding:7px 15px;border-radius:17px;border:1.5px solid #33343d;
+ background:#1c1d24;color:#c8c9d0;font-size:13.5px;font-weight:600;cursor:pointer}
+.ofb span{opacity:.55;font-weight:400;margin-left:3px}
+.ofb.active{border-color:#7fe07f;color:#7fe07f;
+ background:color-mix(in srgb,#7fe07f 12%,#1c1d24)}
+.cat.hidden{display:none}
+.card.hidden{display:none}
 .toc{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .toc a{padding:6px 13px;border-radius:16px;border:1.5px solid #33343d;
  background:#1c1d24;color:#c8c9d0;font-size:13px;font-weight:600;
@@ -87,6 +96,12 @@ Android arm64 with MediaPipe tracking already eating the frame budget, four
 flagship games, and a player standing two metres from a propped phone who
 cannot touch the screen. Every card links to the Unity Asset Store page so it
 can be bought properly.</p>
+<div class="ownfilter">
+  <span class="lbl">Show:</span>
+  <button class="ofb active" data-own="all">All <span id="nAll"></span></button>
+  <button class="ofb" data-own="owned">✓ Already owned <span id="nOwned"></span></button>
+  <button class="ofb" data-own="need">Not owned yet <span id="nNeed"></span></button>
+</div>
 <div class="toc"><a href="#c0" style="border-color:#ff3d7f;color:#ff3d7f">Pose → avatar core</a><a href="#c1" style="border-color:#00c8c8;color:#00c8c8">Rhythm &amp; beat (Daily Moves)</a><a href="#c2" style="border-color:#f2c14e;color:#f2c14e">Game feel &amp; juice</a><a href="#c3" style="border-color:#7fe07f;color:#7fe07f">Mobile performance (arm64)</a><a href="#c4" style="border-color:#7ab8ff;color:#7ab8ff">Endless / arcade templates (study, do not ship)</a><a href="#c5" style="border-color:#c58cff;color:#c58cff">Characters &amp; animation</a><a href="#c6" style="border-color:#4ec9a8;color:#4ec9a8">HUD &amp; UI for a 2m-away player</a><a href="#c7" style="border-color:#ff9f5b;color:#ff9f5b">Environments (extends the Synty packs we own)</a><a href="#c8" style="border-color:#ff5b6e;color:#ff5b6e">Audio</a><a href="#c9" style="border-color:#ffd23d;color:#ffd23d">Complete projects — pose-native genres</a><a href="#c10" style="border-color:#a0e060;color:#a0e060">Complete projects — runner architecture</a></div>
 </header>
 <main>
@@ -223,7 +238,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Pose → avatar core</h2>
   <p class="note">The highest-leverage category in the whole list — everything here turns noisy MediaPipe landmarks into a body that moves believably, which is the actual product. And as of 2 Aug, ALL FIVE ARE ALREADY OWNED. Assets/Plugins/RootMotion in the shared project holds Final IK (32 MB) AND PuppetMaster (55 MB), and throws in Baker and RagdollManager on top. Nothing in this category needs buying — it needs using.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">1</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/93/56/9356a3bb268931353c18c3716232d85bfac80b06823f5a5c01677e27027d355e" alt=""
@@ -242,7 +257,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Final%20IK%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">2</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/a9/9d/a99d93e1027070bf970646180809c47823edef2ea1c3f5fdf65bd6cfaae91a99" alt=""
@@ -261,7 +276,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=PuppetMaster%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">3</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/42/63/42639d7955522953aa78b8c44dd7d832f9f0e2fce5bd28f03073012210422218" alt=""
@@ -280,7 +295,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=OpenCV%20for%20Unity%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">4</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/f7/ad/f7add58775d9c498c697a57f1626e5623dd1b8279b963a983c546a64a941d68c" alt=""
@@ -299,7 +314,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Character%20Controller%20Pro%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">5</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/85/2d/852d08958a5169bb7259b814adbf469c5213331fdacd2c00a44dd27511b9bcbb" alt=""
@@ -324,7 +339,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Rhythm &amp; beat (Daily Moves)</h2>
   <p class="note">Rhythm is the one genre where a hands-free, 2m-away player is ideal rather than a compromise — it needs almost no precision from the tracker, only timing. But the two MOVE LIBRARIES below are the wrong way to get reference moves: record them through our own MediaPipe pipeline instead. We already have the machinery (the virtual-human replay harness records and replays landmark streams). Only the beat/timing tools are worth considering, and both reviewers flagged even those as risky against 50-150ms tracking latency.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">6</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/20/e3/20e3284d82e028e4aa548a6718e2a2bbcbffcfa8f55ebe38628c75a9899ca49a" alt=""
@@ -343,7 +358,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Rhythm%20Timeline%202%20-%20Rhythm%20Game%20Framework%20%26%20Editor%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">7</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/0b/3f/0b3fef13030caf9f5b59e354e7a368c2e3b8b1a4c217ca70e264ef60258220b4" alt=""
@@ -362,7 +377,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Beat%20Detection%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">8</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/24/53/2453f2292e985ff889146d557143855208f0acec7275ec054f35778cbc8fbcb7" alt=""
@@ -381,7 +396,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Koreographer%20Professional%20Edition%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">9</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/cc/84/cc84567823ad30169c39b2506dfa923fca7ee87ecc59400d29d2d9efeb4b213a" alt=""
@@ -400,7 +415,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=AA_Hip_Hop%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">10</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/85/48/85480d9f34a90d13fd3ed3ce1d61b5b491bfb27faa01b4fb8045465ba4f88c77" alt=""
@@ -425,7 +440,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Game feel &amp; juice</h2>
   <p class="note">Feel (More Mountains) is already in the Unity project — these are the layers Feel does not cover: tweened menus, shake presets, and cheap stylised burst VFX for hit/score moments.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">11</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/fd/9e/fd9e96825a766c334cdb3f5b2c3222ee2f810fa007681b3535953b02afb726cf" alt=""
@@ -444,7 +459,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=DOTween%20Pro%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">12</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/a8/a9/a8a96feb8cb3eef003dd1215c689a8283ba0f975e2c4c79e2659b0f9f18bf961" alt=""
@@ -463,7 +478,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Camera%20Shake%20FX%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">13</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/0c/7d/0c7db4e9a7f0d8451f4b608cfdc5f47a818ca1d00c9bf17ac21ff2bea190b25f" alt=""
@@ -482,7 +497,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Super%20Confetti%20FX%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">14</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/94/29/9429342f9ccce9cb1bb79076648ca218f1c901429b2cd524f5f73184b8e2dd83" alt=""
@@ -501,7 +516,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Break%20Items%20-%20Toon%20VFX%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">15</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/17/08/170808922104f25150e5483e530db03afcd691f670ec7f4db31361828e63eeb0" alt=""
@@ -526,7 +541,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Mobile performance (arm64)</h2>
   <p class="note">The single biggest risk in this project: MediaPipe tracking already eats a large slice of the frame budget, so game rendering has to be unusually cheap. These pay for themselves the first time a flagship drops below 60fps.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">16</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/b4/ab/b4abb62be554b11763a92484fc8a7e298711bdd7b38ca48c8b9d7fe94ccf48b4" alt=""
@@ -545,7 +560,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=4%20Optimization%20Tools%20in%201%3A%20Mesh%20Combiner%20Baker%20%2B%20Mesh%20Optimizer%20%2B%20Object%20Pooling%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">17</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/ed/46/ed46bba56249a52f6e2d26227c2c03186d5c5d0a6742d7be29c289168b0f746b" alt=""
@@ -564,7 +579,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Advanced%20Culling%20System%202%20-%20Complete%20Optimization%20Solution%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">18</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/9a/8a/9a8ae37ac6024ce9ef77d310b4da36e14f045763957622fb159ccf6067af0f16" alt=""
@@ -583,7 +598,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=AnimatorLOD%20Pro%20-%20Animator%20Optimizer%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">19</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/55/a5/55a567cf0d5bd01011231255b632e3d359fd542e143b91df16cfb119910d5c92" alt=""
@@ -602,7 +617,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Impostors%20-%20Runtime%20Optimization%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">20</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/92/65/92652ad0c566e6627ba586192c6f7c874ea147315f18a3e9e71908e3abf1dc7a" alt=""
@@ -627,7 +642,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Endless / arcade templates (study, do not ship)</h2>
   <p class="note">Buy these to read, not to ship. Our games must only ever read StickX/StickY/ButtonA/ButtonB, so template input layers get thrown away — what we want is their spawn/difficulty/scoring architecture.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">21</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/24/e6/24e6f15653bcb3edc7435ce93e5bd7d82b7fade04e0c361bd16603f66a9d9511" alt=""
@@ -646,7 +661,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=2D%2B3D%20Infinite%20Runner%20Engine%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">22</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/c9/d1/c9d1445ec9e687a0d9d330ab51254ce404da18672db7dda2b45b8729971e51b1" alt=""
@@ -665,7 +680,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Hypercasual%20-%20Runner%20Starter%20Kit%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">23</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/91/b6/91b6e911b6d7dee6933a1c2e79605788e3cadc2fea8a1ad7f360fc51aad6c6ad" alt=""
@@ -684,7 +699,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=HyperCasual%20-%20Arcade%20Idle%20Engine%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">24</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/3a/26/3a26f52ff80e74656d1dbcccca4e4c175f0aeccd31b0bbaca26c61f66232998c" alt=""
@@ -703,7 +718,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Endless%20Tunnel%20-%20Infinite%20Hyper%20Casual%20Game%20-%20Complete%20Project%20%7C%20Packs%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">25</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/e2/97/e297b6b10340cb46d9115c68d5241d73f072d581fb96fa650bc89d0492cb2185" alt=""
@@ -728,7 +743,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Characters &amp; animation</h2>
   <p class="note">Read this category narrowly. The player-driven avatar gets its motion from the PLAYER — Final IK retargets live landmarks onto the rig, so bought locomotion clips are not what animates it. Clips are only needed for characters we do not drive from pose (obstacles, NPCs) and for the moments tracking is not driving the avatar at all: menus, idle, celebrate, game over, and the fallback blend when tracking confidence drops. Cheap stylised RIGS still matter; large clip libraries mostly do not.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">26</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/13/4a/134ab90c6b8d26143faceb45531c1303948fc81644ec7355d9fd5bea034ec81d" alt=""
@@ -747,7 +762,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=HYPERCASUAL%20-%20Simple%20Characters%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">27</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/c6/dd/c6ddf845135de64e9967cc67be8414a72308e98594a4cb854e69f847dbe1c856" alt=""
@@ -766,7 +781,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=HYPERCASUAL%20-%20Stickman%20Customization%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">28</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/61/88/6188b6b8391f1f504e110962aeccade5aa60d2788886758509d3ad70000ea18b" alt=""
@@ -785,7 +800,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Parkour%20Animation%20Set%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">29</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/08/75/08755e4c5ce3b71e40be306f5840556e7cf9ef7dc795a28a656bcd6af36e05d8" alt=""
@@ -804,7 +819,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Flying%20Animation%20Pack%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">30</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/d2/a1/d2a13dad81d955bcee59c4a89bfdcb064813c23e9589c6aa829a463da50fc310" alt=""
@@ -829,7 +844,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>HUD &amp; UI for a 2m-away player</h2>
   <p class="note">Our hardest UX constraint: the player cannot touch the phone and is standing two metres away. Everything must be large, world-space where possible, and selectable by dwell/gesture.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">31</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/07/18/0718d4f0a39e55998dbcf9e4591767bb7befb19838327785af3451e8220e9b55" alt=""
@@ -848,7 +863,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=3D%20Hypercasual%20Meters%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">32</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/b9/4c/b94ca9fc6f8164381f04b73e7db6bd7ec09657c7020cb973461796999a35d935" alt=""
@@ -867,7 +882,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=3D%20Object%20Image%20for%20UGUI%20-%20MiniMap%20Inventory%20Portrait%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">33</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/72/fd/72fdea1ed1c798480ec9a7b0c914b06f41077575508130248e23c6080b8fd9fb" alt=""
@@ -886,7 +901,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=AMS%20UI%20Soft%20Mask%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">34</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/04/c8/04c8a8752838b06afcb14e3159c6bdb61380d567c0fb18ddb0bd2447a813f3ee" alt=""
@@ -905,7 +920,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=GOOD%20UI%20Icon%20Trail%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">35</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/db/1e/db1e2605342467cdd8ea44b97b75ab9ccf4b697f47b66498d3a62d3d32a1279c" alt=""
@@ -930,7 +945,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Environments (extends the Synty packs we own)</h2>
   <p class="note">We already own POLYGON City / Town / Nature. These extend that exact art style so re-skins stay consistent across all games and no new shader/material work is needed.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">36</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/55/ed/55ed0502976531eb5af678eac3e7facf021877c44a37f4893326a0561585744e" alt=""
@@ -949,7 +964,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=POLYGON%20-%20Adventure%20Pack%20-%20Art%20by%20Synty%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">37</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/d8/55/d855a0588b12aacb4b145e5a20f7257b235d1b2a8fdabe2b19cb9076f35158df" alt=""
@@ -968,7 +983,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=POLYGON%20-%20Alpine%20Mountain%20-%20Nature%20Biomes%20-%203D%20Environment%20Art%20by%20Synty%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">38</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/4d/0f/4d0f5bb8af0f0c13742d21f8b7b624ee2feb3f2af63f21c68360b85ab5260afb" alt=""
@@ -987,7 +1002,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=POLYGON%20-%20City%20Characters%20Pack%20-%20Art%20by%20Synty%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">39</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/72/64/726413b7fc0b85543998ca026bfd15281c154dc9d5cb303642978766b9bb12e2" alt=""
@@ -1006,7 +1021,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=AllSky%20-%20220%2B%20Sky%20%2F%20Skybox%20Set%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">40</span>
   
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/5d/0e/5d0eae0c9ee89190cba4859db342caa7f13759ff84c073e6035dff35492da2ab" alt=""
@@ -1031,7 +1046,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Audio</h2>
   <p class="note">Audio is doing double duty for us: it is the only feedback channel that works when the player is looking away from a phone 2m away. Sound is arguably higher value than art here.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">41</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/b5/e3/b5e366976cbc8375e4d3648e1fd2142f4cf525bab8897844470a7e34ff3eb269" alt=""
@@ -1050,7 +1065,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=2000%20Game%20Sound%20FX%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">42</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/10/93/1093d03be32830576548cbf83614a0d4fc7de595a69912d3f0ccad76f2458d0f" alt=""
@@ -1069,7 +1084,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Ambient%20Sounds%20-%20Interactive%20Soundscapes%20for%20Unity%206%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">43</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/17/fc/17fc22c8506c9f6503c529ad162852e82575e04dc0e474d419cfc7bf70766f83" alt=""
@@ -1088,7 +1103,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=BT%20-%20Sound%20System%20Pro%3A%20Advanced%20Audio%20Manager%20(Easy%20%26%20Optimize)%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">44</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/16/ff/16ffd982371e5be4bcfec32a53da50841f09f109c5efafecb8f729407297741a" alt=""
@@ -1107,7 +1122,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/results?search_query=Impacts%2C%20Hits%20%26%20Whooshes%20unity%20asset" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="owned">
   <span class="num">45</span>
   <span class="owned">OWNED</span>
   <div class="thumb"><img loading="lazy" src="https://dl.gamepackage.net/game-package-asset-media/assets/images/46/a2/46a261acbf3e04a5e6fd7f8c475b1f448c4179ed261c988deb14efdea95e0fc0" alt=""
@@ -1132,7 +1147,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Complete projects — pose-native genres</h2>
   <p class="note">Ready-made projects whose ORIGINAL design already assumes a whole moving body. These are not re-skins, they are the genres our control scheme was born for — the closest thing to a shortcut this project has.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">46</span>
   
   <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2024/12/yoga-fever-e1735377283119.webp" alt=""
@@ -1151,7 +1166,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/watch?v=R0FbEPZv5Cg" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">47</span>
   
   <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2025/07/squid-game-e1752854604268.webp" alt=""
@@ -1170,7 +1185,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/watch?v=L7fNBqPLmtA" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">48</span>
   
   <div class="thumb"><img loading="lazy" src="https://www.sellanycode.com/system/assets/uploads/products/TwerkItBodyRacetoptrendinggame_sellanycode_featured_image_1671805684.png" alt=""
@@ -1189,7 +1204,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/watch?v=nGD-A-TvQlE" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">49</span>
   
   <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2025/08/timberman-e1756290133633.webp" alt=""
@@ -1208,7 +1223,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/watch?v=CS13yB-rssI" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">50</span>
   
   <div class="thumb"><img loading="lazy" src="https://www.sellmyapp.com/wp-content/uploads/featured_image58999ac3f0ca7.png" alt=""
@@ -1233,7 +1248,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h2>Complete projects — runner architecture</h2>
   <p class="note">Buy these for their spawn/difficulty/scoring code, not their content. Endless runners are the flagship shape for lean-to-steer, and their input layer is the only part we throw away.</p>
   <div class="grid">
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">51</span>
   
   <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2024/08/3dflexrunner-e1725091667427.webp" alt=""
@@ -1252,7 +1267,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/watch?v=d9asKCRMWtA" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">52</span>
   
   <div class="thumb"><img loading="lazy" src="https://devassetlibrary.com/wp-content/uploads/2020/09/run-racer-3d-e1599972384270.png" alt=""
@@ -1271,7 +1286,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/watch?v=UrmtDKQoAfg" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">53</span>
   
   <div class="thumb"><img loading="lazy" src="https://www.sellmyapp.com/wp-content/uploads/featured_image5beafcc226f9e.png" alt=""
@@ -1290,7 +1305,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/watch?v=lvr49icrN1A" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">54</span>
   
   <div class="thumb"><img loading="lazy" src="https://www.sellmyapp.com/wp-content/uploads/featured_image6140ef034c087.png" alt=""
@@ -1309,7 +1324,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
     <a class="yt" href="https://www.youtube.com/watch?v=ykFPDwfNTK0" target="_blank" rel="noopener">&#128269; YouTube</a>
   </div>
 </article>
-<article class="card">
+<article class="card" data-own="need">
   <span class="num">55</span>
   
   <div class="thumb"><img loading="lazy" src="https://www.sellanycode.com/system/assets/uploads/products/KnockoutStumbleRun_sellanycode_featured_image_1656944032.png" alt=""
@@ -1339,4 +1354,34 @@ under the account that builds it.</p>
 <p>Already in the project: More Mountains <b>Feel</b>, Synty
 <b>POLYGON City / Town / Nature</b>. Those are deliberately excluded above.</p>
 </footer>
+<script>
+(function () {
+  var cards = [].slice.call(document.querySelectorAll('.card'));
+  var cats = [].slice.call(document.querySelectorAll('.cat'));
+  var btns = [].slice.call(document.querySelectorAll('.ofb'));
+  var owned = cards.filter(function (c) { return c.dataset.own === 'owned'; }).length;
+
+  document.getElementById('nAll').textContent = cards.length;
+  document.getElementById('nOwned').textContent = owned;
+  document.getElementById('nNeed').textContent = cards.length - owned;
+
+  function apply(mode) {
+    cards.forEach(function (c) {
+      c.classList.toggle('hidden', mode !== 'all' && c.dataset.own !== mode);
+    });
+    // hide a category heading entirely when nothing in it survives the filter
+    cats.forEach(function (s) {
+      var visible = s.querySelectorAll('.card:not(.hidden)').length;
+      s.classList.toggle('hidden', visible === 0);
+    });
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+      apply(b.dataset.own);
+    });
+  });
+})();
+</script>
 </body></html>
