@@ -95,6 +95,7 @@ header{padding:8px 12px}
 </style><script>
 function ytck(img){if(img.naturalWidth===120)img.parentElement.style.display='none';}
 function ytbad(img){img.parentElement.style.display='none';}
+document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&t.closest&&t.closest('.card')){var p=t.parentElement;if(p)p.style.display='none';}},true);
 </script>
 </head><body>
 <header>
@@ -10279,7 +10280,7 @@ c.dataset.seq===vid);
 c.classList.toggle('show',hit);if(hit)n++;}
 count.textContent=n+' shown · '+(favOnly?'♥ favorites':tier)+
 (rfilter===null?'':rfilter===0?' · unrated':' · '+rfilter+'★');
-empty.style.display=n?'none':'';}
+empty.style.display=n?'none':'';if(!n)empty.textContent=favOnly?'No favorites yet - tap the heart on any project to add one.':'Nothing matches this filter. '+tier+' has no projects'+(genre?' of this type':'')+'.';}
 for(const t of tabs)t.addEventListener('click',()=>{tier=t.dataset.tier;
 favOnly=false;favtab.classList.remove('active');
 tabs.forEach(x=>x.classList.toggle('active',x===t));
