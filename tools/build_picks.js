@@ -379,10 +379,10 @@ footer{padding:22px 18px 40px;color:#6d6e78;font-size:13px;
  border-top:1px solid #2a2b33;max-width:80ch}
 </style></head><body>
 <header>
-<div class="nav"><a href="index.html">Games</a><span>&middot;</span><a
- href="joystick.html">Joystick</a><span>&middot;</span><a
- href="assets.html">All assets</a><span>&middot;</span><span
- class="here">Top picks</span></div>
+<div class="nav"><a href="index.html">Complete Projects</a><span>|</span><a
+ href="assets.html">Assets</a><span>|</span><a
+ href="joystick.html">&#127993; Joystick</a><span>|</span><span
+ class="here">&#11088; Top picks</span></div>
 <h1>Top picks for Joystick</h1>
 <p>Eleven categories, five each — assets and ready-made projects, chosen
 against this project's real constraints:
