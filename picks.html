@@ -49,6 +49,9 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 .chal.own{background:rgba(127,224,127,.10);border-color:rgba(127,224,127,.38);
  color:#a9dfa9}
 .chal.own b{color:#7fe07f}
+.chal.sup{background:rgba(255,159,91,.10);border-color:rgba(255,159,91,.38);
+ color:#e5c09a}
+.chal.sup b{color:#ff9f5b}
 .owned{position:absolute;top:8px;right:34px;background:#7fe07f;color:#0e0f13;
  font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:2px 7px;
  border-radius:9px}
@@ -232,6 +235,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="chal own"><b>You already own this:</b> Already owned and downloaded (48 MB in the Asset Store cache), and installed. This was the single highest pick on the page — nothing to buy.</p>
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/animation/final-ik-14290" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/74" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -248,6 +252,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">PuppetMaster — active ragdoll. Landmark jitter looks like a glitch on a kinematic rig, but reads as natural wobble on a physical puppet. It converts our worst technical weakness into a stylistic strength.</p>
   <p class="map"><b>Control mapping:</b> Pose drives ragdoll character physically</p>
   <p class="chal own"><b>You already own this:</b> Already owned AND imported — Assets/Plugins/RootMotion/PuppetMaster (55 MB) in the shared AssetsToCheck project. Nothing to buy.</p>
+  
   
   
   <div class="links">
@@ -268,6 +273,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="chal own"><b>You already own this:</b> Already owned — sitting in the shared AssetsToCheck project (2.9 GB). Nothing to buy.</p>
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/integration/opencv-for-unity-21088" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/4011" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -284,6 +290,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Character Controller Pro — a controller robust enough to be fed noisy, occasionally-absent input without exploding. Standard controllers assume clean input; ours is never clean.</p>
   <p class="map"><b>Control mapping:</b> Stick lean steers, buttons trigger jump/actions</p>
   <p class="chal own"><b>You already own this:</b> Already owned — in the shared AssetsToCheck project. Nothing to buy.</p>
+  
   
   
   <div class="links">
@@ -304,6 +311,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="chal own"><b>You already own this:</b> Redundant: PuppetMaster is already owned and imported, and the same RootMotion folder also ships RagdollManager. This was the &quot;buy one of the two&quot; alternative — both are already covered.</p>
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/physics/active-ragdoll-physics-based-character-controller-simple-fullbod-235075" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1975" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -314,7 +322,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
 </section>
 <section id="c1" class="cat" style="--tc:#00c8c8">
   <h2>Rhythm &amp; beat (Daily Moves)</h2>
-  <p class="note">A whole category I had missed. Rhythm is the one genre where a hands-free, 2m-away player is not a compromise but the ideal setup — and it needs almost no precision from the tracker, only timing.</p>
+  <p class="note">Rhythm is the one genre where a hands-free, 2m-away player is ideal rather than a compromise — it needs almost no precision from the tracker, only timing. But the two MOVE LIBRARIES below are the wrong way to get reference moves: record them through our own MediaPipe pipeline instead. We already have the machinery (the virtual-human replay harness records and replays landmark streams). Only the beat/timing tools are worth considering, and both reviewers flagged even those as risky against 50-150ms tracking latency.</p>
   <div class="grid">
 <article class="card">
   <span class="num">6</span>
@@ -325,6 +333,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <div class="meta">audio &gt; Tools &middot; 56 pts</div>
   <p class="why">Rhythm Timeline 2 — a rhythm framework WITH an editor. This is the fastest credible route to the Daily Moves feature across all three apps.</p>
   <p class="map"><b>Control mapping:</b> gesture hits mapped to note lanes</p>
+  
   
   <p class="chal"><b>Kimi disagrees:</b> Contested: tracking latency is roughly 50-150ms, so tight rhythm windows may be unfair. Only viable with generous timing and a calibration step.</p>
   
@@ -344,6 +353,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Beat Detection — real-time beat extraction, so moves can sync to any track the player has rather than only pre-authored charts.</p>
   <p class="map"><b>Control mapping:</b> Sync body-move prompts to music beats</p>
   
+  
   <p class="chal"><b>Kimi disagrees:</b> Same latency caveat as the rhythm framework.</p>
   
   <div class="links">
@@ -361,6 +371,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <div class="meta">audio &gt; Tools &middot; 300 pts</div>
   <p class="why">Koreographer Pro — beat-synced event system. More mature than the above; use it if we want music-driven gameplay events everywhere, not just in one mode.</p>
   <p class="map"><b>Control mapping:</b> drive rhythm/dance game timing windows</p>
+  
   
   <p class="chal"><b>Kimi disagrees:</b> Same latency caveat; also the most expensive of the three rhythm options.</p>
   
@@ -380,6 +391,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Hip-hop animation set — the reference moves the player copies.</p>
   <p class="map"><b>Control mapping:</b> Pose-match dance moves to beat</p>
   
+  <p class="chal sup"><b>Don't buy — record it instead:</b> Same reason as the mocap collection: record the reference moves through our own pipeline instead. Free, no retargeting, and parity-portable across all three apps.</p>
   
   
   <div class="links">
@@ -398,6 +410,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Dance MoCap Collection — a larger move library to score the player against.</p>
   <p class="map"><b>Control mapping:</b> Avatar mirrors player dance moves</p>
   
+  <p class="chal sup"><b>Don't buy — record it instead:</b> Our animation source is the PLAYER, live, through MediaPipe. A dance mode needs a reference to score against, and that reference is better recorded through our own tracking pipeline than bought as mocap: no Humanoid retargeting, the data is already in landmark form so scoring is a direct comparison, and the same recording replays in Kotlin and Flutter. A Unity .anim clip does none of that.</p>
   <p class="chal"><b>Kimi disagrees:</b> Thematically lovely for a win-screen dance, but Humanoid retargeting onto hypercasual rigs costs days. Later, not now.</p>
   
   <div class="links">
@@ -422,6 +435,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">The tween library everything else assumes. Our hands-free menus need dwell-to-select rings, scale pops and eased slide-ins driven from code — DOTween does all of it in one line and is mobile-cheap.</p>
   
   
+  
   <p class="chal"><b>Kimi disagrees:</b> Feel already ships DOTween-based feedbacks, and plain DOTween is free — Pro only adds visual editors we would not use.</p>
   
   <div class="links">
@@ -438,6 +452,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>Camera Shake FX</h3>
   <div class="meta">particles effects &gt; Tools &middot; 10 pts</div>
   <p class="why">Preset camera shake we can trigger from the 4 virtual-pad events. Cheaper to wire per-game than hand-rolling shake in every flagship.</p>
+  
   
   
   <p class="chal"><b>Kimi disagrees:</b> Feel already has MMCameraShake. Straight redundancy.</p>
@@ -460,6 +475,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/vfx/particles/super-confetti-fx-152141" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1013" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -474,6 +490,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>Break Items - Toon VFX</h3>
   <div class="meta">particles &gt; VFX &middot; 35 pts</div>
   <p class="why">Stylised break/shatter VFX matching our POLYGON look. Gives obstacles in Poopy Bird / dodge games a satisfying death instead of just despawning.</p>
+  
   
   
   <p class="chal"><b>Kimi disagrees:</b> Pipeline risk: most modern VFX packs are URP/Shader-Graph and render pink on the built-in pipeline we use. Verify before buying.</p>
@@ -492,6 +509,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>Amazing VFX Pack - Particle System</h3>
   <div class="meta">particles &gt; VFX &middot; 35 pts</div>
   <p class="why">General-purpose particle pack to pull one-off hits, pickups and trails from, rather than buying a pack per game.</p>
+  
   
   
   <p class="chal"><b>Kimi disagrees:</b> Same built-in-pipeline shader risk as above. Verify it is legacy-particle based, not Shader Graph.</p>
@@ -518,6 +536,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Mesh combining + object pooling in one. Pooling matters most for endless games that spawn obstacles forever — GC spikes are what makes tracking stutter.</p>
   
   
+  
   <p class="chal"><b>Kimi disagrees:</b> Our bottleneck is MediaPipe GPU inference, not draw calls — and Synty content is already cheap. Pooling is trivial to hand-roll. Profile before buying.</p>
   
   <div class="links">
@@ -534,6 +553,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>Advanced Culling System 2 - Complete Optimization Solution</h3>
   <div class="meta">Tools &gt; utilities &middot; 85 pts</div>
   <p class="why">Occlusion/distance culling. Our Synty environments are draw-call heavy; culling is the cheapest way to buy frame time back for the tracking thread.</p>
+  
   
   
   <p class="chal"><b>Kimi disagrees:</b> Occlusion culling does not pay for small arcade scenes; frustum culling is already built in.</p>
@@ -554,6 +574,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Animator LOD. Every animated character off-screen or far away is wasted CPU we need for pose inference.</p>
   
   
+  
   <p class="chal"><b>Kimi disagrees:</b> We have very few animated characters on screen. Little to reclaim.</p>
   
   <div class="links">
@@ -572,6 +593,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Impostors for distant scenery — turns background Synty props into billboards. Big win for endless runners with long view distances.</p>
   
   
+  
   <p class="chal"><b>Kimi disagrees:</b> Impostors are for big scenes with distant crowds. Our scenes are vignettes — wrong problem, and often URP-only.</p>
   
   <div class="links">
@@ -588,6 +610,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>Built-In Mobile Lighting Box</h3>
   <div class="meta">Tools &gt; utilities &middot; 20 pts</div>
   <p class="why">Baked mobile lighting setup for the built-in pipeline (which this project uses). Avoids the realtime-light cost we currently pay for no visual gain.</p>
+  
   
   
   <p class="chal"><b>Kimi disagrees:</b> Borderline: it is a preset pack we could replicate from the docs in an afternoon.</p>
@@ -616,6 +639,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/templates/systems/2d-3d-infinite-runner-engine-51328" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/348" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -631,6 +655,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <div class="meta">systems &gt; Templates &middot; 60 pts</div>
   <p class="why">Smaller, cleaner runner starter — easier to read end-to-end than the full engine above.</p>
   <p class="map"><b>Control mapping:</b> lean=steer lanes, jump/squat gestures=obstacles</p>
+  
   
   <p class="chal"><b>Kimi disagrees:</b> Redundant with the full Infinite Runner Engine above; buy one runner reference, not three.</p>
   
@@ -648,6 +673,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>HyperCasual - Arcade Idle Engine</h3>
   <div class="meta">systems &gt; Templates &middot; 110 pts</div>
   <p class="why">Arcade-idle loop. Interesting for a hands-free mode where the player earns progress by holding poses rather than reacting fast.</p>
+  
   
   
   <p class="chal"><b>Kimi disagrees:</b> Idle/tycoon economies are tap-driven meta loops — the opposite of our hands-free constraint, and a parity tax across three platforms.</p>
@@ -668,6 +694,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Endless tunnel — the exact shape of a one-axis (StickX only) motion game. Good template for a lean-left/lean-right flagship.</p>
   <p class="map"><b>Control mapping:</b> Lean=steer around obstacles</p>
   
+  
   <p class="chal"><b>Kimi disagrees:</b> Third runner reference. Redundant — pick one and read it properly.</p>
   <p class="chal c2"><b>Codex disagrees:</b> Effectively legacy — version 1.0 from 2021, authored for Unity 2018.4.</p>
   <div class="links">
@@ -687,6 +714,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="map"><b>Control mapping:</b> map torso lean to pitch/roll input</p>
   <p class="chal own"><b>You already own this:</b> Already owned and imported into AssetsToCheck on 2 Aug (RageRun Games / Easy Flying System). Nothing to buy.</p>
   
+  
   <p class="chal c2"><b>Codex disagrees:</b> Redundant if we buy the Infinite Runner Engine, which already ships flight and tunnel examples. Only worth it for a dedicated free-flight flagship.</p>
   <div class="links">
     
@@ -698,7 +726,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
 </section>
 <section id="c5" class="cat" style="--tc:#c58cff">
   <h2>Characters &amp; animation</h2>
-  <p class="note">Our avatar/puppet is driven by MediaPipe landmarks, so we need cheap stylised rigs plus animation clips for the moments tracking is NOT driving the character (menus, idle, celebrate, game over).</p>
+  <p class="note">Read this category narrowly. The player-driven avatar gets its motion from the PLAYER — Final IK retargets live landmarks onto the rig, so bought locomotion clips are not what animates it. Clips are only needed for characters we do not drive from pose (obstacles, NPCs) and for the moments tracking is not driving the avatar at all: menus, idle, celebrate, game over, and the fallback blend when tracking confidence drops. Cheap stylised RIGS still matter; large clip libraries mostly do not.</p>
   <div class="grid">
 <article class="card">
   <span class="num">26</span>
@@ -708,6 +736,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>HYPERCASUAL - Simple Characters</h3>
   <div class="meta">3D &gt; characters &middot; 15 pts</div>
   <p class="why">Low-cost stylised characters that match the hypercasual look and cost almost nothing to render — ideal as game avatars.</p>
+  
   
   
   
@@ -728,6 +757,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Stickman customisation. A stickman reads perfectly at 2m and is the cheapest possible rig to drive from pose landmarks.</p>
   
   
+  
   <p class="chal"><b>Kimi disagrees:</b> A customisation meta-feature we would then have to rebuild in Kotlin and Flutter. Skip until v2.</p>
   
   <div class="links">
@@ -746,6 +776,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Parkour animation set — run, jump and vault cycles, the core vocabulary of every endless-runner flagship.</p>
   <p class="map"><b>Control mapping:</b> Jump/squat gestures trigger parkour moves</p>
   
+  <p class="chal sup"><b>Don't buy — record it instead:</b> Only needed for characters we do NOT drive from pose — obstacles, NPCs, or the avatar during menus and game-over. The player-driven avatar gets its motion from the player.</p>
   
   
   <div class="links">
@@ -764,6 +795,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Flying animation clips for the glider/bird flagships.</p>
   <p class="map"><b>Control mapping:</b> lean steers flying character</p>
   
+  <p class="chal sup"><b>Don't buy — record it instead:</b> Same caveat: useful for non-player craft, not for the avatar the player is animating with their own body.</p>
   
   
   <div class="links">
@@ -782,6 +814,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">MOBILITY PRO mocap locomotion — clean run/walk/turn cycles to blend against when tracking confidence drops and we have to fall back to canned animation.</p>
   <p class="map"><b>Control mapping:</b> animate runner mirroring player movement</p>
   
+  <p class="chal sup"><b>Don't buy — record it instead:</b> Keep only as the fallback blend for when tracking confidence drops. Not the primary animation source.</p>
   
   
   <div class="links">
@@ -808,6 +841,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/props/3d-hypercasual-meters-199409" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/1543" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -822,6 +856,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>3D Object Image for UGUI - MiniMap Inventory Portrait</h3>
   <div class="meta">2D &gt; gui &middot; 35 pts</div>
   <p class="why">Renders 3D objects into uGUI. Lets the game-select grid show live rotating 3D previews instead of flat emoji tiles.</p>
+  
   
   
   <p class="chal"><b>Kimi disagrees:</b> A RenderTexture per 3D object in UI is genuinely expensive on mobile GPUs. Use sparingly or not at all.</p>
@@ -842,6 +877,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Soft mask for uGUI — fixes the hard-edged clipping in our scrolling game list.</p>
   
   
+  
   <p class="chal"><b>Kimi disagrees:</b> Probably unnecessary: a dwell/hold-to-confirm ring is just uGUI Image with fillMethod = Radial360, which is built in and free.</p>
   <p class="chal c2"><b>Codex disagrees:</b> Also flagged here: decorative masking plus extra UI shader overdraw, for almost no benefit at two metres.</p>
   <div class="links">
@@ -860,6 +896,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Icon trails: gives the moving cursor/hand indicator a visible tail, which makes an untouched, camera-driven pointer far easier to follow.</p>
   
   
+  
   <p class="chal"><b>Kimi disagrees:</b> Low value, and UI trails add overdraw.</p>
   <p class="chal c2"><b>Codex disagrees:</b> Also flagged here: pointer decoration and overdraw, and Feel can already reproduce it.</p>
   <div class="links">
@@ -876,6 +913,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>1000+ Character Avatar Icons Pack</h3>
   <div class="meta">2D &gt; gui &middot; 10 pts</div>
   <p class="why">Large avatar icon set for the game grid and player slots.</p>
+  
   
   
   
@@ -904,6 +942,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/environments/fantasy/polygon-adventure-pack-art-by-synty-80585" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/489" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -922,6 +961,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/3d/environments/landscapes/polygon-alpine-mountain-nature-biomes-3d-environment-art-by-synt-271620" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/2443" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -936,6 +976,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>POLYGON - City Characters Pack - Art by Synty</h3>
   <div class="meta">3D &gt; characters &middot; 35 pts</div>
   <p class="why">POLYGON City Characters — matching character set for the city environment we already imported.</p>
+  
   
   
   
@@ -958,6 +999,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-220-sky-skybox-set-10109" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/51" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -972,6 +1014,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <h3>Nature – Spawner Pack for POLYGON Nature</h3>
   <div class="meta">Environments</div>
   <p class="why">Spawner for POLYGON Nature — procedural scatter, which is what an endless environment needs.</p>
+  
   
   
   
@@ -1000,6 +1043,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="chal own"><b>You already own this:</b> Covered by the Music2 library — 29 GB and 41,466 audio files already on disk. Nothing to buy.</p>
   
   
+  
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/audio/sound-fx/2000-game-sound-fx-207739" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
     <a class="alt" href="https://gamepackage.net/assets/3567" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -1016,6 +1060,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Interactive ambient soundscapes, Unity 6 ready. Gives each flagship a distinct bed cheaply.</p>
   
   <p class="chal own"><b>You already own this:</b> Covered by the Music2 library. Nothing to buy.</p>
+  
   
   <p class="chal c2"><b>Codex disagrees:</b> Built for elaborate spatial soundscapes — excessive for short arcade sessions, and another Unity-only system.</p>
   <div class="links">
@@ -1035,6 +1080,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   <p class="chal own"><b>You already own this:</b> Covered by the Music2 library. Nothing to buy — and both reviewers called a Unity-only audio manager parity debt anyway.</p>
   
+  
   <p class="chal c2"><b>Codex disagrees:</b> Unity-only architecture, therefore parity debt against Kotlin and Flutter. A small AudioMixer facade is enough.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/tools/audio/bt-sound-system-pro-advanced-audio-manager-easy-optimize-312741" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
@@ -1053,6 +1099,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="map"><b>Control mapping:</b> play on punch/kick gesture hits</p>
   <p class="chal own"><b>You already own this:</b> Covered by the Music2 library, which already includes impact and whoosh packs. Nothing to buy.</p>
   
+  
   <p class="chal c2"><b>Codex disagrees:</b> Overlaps 2000 Game Sound FX. Buy one of the two initially, not both.</p>
   <div class="links">
     <a class="buy" href="https://assetstore.unity.com/packages/audio/sound-fx/impacts-hits-whooshes-157519" target="_blank" rel="noopener">Unity Asset Store &#8599;</a>
@@ -1070,6 +1117,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <p class="why">Electronic/dance music pack for the movement-driven modes.</p>
   <p class="map"><b>Control mapping:</b> Music for rhythm and dance modes</p>
   <p class="chal own"><b>You already own this:</b> Covered by the Music2 library, which already includes electronic and hybrid-action music packs. Nothing to buy.</p>
+  
   
   
   <div class="links">
@@ -1096,6 +1144,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/15" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -1111,6 +1160,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <div class="meta">Packs &middot; complete project</div>
   <p class="why">Red-light-green-light. A hands-free masterpiece by accident: move when told, freeze when told. Needs only &quot;is the player moving&quot;, the single most reliable signal a pose tracker produces.</p>
   <p class="map"><b>Control mapping:</b> body motion=move, freeze=stop</p>
+  
   
   
   
@@ -1132,6 +1182,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/607" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -1150,6 +1201,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/615" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -1165,6 +1217,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <div class="meta">Arcades &middot; complete project</div>
   <p class="why">One-button flappy template. This is Poopy Bird's genre; worth buying purely to compare their difficulty curve and spawn pacing against ours.</p>
   <p class="map"><b>Control mapping:</b> jump gesture or blow=flap</p>
+  
   
   
   
@@ -1192,6 +1245,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/314" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -1207,6 +1261,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <div class="meta">Packs &middot; complete project</div>
   <p class="why">Parkour race runner. Good reference for a race framing, which gives a hands-free player a natural end condition without a menu.</p>
   <p class="map"><b>Control mapping:</b> lean=steer, jump/squat gestures=parkour moves</p>
+  
   
   
   
@@ -1228,6 +1283,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/419" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -1246,6 +1302,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   
   
   
+  
   <div class="links">
     
     <a class="alt" href="https://gamepackage.net/ready-made-solutions/411" target="_blank" rel="noopener">Catalog entry &#8599;</a>
@@ -1261,6 +1318,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <div class="meta">Php scripts &middot; complete project</div>
   <p class="why">Stumble/fall-guys style physical runner. Its ragdoll failure states are exactly the visually-obvious game-over a 2m player needs.</p>
   <p class="map"><b>Control mapping:</b> lean=steer, jump gesture=jump, squat=dodge</p>
+  
   
   
   

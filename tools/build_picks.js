@@ -36,7 +36,7 @@ const CATS = [
   {
     name: 'Rhythm & beat (Daily Moves)',
     color: '#00c8c8',
-    note: 'A whole category I had missed. Rhythm is the one genre where a hands-free, 2m-away player is not a compromise but the ideal setup — and it needs almost no precision from the tracker, only timing.',
+    note: 'Rhythm is the one genre where a hands-free, 2m-away player is ideal rather than a compromise — it needs almost no precision from the tracker, only timing. But the two MOVE LIBRARIES below are the wrong way to get reference moves: record them through our own MediaPipe pipeline instead. We already have the machinery (the virtual-human replay harness records and replays landmark streams). Only the beat/timing tools are worth considering, and both reviewers flagged even those as risky against 50-150ms tracking latency.',
     picks: [
       ['4003', 'Rhythm Timeline 2 — a rhythm framework WITH an editor. This is the fastest credible route to the Daily Moves feature across all three apps.'],
       ['4937', 'Beat Detection — real-time beat extraction, so moves can sync to any track the player has rather than only pre-authored charts.'],
@@ -84,7 +84,7 @@ const CATS = [
   {
     name: 'Characters & animation',
     color: '#c58cff',
-    note: 'Our avatar/puppet is driven by MediaPipe landmarks, so we need cheap stylised rigs plus animation clips for the moments tracking is NOT driving the character (menus, idle, celebrate, game over).',
+    note: 'Read this category narrowly. The player-driven avatar gets its motion from the PLAYER — Final IK retargets live landmarks onto the rig, so bought locomotion clips are not what animates it. Clips are only needed for characters we do not drive from pose (obstacles, NPCs) and for the moments tracking is not driving the avatar at all: menus, idle, celebrate, game over, and the fallback blend when tracking confidence drops. Cheap stylised RIGS still matter; large clip libraries mostly do not.',
     picks: [
       ['5190', 'Low-cost stylised characters that match the hypercasual look and cost almost nothing to render — ideal as game avatars.'],
       ['1361', 'Stickman customisation. A stickman reads perfectly at 2m and is the cheapest possible rig to drive from pose landmarks.'],
@@ -210,6 +210,15 @@ const OWNED = {
   '1070': 'Covered by the Music2 library, which already includes electronic and hybrid-action music packs. Nothing to buy.',
 };
 
+// Superseded by how this project actually works — not by a better purchase.
+const SUPERSEDED = {
+  '644':  'Our animation source is the PLAYER, live, through MediaPipe. A dance mode needs a reference to score against, and that reference is better recorded through our own tracking pipeline than bought as mocap: no Humanoid retargeting, the data is already in landmark form so scoring is a direct comparison, and the same recording replays in Kotlin and Flutter. A Unity .anim clip does none of that.',
+  '2005': 'Same reason as the mocap collection: record the reference moves through our own pipeline instead. Free, no retargeting, and parity-portable across all three apps.',
+  '2044': 'Only needed for characters we do NOT drive from pose — obstacles, NPCs, or the avatar during menus and game-over. The player-driven avatar gets its motion from the player.',
+  '1049': 'Same caveat: useful for non-player craft, not for the avatar the player is animating with their own body.',
+  '253':  'Keep only as the fallback blend for when tracking confidence drops. Not the primary animation source.',
+};
+
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -237,6 +246,7 @@ const sections = CATS.map((cat, ci) => {
   <p class="why">${esc(why)}</p>
   ${it.m ? `<p class="map"><b>Control mapping:</b> ${esc(it.m)}</p>` : ''}
   ${OWNED[rawId] ? `<p class="chal own"><b>You already own this:</b> ${esc(OWNED[rawId])}</p>` : ''}
+  ${SUPERSEDED[rawId] ? `<p class="chal sup"><b>Don't buy — record it instead:</b> ${esc(SUPERSEDED[rawId])}</p>` : ''}
   ${CHALLENGE[rawId] ? `<p class="chal"><b>Kimi disagrees:</b> ${esc(CHALLENGE[rawId])}</p>` : ''}
   ${CHALLENGE2[rawId] ? `<p class="chal c2"><b>Codex disagrees:</b> ${esc(CHALLENGE2[rawId])}</p>` : ''}
   <div class="links">
@@ -307,6 +317,9 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 .chal.own{background:rgba(127,224,127,.10);border-color:rgba(127,224,127,.38);
  color:#a9dfa9}
 .chal.own b{color:#7fe07f}
+.chal.sup{background:rgba(255,159,91,.10);border-color:rgba(255,159,91,.38);
+ color:#e5c09a}
+.chal.sup b{color:#ff9f5b}
 .owned{position:absolute;top:8px;right:34px;background:#7fe07f;color:#0e0f13;
  font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:2px 7px;
  border-radius:9px}
