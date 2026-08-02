@@ -68,6 +68,15 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 .verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
  border-radius:11px;padding:15px 17px;margin:0 0 26px}
 .verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
+.verdict.inv{border-left-color:#c58cff}
+.verdict.inv h2{color:#c58cff;font-size:19px}
+.verdict.inv h3{margin:14px 0 6px;font-size:14px;color:#e8e8ea;
+ text-transform:uppercase;letter-spacing:.05em}
+.verdict.inv b{color:#e8e8ea}
+.verdict.inv code{background:#0e0f13;padding:1px 5px;border-radius:4px;
+ font-size:12.5px;color:#9a9aa5}
+ul.inv2{margin:0;padding-left:20px;font-size:14px;color:#c8c9d0}
+ul.inv2 li{margin-bottom:4px}
 .verdict.endless{border-left-color:#7ab8ff}
 .verdict.endless h2{color:#7ab8ff;font-size:19px}
 .verdict.endless b{color:#e8e8ea}
@@ -108,6 +117,52 @@ can be bought properly.</p>
 <div class="toc"><a href="#c0" style="border-color:#ff3d7f;color:#ff3d7f">Pose → avatar core</a><a href="#c1" style="border-color:#00c8c8;color:#00c8c8">Rhythm &amp; beat (Daily Moves)</a><a href="#c2" style="border-color:#f2c14e;color:#f2c14e">Game feel &amp; juice</a><a href="#c3" style="border-color:#7fe07f;color:#7fe07f">Mobile performance (arm64)</a><a href="#c4" style="border-color:#7ab8ff;color:#7ab8ff">Endless / arcade templates (study, do not ship)</a><a href="#c5" style="border-color:#c58cff;color:#c58cff">Characters &amp; animation</a><a href="#c6" style="border-color:#4ec9a8;color:#4ec9a8">HUD &amp; UI for a 2m-away player</a><a href="#c7" style="border-color:#ff9f5b;color:#ff9f5b">Environments (extends the Synty packs we own)</a><a href="#c8" style="border-color:#ff5b6e;color:#ff5b6e">Audio</a><a href="#c9" style="border-color:#ffd23d;color:#ffd23d">Complete projects — pose-native genres</a><a href="#c10" style="border-color:#a0e060;color:#a0e060">Complete projects — runner architecture</a></div>
 </header>
 <main>
+<div class="verdict inv">
+<h2>What is actually installed — full scan, 2 Aug 2026</h2>
+<p>Every folder and subfolder of both Unity projects, walked. Products often sit
+one level down (four separate RootMotion products live inside
+<code>Plugins/RootMotion</code>), so a top-level listing undercounts badly.</p>
+
+<h3>Joystick project</h3>
+<ul class="inv2">
+<li><b>Feel</b> — MMFeedbacks + MMTools + NiceVibrations, 196 MB, demos excluded</li>
+<li><b>Synty POLYGON</b> — City, Town, Nature, Generic (344 MB)</li>
+<li><b>Ultimate Joystick</b> (Tank &amp; Healer Studio)</li>
+<li><b>MediaPipe Unity plugin</b> (homuler) — the tracking anchor</li>
+</ul>
+
+<h3>AssetsToCheck — shared library, reusable by both projects</h3>
+<ul class="inv2">
+<li><b>RootMotion, 4 products</b> in <code>Plugins/RootMotion</code>: <b>Final IK</b> (32 MB),
+    <b>PuppetMaster</b> (55 MB), <b>Baker</b>, <b>RagdollManager</b></li>
+<li><b>DOTween PRO</b> — <code>Plugins/Demigiant</code> (not the free build)</li>
+<li><b>Amplify Impostors</b> — 203 MB, added 2 Aug</li>
+<li><b>OpenCV for Unity</b> — 2.9 GB &middot; <b>Character Controller Pro</b> — 26 MB</li>
+<li><b>Beat Detection</b> &middot; <b>Rhythm Timeline</b> (Dypsloom, 49 MB) &middot;
+    <b>AA Hip Hop</b> (Animo, 37 MB) &middot; <b>Dance MoCap Collection</b> (346 MB)</li>
+<li><b>Easy Flying System</b> (RageRun Games)</li>
+<li>Vehicles, four stacks: <b>Realistic Car Controller Pro</b> (644 MB),
+    <b>NWH Vehicle Physics 2 + WheelController</b> (528 MB), <b>EVP5</b> (75 MB),
+    <b>Ash Vehicle Physics</b></li>
+<li>World-building: <b>CityGen3D</b> (1.9 GB), <b>EasyRoads3D Pro</b> (108 MB),
+    <b>PampelGames Road Constructor</b> (150 MB), <b>Spline Architect</b> +
+    ObjectCloning + TerrainTools (153 MB), <b>MicroVerse</b> + Roads</li>
+<li><b>Player-X</b> character pack &middot; <b>Feel</b> (full, with demos) &middot; <b>TextMesh Pro</b></li>
+</ul>
+
+<h3>Elsewhere</h3>
+<ul class="inv2">
+<li><b>Music2 library</b> — 29 GB, 41,466 audio files. Closes the audio category outright.</li>
+<li><b>Owned but not imported</b> (in the Asset Store download cache):
+    <b>Dlib FaceLandmark Detector</b>, <b>Color Tracker</b></li>
+<li><b>~818 further packages</b> owned on the Unity account but not downloaded —
+    Package Manager fetches that list live, so it cannot be audited from here.</li>
+</ul>
+<p class="src">Consequence: of the 55 cards below, 17 are already owned, and the
+purchase list is empty. The remaining value on this page is the reasoning about
+what to USE, not what to buy.</p>
+</div>
+
 <div class="verdict endless">
 <h2>Endless: the right call, but not the way endless games normally work</h2>
 <p>Both reviewers were asked whether endless is even correct for a hands-free,
@@ -668,7 +723,7 @@ has to be rebuilt by hand in Kotlin and Flutter.</p>
   <div class="meta">Tools &gt; utilities &middot; 125 pts</div>
   <p class="why">Impostors for distant scenery — turns background Synty props into billboards. Big win for endless runners with long view distances.</p>
   
-  <p class="chal own"><b>You already own this:</b> Superseded: Amplify Impostors is already owned and is the better tool here — it BAKES impostors in-editor (vendor wiki: &quot;currently only provides the in-editor baked variant&quot;), so there is zero runtime generation cost. A runtime impostor generator spends GPU at play time, which is exactly what MediaPipe has already taken. Use Amplify if impostors are ever needed at all — and for Joystick they are not.</p>
+  <p class="chal own"><b>You already own this:</b> Superseded: Amplify Impostors is owned AND imported (203 MB, 2 Aug), and is the better tool here — it BAKES impostors in-editor (vendor wiki: &quot;currently only provides the in-editor baked variant&quot;), so there is zero runtime generation cost. A runtime impostor generator spends GPU at play time, which is exactly what MediaPipe has already taken. Use Amplify if impostors are ever needed at all — and for Joystick they are not.</p>
   
   <p class="chal"><b>Kimi disagrees:</b> Impostors are for big scenes with distant crowds. Our scenes are vignettes — wrong problem, and often URP-only.</p>
   

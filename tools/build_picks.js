@@ -207,7 +207,7 @@ const OWNED = {
   '4937': 'Already owned and imported — Assets/Beat Detection. Its 4 demo scripts needed a GUIText fix to compile on Unity 6; done 2 Aug.',
   '2005': 'Already owned and imported — Assets/Animo/AA.Hip.Hop (37 MB).',
   '644':  'Already owned and imported — Assets/Dance_MoCap_Collection_Update (346 MB).',
-  '1411': 'Superseded: Amplify Impostors is already owned and is the better tool here — it BAKES impostors in-editor (vendor wiki: "currently only provides the in-editor baked variant"), so there is zero runtime generation cost. A runtime impostor generator spends GPU at play time, which is exactly what MediaPipe has already taken. Use Amplify if impostors are ever needed at all — and for Joystick they are not.',
+  '1411': 'Superseded: Amplify Impostors is owned AND imported (203 MB, 2 Aug), and is the better tool here — it BAKES impostors in-editor (vendor wiki: "currently only provides the in-editor baked variant"), so there is zero runtime generation cost. A runtime impostor generator spends GPU at play time, which is exactly what MediaPipe has already taken. Use Amplify if impostors are ever needed at all — and for Joystick they are not.',
   // Audio: 29 GB / 41,466 files already on disk in the Music2 library.
   '3567': 'Covered by the Music2 library — 29 GB and 41,466 audio files already on disk. Nothing to buy.',
   '928':  'Covered by the Music2 library. Nothing to buy.',
@@ -343,6 +343,15 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 .verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
  border-radius:11px;padding:15px 17px;margin:0 0 26px}
 .verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
+.verdict.inv{border-left-color:#c58cff}
+.verdict.inv h2{color:#c58cff;font-size:19px}
+.verdict.inv h3{margin:14px 0 6px;font-size:14px;color:#e8e8ea;
+ text-transform:uppercase;letter-spacing:.05em}
+.verdict.inv b{color:#e8e8ea}
+.verdict.inv code{background:#0e0f13;padding:1px 5px;border-radius:4px;
+ font-size:12.5px;color:#9a9aa5}
+ul.inv2{margin:0;padding-left:20px;font-size:14px;color:#c8c9d0}
+ul.inv2 li{margin-bottom:4px}
 .verdict.endless{border-left-color:#7ab8ff}
 .verdict.endless h2{color:#7ab8ff;font-size:19px}
 .verdict.endless b{color:#e8e8ea}
@@ -384,6 +393,52 @@ can be bought properly.</p>
   `<a href="#c${i}" style="border-color:${c.color};color:${c.color}">${esc(c.name)}</a>`).join('')}</div>
 </header>
 <main>
+<div class="verdict inv">
+<h2>What is actually installed — full scan, 2 Aug 2026</h2>
+<p>Every folder and subfolder of both Unity projects, walked. Products often sit
+one level down (four separate RootMotion products live inside
+<code>Plugins/RootMotion</code>), so a top-level listing undercounts badly.</p>
+
+<h3>Joystick project</h3>
+<ul class="inv2">
+<li><b>Feel</b> — MMFeedbacks + MMTools + NiceVibrations, 196 MB, demos excluded</li>
+<li><b>Synty POLYGON</b> — City, Town, Nature, Generic (344 MB)</li>
+<li><b>Ultimate Joystick</b> (Tank &amp; Healer Studio)</li>
+<li><b>MediaPipe Unity plugin</b> (homuler) — the tracking anchor</li>
+</ul>
+
+<h3>AssetsToCheck — shared library, reusable by both projects</h3>
+<ul class="inv2">
+<li><b>RootMotion, 4 products</b> in <code>Plugins/RootMotion</code>: <b>Final IK</b> (32 MB),
+    <b>PuppetMaster</b> (55 MB), <b>Baker</b>, <b>RagdollManager</b></li>
+<li><b>DOTween PRO</b> — <code>Plugins/Demigiant</code> (not the free build)</li>
+<li><b>Amplify Impostors</b> — 203 MB, added 2 Aug</li>
+<li><b>OpenCV for Unity</b> — 2.9 GB &middot; <b>Character Controller Pro</b> — 26 MB</li>
+<li><b>Beat Detection</b> &middot; <b>Rhythm Timeline</b> (Dypsloom, 49 MB) &middot;
+    <b>AA Hip Hop</b> (Animo, 37 MB) &middot; <b>Dance MoCap Collection</b> (346 MB)</li>
+<li><b>Easy Flying System</b> (RageRun Games)</li>
+<li>Vehicles, four stacks: <b>Realistic Car Controller Pro</b> (644 MB),
+    <b>NWH Vehicle Physics 2 + WheelController</b> (528 MB), <b>EVP5</b> (75 MB),
+    <b>Ash Vehicle Physics</b></li>
+<li>World-building: <b>CityGen3D</b> (1.9 GB), <b>EasyRoads3D Pro</b> (108 MB),
+    <b>PampelGames Road Constructor</b> (150 MB), <b>Spline Architect</b> +
+    ObjectCloning + TerrainTools (153 MB), <b>MicroVerse</b> + Roads</li>
+<li><b>Player-X</b> character pack &middot; <b>Feel</b> (full, with demos) &middot; <b>TextMesh Pro</b></li>
+</ul>
+
+<h3>Elsewhere</h3>
+<ul class="inv2">
+<li><b>Music2 library</b> — 29 GB, 41,466 audio files. Closes the audio category outright.</li>
+<li><b>Owned but not imported</b> (in the Asset Store download cache):
+    <b>Dlib FaceLandmark Detector</b>, <b>Color Tracker</b></li>
+<li><b>~818 further packages</b> owned on the Unity account but not downloaded —
+    Package Manager fetches that list live, so it cannot be audited from here.</li>
+</ul>
+<p class="src">Consequence: of the 55 cards below, 17 are already owned, and the
+purchase list is empty. The remaining value on this page is the reasoning about
+what to USE, not what to buy.</p>
+</div>
+
 <div class="verdict endless">
 <h2>Endless: the right call, but not the way endless games normally work</h2>
 <p>Both reviewers were asked whether endless is even correct for a hands-free,
