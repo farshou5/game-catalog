@@ -133,7 +133,10 @@ main{display:grid;gap:14px;padding:16px;
   <button class="tab" data-k="p" style="--tc:#f2c14e">Complete projects <span>${PROJECTS.length}</span></button>
  </div>
  <div class="row" id="genrow"></div>
- <div class="row"><input id="q" placeholder="Search name or category…"><span id="count"></span></div>
+ <div class="row"><input id="q" placeholder="Search…">
+  <button class="chip" id="sTitle" data-s="title">Title only</button>
+  <button class="chip active" id="sFull" data-s="full">Title + description</button>
+  <span id="count"></span></div>
 </header>
 <main id="grid"><div id="empty" style="display:none">Nothing matches.</div><div id="more"></div></main>
 <script id="d" type="application/json">${JSON.stringify(DATA).replace(/</g, '\\u003c')}</script>
@@ -143,7 +146,7 @@ const GENRES=${JSON.stringify(GENRES)};
 const grid=document.getElementById('grid'),more=document.getElementById('more'),
  q=document.getElementById('q'),count=document.getElementById('count'),
  empty=document.getElementById('empty'),genrow=document.getElementById('genrow');
-let kind='*',genre=null,view=[],rendered=0;const CHUNK=60;
+let kind='*',genre=null,scope='full',view=[],rendered=0;const CHUNK=60;
 
 function esc(s){const d=document.createElement('div');d.textContent=s==null?'':s;
  return d.innerHTML;}
@@ -182,9 +185,15 @@ function makeCard(it){
 
 function compute(){
  const v=q.value.trim().toLowerCase();
- view=DATA.filter(it=>(kind==='*'||it.k===kind)
-  &&(!genre||it.g===genre)
-  &&(!v||it.n.toLowerCase().includes(v)||(it.cat||'').toLowerCase().includes(v)));
+ view=DATA.filter(it=>{
+  if(kind!=='*'&&it.k!==kind)return false;
+  if(genre&&it.g!==genre)return false;
+  if(!v)return true;
+  if(it.n.toLowerCase().includes(v))return true;
+  if(scope==='title')return false;
+  return (it.cat||'').toLowerCase().includes(v)
+      || (it.d||'').toLowerCase().includes(v);
+ });
 }
 function renderMore(){
  const end=Math.min(rendered+CHUNK,view.length);
@@ -207,6 +216,11 @@ new IntersectionObserver(es=>{if(es[0].isIntersecting&&rendered<view.length)rend
  document.querySelectorAll('#srcrow .tab').forEach(x=>x.classList.toggle('active',x===b));
  renderGenres();refresh();window.scrollTo(0,0);}));
 q.addEventListener('input',refresh);
+[document.getElementById('sTitle'),document.getElementById('sFull')].forEach(b=>
+ b.addEventListener('click',()=>{scope=b.dataset.s;
+  document.getElementById('sTitle').classList.toggle('active',scope==='title');
+  document.getElementById('sFull').classList.toggle('active',scope==='full');
+  refresh();}));
 // hide any image that fails to load, whatever the host
 document.addEventListener('error',function(e){const t=e.target;
  if(t&&t.tagName==='IMG'&&t.closest&&t.closest('.card'))t.style.display='none';},true);
