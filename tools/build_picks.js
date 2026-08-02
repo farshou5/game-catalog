@@ -24,7 +24,7 @@ const CATS = [
   {
     name: 'Pose → avatar core',
     color: '#ff3d7f',
-    note: 'The highest-leverage category in the whole list, and the one I originally missed. Everything here turns noisy MediaPipe landmarks into a body that moves believably — which is the actual product, not a nice-to-have. Buy from here first.',
+    note: 'The highest-leverage category in the whole list — everything here turns noisy MediaPipe landmarks into a body that moves believably, which is the actual product. And as of 2 Aug, ALL FIVE ARE ALREADY OWNED. Assets/Plugins/RootMotion in the shared project holds Final IK (32 MB) AND PuppetMaster (55 MB), and throws in Baker and RagdollManager on top. Nothing in this category needs buying — it needs using.',
     picks: [
       ['74', 'Final IK — the industry standard for retargeting. This is how you drive a rigged avatar from 33 pose landmarks without the limbs tearing apart. Nothing else on this list changes the feel of the app more.'],
       ['270', 'PuppetMaster — active ragdoll. Landmark jitter looks like a glitch on a kinematic rig, but reads as natural wobble on a physical puppet. It converts our worst technical weakness into a stylistic strength.'],
@@ -197,8 +197,10 @@ const CHALLENGE2 = {
 // in the shared AssetsToCheck evaluation project on the same PC.
 const OWNED = {
   '74': 'Already owned and downloaded (48 MB in the Asset Store cache), and installed. This was the single highest pick on the page — nothing to buy.',
+  '270': 'Already owned AND imported — Assets/Plugins/RootMotion/PuppetMaster (55 MB) in the shared AssetsToCheck project. Nothing to buy.',
   '4011': 'Already owned — sitting in the shared AssetsToCheck project (2.9 GB). Nothing to buy.',
   '1080': 'Already owned — in the shared AssetsToCheck project. Nothing to buy.',
+  '1975': 'Redundant: PuppetMaster is already owned and imported, and the same RootMotion folder also ships RagdollManager. This was the "buy one of the two" alternative — both are already covered.',
   '3754': 'Already owned and imported into AssetsToCheck on 2 Aug (RageRun Games / Easy Flying System). Nothing to buy.',
   // Audio: 29 GB / 41,466 files already on disk in the Music2 library.
   '3567': 'Covered by the Music2 library — 29 GB and 41,466 audio files already on disk. Nothing to buy.',
@@ -357,6 +359,13 @@ owned too.</b> The Music2 library holds <b>29 GB across 41,466 audio files</b>
 (SFX packs, engine sounds, combat magic, card-game UI, hybrid-action and
 classical music). Audio was the last thing on the buy list, and it was never
 needed. <b>The shopping list is now zero.</b></p>
+<p><b>The entire top category is owned outright.</b>
+<code>Assets/Plugins/RootMotion</code> in the shared project already contains
+<b>Final IK</b> (32 MB) and <b>PuppetMaster</b> (55 MB) — the two picks I called
+the highest-leverage on this whole page — plus <b>Baker</b> and
+<b>RagdollManager</b> as bonuses. Between those, OpenCV for Unity and Character
+Controller Pro, all five cards in "Pose → avatar core" are already on disk. That
+category doesn't need buying; it needs using.</p>
 <p>The one purchase neither of them could cross off is not an asset at all:
 <b>representative low/mid-tier arm64 test phones</b>, because GPU contention and
 thermal throttling under MediaPipe cannot be reproduced in the editor.</p>
