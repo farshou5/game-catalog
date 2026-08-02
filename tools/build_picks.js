@@ -341,10 +341,17 @@ main{padding:18px;max-width:1400px;margin:0 auto}
  border-radius:9px}
 .card:has(.owned){border-left-color:#7fe07f}
 .verdict{background:#15161c;border:1px solid #2a2b33;border-left:3px solid #ff5b6e;
- border-radius:11px;padding:15px 17px;margin:0 0 26px}
-.verdict h2{margin:0 0 8px;font-size:17px;color:#ff8b96}
+ border-radius:11px;padding:0;margin:0 0 10px}
+.verdict>summary{cursor:pointer;padding:12px 16px;font-size:15px;font-weight:700;
+ color:#ff8b96;list-style:none;display:flex;align-items:center;gap:9px}
+.verdict>summary::-webkit-details-marker{display:none}
+.verdict>summary::before{content:'▸';font-size:13px;opacity:.75}
+.verdict[open]>summary::before{content:'▾'}
+.verdict[open]>summary{border-bottom:1px solid #2a2b33;margin-bottom:12px}
+.verdict>*:not(summary){margin-left:16px;margin-right:16px}
+.verdict>*:last-child{margin-bottom:14px}
 .verdict.inv{border-left-color:#c58cff}
-.verdict.inv h2{color:#c58cff;font-size:19px}
+.verdict.inv>summary{color:#c58cff}
 .verdict.inv h3{margin:14px 0 6px;font-size:14px;color:#e8e8ea;
  text-transform:uppercase;letter-spacing:.05em}
 .verdict.inv b{color:#e8e8ea}
@@ -353,10 +360,10 @@ main{padding:18px;max-width:1400px;margin:0 auto}
 ul.inv2{margin:0;padding-left:20px;font-size:14px;color:#c8c9d0}
 ul.inv2 li{margin-bottom:4px}
 .verdict.endless{border-left-color:#7ab8ff}
-.verdict.endless h2{color:#7ab8ff;font-size:19px}
+.verdict.endless>summary{color:#7ab8ff}
 .verdict.endless b{color:#e8e8ea}
 .verdict.final{border-left-color:#7fe07f}
-.verdict.final h2{color:#7fe07f;font-size:19px}
+.verdict.final>summary{color:#7fe07f}
 .verdict.final b{color:#e8e8ea}
 .verdict p{margin:0 0 9px;font-size:14px;color:#c8c9d0;max-width:85ch}
 .verdict ol,.verdict ul{margin:0 0 9px;padding-left:20px;font-size:14px;
@@ -393,8 +400,8 @@ can be bought properly.</p>
   `<a href="#c${i}" style="border-color:${c.color};color:${c.color}">${esc(c.name)}</a>`).join('')}</div>
 </header>
 <main>
-<div class="verdict inv">
-<h2>What is actually installed — full scan, 2 Aug 2026</h2>
+<details class="verdict inv">
+<summary>What is actually installed — full scan, 2 Aug 2026</summary>
 <p>Every folder and subfolder of both Unity projects, walked. Products often sit
 one level down (four separate RootMotion products live inside
 <code>Plugins/RootMotion</code>), so a top-level listing undercounts badly.</p>
@@ -437,10 +444,10 @@ one level down (four separate RootMotion products live inside
 <p class="src">Consequence: of the 55 cards below, 17 are already owned, and the
 purchase list is empty. The remaining value on this page is the reasoning about
 what to USE, not what to buy.</p>
-</div>
+</details>
 
-<div class="verdict endless">
-<h2>Endless: the right call, but not the way endless games normally work</h2>
+<details class="verdict endless">
+<summary>Endless: the right call, but not the way endless games normally work</summary>
 <p>Both reviewers were asked whether endless is even correct for a hands-free,
 two-metre, pose-controlled game. Both said yes — and both immediately named the
 same failure mode, in near-identical terms. Codex called it
@@ -495,10 +502,10 @@ The synthesis is to auto-restart on a visible countdown, while showing a
 persistent exit gesture and falling back to the catalog on idle. They also split
 on run length: Kimi says 90–150s median, Codex 3–5 minutes; Kimi's is the safer
 figure for a standing player.</p>
-</div>
+</details>
 
-<div class="verdict final">
-<h2>Final verdict, after a full inventory: buy almost nothing</h2>
+<details class="verdict final">
+<summary>Final verdict, after a full inventory: buy almost nothing</summary>
 <p>On 1 Aug I inventoried what is actually installed on this PC — the Joystick
 project plus the shared AssetsToCheck library — and put that list to both
 reviewers. They converged, independently, on the same uncomfortable answer:
@@ -563,10 +570,10 @@ on real phones — so 115 games don't become 115 separate performance problems.<
 <p class="src">Everything below this box was written before that inventory. It is
 kept because the reasoning per card is still sound, but read it as "what we would
 have bought", not a shopping list. Cards marked OWNED are already on this PC.</p>
-</div>
+</details>
 
-<div class="verdict">
-<h2>Earlier round — where the reviewers disagreed with me</h2>
+<details class="verdict">
+<summary>Earlier round — where the reviewers disagreed with me</summary>
 <p>Two independent reviewers were given this list and the same constraints:
 Kimi K3 at max effort (red notes on the cards) and Codex gpt-5.6-sol at xhigh
 (blue notes). They agree far more than they disagree. The three most useful
@@ -625,7 +632,7 @@ a template's touch UI or application shell.</p>
 <p>It also flags a parity angle worth keeping in mind: Unity-only architectural
 assets (audio managers, UI frameworks) are parity debt, because whatever they do
 has to be rebuilt by hand in Kotlin and Flutter.</p>
-</div>
+</details>
 ${sections.replace(/<section class="cat"/g, (m => {
   let n = -1; return () => { n++; return `<section id="c${n}" class="cat"`; };
 })())}
