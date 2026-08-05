@@ -184,7 +184,7 @@ const TIERC={Bronze:'#cd7f32',Silver:'#b9bfc9',
 Ruby:'#e0446a',Gold:'#e8b923'};
 const CHUNK=120;
 let sec='*',cat=null,sub=null,rfilter=null,sort='az',favOnly=false,
-tfilter=null,genre=null;
+tset=new Set(),genre=null;
 const GENRES={"dance": "🕺 Dance & Music", "racing": "🏎 Racing & Driving", "flying": "🪂 Flying", "runner": "🏃 Runners & Parkour", "sports": "⚽ Sports", "shooter": "🔫 Shooters & Battle", "puzzle": "🧩 Puzzle & Cards", "sim": "🏗 Simulation & Idle", "action": "🗡 Action & Adventure", "arcade": "👾 Arcade & Casual", "other": "🎮 Other"};
 const genrow=document.getElementById('genrow');
 function renderGenres(){const cnt={};
@@ -266,7 +266,7 @@ vid=v.replace('#','');
 view=DATA.filter(it=>(favOnly?favs.has(it.id):(inSec(it,sec)&&
 (!cat||inCat(it,cat))&&(!sub||inCat(it,sub))&&
 (!genre||it.g===genre)))&&
-(tfilter===null||it.t===tfilter)&&
+(tset.size===0||tset.has(it.t))&&
 (rfilter===null||(ratings[it.id]||0)===rfilter)&&priceOk(it));
 if(v)view=view.filter((it,i)=>it.n.toLowerCase().includes(v)||
 it.cn.toLowerCase().includes(v)||(it.a||'').toLowerCase().includes(v)||String(i+1)===vid);
@@ -329,8 +329,11 @@ for(const b of rbtns)b.addEventListener('click',()=>{
 rfilter=b.dataset.r===''?null:+b.dataset.r;
 rbtns.forEach(x=>x.classList.toggle('active',x===b));refresh();});
 for(const b of tbtns)b.addEventListener('click',()=>{
-tfilter=b.dataset.t==='*'?null:b.dataset.t;
-tbtns.forEach(x=>x.classList.toggle('active',x===b));refresh();});
+const tv=b.dataset.t;
+if(tv==='*')tset.clear();
+else tset.has(tv)?tset.delete(tv):tset.add(tv);
+tbtns.forEach(x=>x.classList.toggle('active',
+x.dataset.t==='*'?tset.size===0:tset.has(x.dataset.t)));refresh();});
 const pmin=document.getElementById('pmin'),pmax=document.getElementById('pmax');
 function priceOk(it){const lo=pmin.value===''?null:+pmin.value,
 hi=pmax.value===''?null:+pmax.value;

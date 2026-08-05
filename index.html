@@ -10590,8 +10590,8 @@ favtab=document.getElementById('favtab'),favn=document.getElementById('favn'),
 empty=document.getElementById('empty'),
 jump=document.getElementById('jump'),go=document.getElementById('go'),
 rbtns=[...document.querySelectorAll('.rbtn')];
-let tier='*',favOnly=false,rfilter=null,genre=null;
-const inTier=c=>tier==='*'||c.dataset.tier===tier;
+let tiers=new Set(),favOnly=false,rfilter=null,genre=null;
+const inTier=c=>tiers.size===0||tiers.has(c.dataset.tier);
 const GENRES={"dance": "🕺 Dance & Music", "racing": "🏎 Racing & Driving", "flying": "🪂 Flying", "runner": "🏃 Runners & Parkour", "sports": "⚽ Sports", "shooter": "🔫 Shooters & Battle", "puzzle": "🧩 Puzzle & Cards", "sim": "🏗 Simulation & Idle", "action": "🗡 Action & Adventure", "arcade": "👾 Arcade & Casual", "other": "🎮 Other"};
 const genrow=document.getElementById('genrow');
 function renderGenres(){const cnt={};
@@ -10641,7 +10641,7 @@ const r=ratings[c.dataset.id]||0;
 [...c.querySelectorAll('.star')].forEach((b,i)=>b.classList.toggle('on',i<r));}}
 function goTo(raw){const id=String(raw).trim().replace('#','');if(!id)return;
 const c=cards.find(x=>x.dataset.seq===id&&inTier(x));
-if(!c){count.textContent='no #'+id+(tier==='*'?'':' in '+tier);return;}
+if(!c){count.textContent='no #'+id+(tiers.size===0?'':' in '+[...tiers].join('+'));return;}
 favOnly=false;favtab.classList.remove('active');
 rfilter=null;rbtns.forEach(x=>x.classList.toggle('active',x.dataset.r===''));
 q.value='';apply();
@@ -10665,12 +10665,16 @@ const hit=(favOnly?favs.has(c.dataset.id):inTier(c)&&
 c.dataset.name.includes(v)||c.dataset.cat.includes(v)||
 c.dataset.seq===vid);
 c.classList.toggle('show',hit);if(hit)n++;}
-count.textContent=n+' shown · '+(favOnly?'♥ favorites':(tier==='*'?'all tiers':tier))+
+count.textContent=n+' shown · '+(favOnly?'♥ favorites':(tiers.size===0?'all tiers':[...tiers].join(' + ')))+
 (rfilter===null?'':rfilter===0?' · unrated':' · '+rfilter+'★');
 empty.style.display=n?'none':'';}
-for(const t of tabs)t.addEventListener('click',()=>{tier=t.dataset.tier;
+for(const t of tabs)t.addEventListener('click',()=>{
+const tv=t.dataset.tier;
+if(tv==='*')tiers.clear();
+else tiers.has(tv)?tiers.delete(tv):tiers.add(tv);
 favOnly=false;favtab.classList.remove('active');
-tabs.forEach(x=>x.classList.toggle('active',x===t));
+tabs.forEach(x=>x.classList.toggle('active',
+x.dataset.tier==='*'?tiers.size===0:tiers.has(x.dataset.tier)));
 renderGenres();apply();});
 favtab.addEventListener('click',()=>{favOnly=!favOnly;
 favtab.classList.toggle('active',favOnly);apply();});
