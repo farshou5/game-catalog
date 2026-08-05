@@ -60,6 +60,7 @@ main{display:grid;gap:14px;padding:16px;
 .star.on{color:#f2c14e}
 #more{grid-column:1/-1;height:1px}
 #empty{grid-column:1/-1;color:#8f909b;padding:26px 4px}
+.card.tier-Bronze{border-color:#cd7f3288}.card.tier-Silver{border-color:#b9bfc988}.card.tier-Ruby{border-color:#e0446a88}.card.tier-Gold{border-color:#e8b92388}
 </style></head><body>
 <header>
  <div class="nav"><a href="index.html">Complete Projects</a><span>|</span><a
@@ -142,9 +143,10 @@ function renderGenres(){
   genre=b.dataset.g||null;renderGenres();refresh();}));
 }
 
+const TIERC={Bronze:'#cd7f32',Silver:'#b9bfc9',Ruby:'#e0446a',Gold:'#e8b923'};
 function makeCard(it){
  const el=document.createElement('div');
- el.className='card '+it.k;
+ el.className='card '+it.k+(it.tier?' tier-'+it.tier:'');
  const imgs=(it.img||[]).map(u=>'<img loading="lazy" src="'+esc(u)+'" alt="">').join('');
  const yt='https://www.youtube.com/results?search_query='
   +encodeURIComponent(it.n+(it.k==='p'?' unity game':' unity asset'));
@@ -153,7 +155,7 @@ function makeCard(it){
   +(imgs?'<div class="imgs">'+imgs+'</div>':'')
   +'<div class="hdr"><button class="fav" title="Favorite">♡</button>'
   +'<h3><a href="'+esc(it.src)+'" target="_blank" rel="noopener">'+esc(it.n)+'</a></h3></div>'
-  +'<div class="meta">'+esc(it.cat||'')+(it.tier?' · '+esc(it.tier):'')
+  +'<div class="meta">'+esc(it.cat||'')+(it.tier?' · <b style="color:'+TIERC[it.tier]+'">'+esc(it.tier)+'</b>':'')
    +(it.ts?' · '+it.ts.slice(0,10):'')+'</div>'
   +'<p>'+esc(it.d||'')+'</p>'
   +'<div class="links"><a href="'+esc(it.src)+'" target="_blank" rel="noopener">Open ↗</a>'
@@ -184,6 +186,8 @@ function compute(){
   if(favOnly&&!FAVS[it.k].has(it.id))return false;
   if(kind!=='*'&&it.k!==kind)return false;
   if(genre&&it.g!==genre)return false;
+  if(tset.size&&!tset.has(it.tier||''))return false;
+  if(secset.size&&!secset.has(it.sec||'other'))return false;
   if(tset.size&&!tset.has(it.tier||''))return false;
   if(secset.size&&!secset.has(it.sec||'other'))return false;
   if(tset.size&&!tset.has(it.tier||''))return false;
